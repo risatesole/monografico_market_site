@@ -3,7 +3,7 @@ from .views import security, signIn, signUp, signOut
 
 urlpatterns = [
     path("security/", security),
-    path("signin/",signIn),
+    path("signin/", signIn, name="signin"),
     path("signout/",signOut),
-    path("signup/",signUp),
+    path("signup/", signUp, name="signup"),
 ]

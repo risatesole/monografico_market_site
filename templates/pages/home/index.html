@@ -1,16 +1,17 @@
-<!DOCTYPE html>
+{% load static %}
+<!doctype html>
 <html>
-<head>
+  <head>
     <title>{{name}}</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>{{name}}</h1>
 
-    <a href="/signin">Sign in</a>
-    <br>
-    <a href="/signup">Sign up</a>
+    <a href="{% url 'signin' %}">Sign in</a>
+    <br />
+    <a href="{% url 'signup' %}">Sign up</a>
     <p>hello user.</p>
 
     <p>List of products</p>
-</body>
+  </body>
 </html>
