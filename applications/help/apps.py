@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class HelpConfig(AppConfig):
-    name = 'help'
+    name = 'applications.help'
