@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from ...utils.env import environment
+from ...utils import environment
 
 context = {
     "name": environment["name"],

@@ -1,2 +1,3 @@
 from .normalizeStringToLowerCase import normalizeStringToLowerCase
 from .validateStringIsNotEmpty import validateStringIsNotEmpty
+from .environment import environment

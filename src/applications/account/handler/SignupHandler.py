@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render , redirect
 from django.contrib.auth import login
-from ....utils.env import environment
+from ....utils import environment
 from ..models import User
 
 def signUpHandler(request): 
