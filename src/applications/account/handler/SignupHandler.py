@@ -1,7 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render , redirect
 from django.contrib.auth import login
-from django.contrib.auth import logout
 from ....utils.env import environment
 from ..models import User
 
