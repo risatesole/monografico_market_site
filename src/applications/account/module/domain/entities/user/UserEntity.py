@@ -12,4 +12,6 @@ class UserEntity:
 
     def get_value(self, key):
         return getattr(self, key, None)
-    
+
+    def set_value(self, key, value):
+        setattr(self, key, value)
