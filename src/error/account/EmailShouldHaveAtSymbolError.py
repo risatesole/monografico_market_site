@@ -1,2 +1,0 @@
-class EmailShouldHaveAtSymbolError(Exception):
-    pass

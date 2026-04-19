@@ -1,8 +1,7 @@
 from django.shortcuts import render
-from ...utils import environment
 
 context = {
-    "name": environment["name"],
+    "name": "supermercado",
 }
 
 def home(request): return render(request, "pages/home/index.html", context)
