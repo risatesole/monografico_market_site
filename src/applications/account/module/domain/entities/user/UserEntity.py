@@ -1,6 +1,6 @@
 class UserEntity:
-    def __init__(self, user_id: int, email:str, password_hash:str, first_name:str, last_name:str, created_at:str , updated_at:str, is_active:bool, is_email_verified:bool):
-        self.user_id = user_id
+    def __init__(self, id: int, email:str, password_hash:str, first_name:str, last_name:str, created_at:str , updated_at:str, is_active:bool, is_email_verified:bool):
+        self.id = id
         self.email = email
         self.password_hash = password_hash  
         self.first_name = first_name
