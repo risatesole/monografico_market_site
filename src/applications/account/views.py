@@ -2,7 +2,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from ...utils import environment
-from .handler.SignupHandler import signUpHandler
+from .module.presentation.web.signupController import SignupController
 
 context: dict[str, str] = {
     "name": environment["name"],
@@ -16,7 +16,8 @@ def signIn(request: HttpRequest) -> HttpResponse:
     return response
 
 def signUp(request: HttpRequest) -> HttpResponse: 
-    return signUpHandler(request)
+    controller = SignupController()
+    return controller.render(request)
 
 def signOut(request: HttpRequest) -> HttpResponse:
     logout(request)
