@@ -1,1 +1,1 @@
-from .EmailValueObject import EmailValueObject
+from .EmailValueObject import EmailValueObject as EmailValueObject

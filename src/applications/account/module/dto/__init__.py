@@ -1,1 +1,1 @@
-from .create_user_dto import CreateUserDTO
+from .create_user_dto import CreateUserDTO as CreateUserDTO

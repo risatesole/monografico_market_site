@@ -1,3 +1,3 @@
-from .normalizeStringToLowerCase import normalizeStringToLowerCase
-from .validateStringIsNotEmpty import validateStringIsNotEmpty
-from .environment import environment
+from .normalizeStringToLowerCase import normalizeStringToLowerCase as normalizeStringToLowerCase
+from .validateStringIsNotEmpty import validateStringIsNotEmpty as validateStringIsNotEmpty
+from .environment import environment as environment
