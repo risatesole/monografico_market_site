@@ -1,4 +1,3 @@
-# users/repository.py
 from django.contrib.auth import get_user_model
 from ..domain.entities.user.UserEntity import UserEntity
 
