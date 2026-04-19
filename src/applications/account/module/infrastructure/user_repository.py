@@ -1,34 +1,26 @@
 # users/repository.py
 from django.contrib.auth import get_user_model
+from ..domain.entities.user.UserEntity import UserEntity
 
 User = get_user_model()
 
 class UserRepository:
 
     @staticmethod
-    def create_user(username, email, password):
+    def create_user(user: UserEntity):
         return User.objects.create_user(
-            username=username,
-            email=email,
-            password=password
+            username = "n/a",
+            email= user.email,
+            password= user.password_hash,
+            first_name = user.first_name,
+            last_name = user.last_name,
         )
+    
+    @staticmethod
+    def get_by_id(user: UserEntity):
+        return User.objects.filter(id=user.id).first()
 
     @staticmethod
-    def get_by_id(user_id):
-        return User.objects.filter(id=user_id).first()
-
-    @staticmethod
-    def get_by_email(email):
-        return User.objects.filter(email=email).first()
-
-    @staticmethod
-    def update_user(user, **kwargs):
-        for key, value in kwargs.items():
-            setattr(user, key, value)
-        user.save()
-        return user
-
-    @staticmethod
-    def delete_user(user):
-        user.delete()
+    def get_by_email(user: UserEntity):
+        return User.objects.filter(email=user.email).first()
 
