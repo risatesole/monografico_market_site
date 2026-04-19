@@ -1,0 +1,108 @@
+Table customer {
+  id int [pk]
+  firstname varchar
+  lastname varchar
+  email varchar
+  password_hash varchar
+  age varchar
+  phone_number varchar
+  created_at datetime
+  updated_at datetime
+}
+
+Table customer_paymentinformation {
+  id int [pk]
+  payment_method varchar
+  payment_details varchar
+}
+
+Table direction{
+  id int [pk]
+  client_id int  [ref: > customer.id]
+  ubicacion varchar
+}
+
+Table customer_order {
+  customer_id int [ref: - customer.id]
+  amount int 
+  status varchar
+}
+
+Table customer_order_item {
+  id int
+  order_id int 
+  product_id int [ref: - product.id]
+  quantity int
+  price int
+}
+
+Table product{
+  id int [pk]
+  name varchar
+  description varchar
+  category int [ref: - product_category.id]
+}
+
+Table product_category{
+  id int [pk]
+  name varchar
+}
+
+Table product_lot {
+  id int [pk]
+  recived_at datetime
+  product_id int [ref: - product.id]
+  price_per_unit int
+  provider_id int [ref: - provider.id]
+  quantity int
+}
+
+Table provider{
+  id int [pk]
+  name varchar
+}
+
+Table provider_account {
+  // puede anadir quitar productos
+  id int [pk]
+  firstname varchar
+  lastname varchar
+  email varchar
+  password_hash varchar
+  age varchar
+  phone_number varchar
+  created_at datetime
+  updated_at datetime
+  provider_id int [ref: >provider.id]
+  position varchar
+}
+
+Table provider_payment_information {
+  id int [pk]
+  provider_id int [ref: > provider.id]
+  card_number int
+  card_secret int
+}
+
+Table transaction_provider{
+  id int [pk]
+  from varchar
+  to varchar
+  created_at varchar
+  product_lot_id int [ref: > product_lot.id]
+  price_per_unit int
+  quantitu_unit int
+}
+
+Table internal_user{
+  id int [pk]
+  firstname varchar
+  lastname varchar
+  email varchar
+  password_hash varchar
+  age varchar
+  phone_number varchar
+  created_at datetime
+  updated_at datetime
+  role varchar
+}
