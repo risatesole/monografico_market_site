@@ -1,24 +1,32 @@
-from django.http import HttpResponse
-from django.shortcuts import render , redirect
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from ...utils import environment
 from .handler.SignupHandler import signUpHandler
 
-context = {
+context: dict[str, str] = {
     "name": environment["name"],
 }
 
-def security(request): return HttpResponse("We take security very seriously")
-def signIn(request): return render(request, "pages/account/signin.html", context)
+def security(request: HttpRequest) -> HttpResponse:
+    return HttpResponse("We take security very seriously")
 
-def signUp(request): 
+def signIn(request: HttpRequest) -> HttpResponse: 
+    response: HttpResponse = render(request, "pages/account/signin.html", context)
+    return response
+
+def signUp(request: HttpRequest) -> HttpResponse: 
     return signUpHandler(request)
 
-def signOut(request):
+def signOut(request: HttpRequest) -> HttpResponse:
     logout(request)
     return redirect("home")
 
-# Out of project scope:
-def validateAccount(request): return HttpResponse("validate account view")
-def restorePassword(request): return HttpResponse("restore password view")
-def changeEmail(request): return HttpResponse("change email view")
+def validateAccount(request: HttpRequest) -> HttpResponse: 
+    return HttpResponse("validate account view")
+
+def restorePassword(request: HttpRequest) -> HttpResponse: 
+    return HttpResponse("restore password view")
+
+def changeEmail(request: HttpRequest) -> HttpResponse: 
+    return HttpResponse("change email view")
