@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 from .models import User , ProviderApplicationToBeProvider
 from .interfaces.signupInterface import signup_interface
 from .interfaces.signinInterface import signinInterface
+from .interfaces.signoutInterface import signoutInterface
 
 context = {
     "name": "supermercado",
@@ -11,28 +13,12 @@ context = {
 def home(request): return render(request, "pages/home/index.html", context)
 def dashboard(request): return render(request, "pages/home/dashboard.html", context)
 def provider(request): return render(request, "pages/home/provider.html", context)
-
-
-def signup_view(request):
-    return signup_interface(request)
-
-def signin_view(request):
-    return signinInterface(request)
-
-# ----------------------
-# SIGN OUT
-# ----------------------
-def signout_view(request):
-    logout(request)
-    return redirect("home")
-
-
-
-
+def signup_view(request): return signup_interface(request)
+def signin_view(request): return signinInterface(request)
+def signout_view(request): return signoutInterface(request)
 
 #########################################################################################
 
-from django.contrib.auth.decorators import login_required
 
 
 # ----------------------
