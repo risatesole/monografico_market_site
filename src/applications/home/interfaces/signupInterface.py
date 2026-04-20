@@ -7,16 +7,19 @@ def signup_interface(request):
         return redirect("home")
 
     if request.method == "POST":
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
         email = request.POST.get("email")
         password = request.POST.get("password")
 
-        # prevent duplicate emails
         if User.objects.filter(email=email).exists():
             return render(request, "signup.html", {
                 "error": "Email already exists"
             })
 
         user = User.objects.create_user(
+            first_name=first_name,
+            last_name=last_name,
             email=email,
             password=password,
             role="customer",
