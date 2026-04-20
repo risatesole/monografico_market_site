@@ -1,5 +1,11 @@
 from django.urls import path
-from .views import home , signin_view, signout_view, signup_view, settings_view, provider_view, provider_request_view
+from .views import home 
+from .views import signin_view
+from .views import signout_view
+from .views import signup_view
+from .views import settings_view
+from .views import provider_view
+from .views import provider_request_view
 
 urlpatterns = [
     path("", home, name="home"),
