@@ -1,1 +1,47 @@
-<h2>Todo: insert logic to apply to be provider here</h2>
+<h2>Become a Provider</h2>
+
+<p>User: <strong>{{ user.username }}</strong></p>
+
+<hr>
+
+{% if application %}
+
+    <h3>📄 Your Application</h3>
+
+    <p><strong>Status:</strong> {{ application.status }}</p>
+
+    <p><strong>Submitted:</strong> {{ application.created_at }}</p>
+
+    <p><strong>External ID:</strong> {{ application.external_id }}</p>
+
+    <p><strong>Notes:</strong> {{ application.notes }}</p>
+
+    {% if application.status == "approved" %}
+        <p>✅ You are now a provider.</p>
+    {% elif application.status == "vetting" %}
+        <p>🔎 Your application is under review.</p>
+    {% else %}
+        <p>⏳ Your application is pending.</p>
+    {% endif %}
+
+{% else %}
+
+    <h3>Apply to become a Provider</h3>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <textarea
+            name="notes"
+            placeholder="Why do you want to become a provider?"
+            required
+            rows="5"
+            style="width: 100%;"
+        ></textarea>
+
+        <br><br>
+
+        <button type="submit">Submit Application</button>
+    </form>
+
+{% endif %}

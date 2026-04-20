@@ -17,11 +17,19 @@ def provider_request_interface(request):
                 notes=request.POST.get("notes", "")
             )
 
-        return redirect("provider_request_interface")
+        return redirect("provider_request")
 
     return render(request, "pages/provider/request.html", {
         "application": application
     })
+
+
+
+
+
+
+
+#####################################################################################
 
 def provider_landing(request):
     return render(request,"pages/provider/distribuitor_landing.html")
