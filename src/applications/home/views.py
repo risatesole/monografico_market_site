@@ -22,6 +22,11 @@ def settings_view(request): return settingsPageInterface
 
 @login_required
 def request_provider_view(request):
+    """
+    this route adds a request to the database where the user wants to be a provider
+    internal user should check it and return the status of being provider
+    needs to be refactored in sence its a fucking bad name
+    """
     if request.method == "POST":
         # prevent duplicate requests
         exists = ProviderApplicationToBeProvider.objects.filter(user=request.user).exists()
