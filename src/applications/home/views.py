@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
@@ -7,6 +8,7 @@ from .interfaces.signinInterface import signinInterface
 from .interfaces.signoutInterface import signoutInterface
 from .interfaces.settingsPageInterface import settingsPageInterface, apply_to_be_provider
 from .interfaces.ProviderInterface import providerInterface
+
 context = {
     "name": "supermercado",
 }
@@ -21,20 +23,17 @@ def signout_view(request): return signoutInterface(request)
 def apply_to_be_provider_view(request):
     return apply_to_be_provider(request)
 
-@login_required
-def settings_view(request): 
-    return settingsPageInterface(request)
+def settings_view(request):
+    if not request.user.is_authenticated:
+        return redirect("home")
 
-
+    return HttpResponse("this is settings page")
 
 
 from .interfaces.ProviderInterface import provider_request_interface
-#####################################################################################
+
 def provider_view(request):
     return providerInterface(request)
 
 def provider_request_view(request):
     return provider_request_interface(request)
-#####################################################################################
-
-############################################################################################
