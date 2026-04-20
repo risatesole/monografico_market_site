@@ -49,7 +49,9 @@ def internal_view(request):
     if the user is a customer or a provider, it should not load, eg.
     redirect to home page
     """
-    if request.user.role != 'internal_user':
-            return redirect('home')
+    if request.user.role == 'internal_user':
+        return render(request, "pages/internal/internal.html")
+    
+    return redirect('home')
 
-    return render(request, "pages/internal/internal.html")
+    
