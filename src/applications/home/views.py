@@ -5,6 +5,7 @@ from .models import User , ProviderApplicationToBeProvider
 from .interfaces.signupInterface import signup_interface
 from .interfaces.signinInterface import signinInterface
 from .interfaces.signoutInterface import signoutInterface
+from .interfaces.settingsPageInterface import settingsPageInterface
 
 context = {
     "name": "supermercado",
@@ -16,30 +17,9 @@ def provider(request): return render(request, "pages/home/provider.html", contex
 def signup_view(request): return signup_interface(request)
 def signin_view(request): return signinInterface(request)
 def signout_view(request): return signoutInterface(request)
-
-#########################################################################################
-
-
-
-# ----------------------
-# SETTINGS PAGE
-# ----------------------
 @login_required
-def settings_view(request):
-    # check if user already has an application
-    application = ProviderApplicationToBeProvider.objects.filter(user=request.user).first()
-    
-    role = request.user.role  
-    
-    return render(request, "pages/auth/settings.html", {
-        "application": application,
-        "role": role,
-    })
+def settings_view(request): return settingsPageInterface
 
-
-# ----------------------
-# REQUEST PROVIDER
-# ----------------------
 @login_required
 def request_provider_view(request):
     if request.method == "POST":
