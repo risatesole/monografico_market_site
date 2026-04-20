@@ -20,6 +20,10 @@ def signout_view(request): return signoutInterface(request)
 @login_required
 def settings_view(request): return settingsPageInterface
 
+def distribuitor_view(request):
+    return render(request,"pages/distribuitor/become.html")
+
+
 @login_required
 def request_provider_view(request):
     """
