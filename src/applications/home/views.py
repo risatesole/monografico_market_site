@@ -41,6 +41,7 @@ def provider_request_view(request):
 
     return provider_request_interface(request)
 
+@login_required
 def internal_view(request):
     """
     This is the company employees facing part of the application
@@ -48,4 +49,7 @@ def internal_view(request):
     if the user is a customer or a provider, it should not load, eg.
     redirect to home page
     """
-    return render(request,"pages/internal/internal.html")
+    if request.user.role != 'internal_user':
+            return redirect('home')
+
+    return render(request, "pages/internal/internal.html")
