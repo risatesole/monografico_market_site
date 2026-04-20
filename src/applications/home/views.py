@@ -14,7 +14,7 @@ context = {
 }
 
 def home(request): return render(request, "pages/home/index.html", context)
-def dashboard(request): return render(request, "pages/home/dashboard.html", context)
+# def dashboard(request): return render(request, "pages/home/dashboard.html", context)
 def provider(request): return render(request, "pages/home/provider.html", context)
 def signin_view(request): return signinInterface(request)
 def signup_view(request): return signup_interface(request)
