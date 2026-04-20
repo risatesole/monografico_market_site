@@ -2,7 +2,7 @@ from django.urls import path
 from .views import home 
 from .views import signin_view
 from .views import signout_view
-from .views import signup_view
+from .core.views.auth.view_signup import signup_view
 from .views import settings_view
 from .views import provider_view
 from .views import provider_request_view
