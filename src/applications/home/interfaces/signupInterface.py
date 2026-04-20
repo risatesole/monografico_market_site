@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
-from ..models import User , ProviderApplicationToBeProvider
+from ..models import User
 
 def signup_interface(request):
     if request.method == "POST":

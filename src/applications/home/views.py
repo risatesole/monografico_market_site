@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from .models import User , ProviderApplicationToBeProvider
+from .interfaces.signupInterface import signup_interface
+from .interfaces.signinInterface import signinInterface
 
 context = {
     "name": "supermercado",
@@ -10,30 +12,12 @@ def home(request): return render(request, "pages/home/index.html", context)
 def dashboard(request): return render(request, "pages/home/dashboard.html", context)
 def provider(request): return render(request, "pages/home/provider.html", context)
 
-from .interfaces.signupInterface import signup_interface
+
 def signup_view(request):
     return signup_interface(request)
 
-# ----------------------
-# SIGN IN
-# ----------------------
 def signin_view(request):
-    if request.method == "POST":
-        email = request.POST.get("email")
-        password = request.POST.get("password")
-
-        user = authenticate(request, email=email, password=password)
-
-        if user is not None:
-            login(request, user)
-            return redirect("home")
-
-        return render(request, "pages/auth/signin.html", {
-            "error": "Invalid credentials"
-        })
-
-    return render(request, "pages/auth/signin.html")
-
+    return signinInterface(request)
 
 # ----------------------
 # SIGN OUT
