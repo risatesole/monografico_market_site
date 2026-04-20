@@ -7,6 +7,8 @@ from .interfaces.ProviderInterface import providerInterface
 from .interfaces.ProviderInterface import provider_request_interface
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from .models import User
+from .models import ProviderApplicationToBeProvider
 
 context = {
     "name": "Supermercado Blanco",
@@ -50,8 +52,13 @@ def internal_view(request):
     redirect to home page
     """
     if request.user.role == 'internal_user':
-        return render(request, "pages/internal/internal.html")
+
+        list_users = User.objects.all()
+        provider_applications = ProviderApplicationToBeProvider.objects.all()
+        context = {
+            "list_users": list_users,
+            "provider_applications": provider_applications
+        }
+        return render(request, "pages/internal/internal.html", context)
     
     return redirect('home')
-
-    
