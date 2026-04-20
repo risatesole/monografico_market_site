@@ -53,7 +53,7 @@ def signin_view(request):
             login(request, user)
             return redirect("home")
 
-        return render(request, "signin.html", {
+        return render(request, "pages/auth/signin.html", {
             "error": "Invalid credentials"
         })
 
@@ -66,3 +66,47 @@ def signin_view(request):
 def signout_view(request):
     logout(request)
     return redirect("home")
+
+
+
+
+
+#########################################################################################
+
+from django.contrib.auth.decorators import login_required
+from .models import ProviderApplicationToBeProvider
+
+
+# ----------------------
+# SETTINGS PAGE
+# ----------------------
+@login_required
+def settings_view(request):
+    # check if user already has an application
+    application = ProviderApplicationToBeProvider.objects.filter(user=request.user).first()
+
+    return render(request, "pages/auth/settings.html", {
+        "application": application
+    })
+
+
+# ----------------------
+# REQUEST PROVIDER
+# ----------------------
+@login_required
+def request_provider_view(request):
+    if request.method == "POST":
+        # prevent duplicate requests
+        exists = ProviderApplicationToBeProvider.objects.filter(user=request.user).exists()
+
+        if not exists:
+            ProviderApplicationToBeProvider.objects.create(
+                user=request.user,
+                status="pending",
+                external_id="",   # you can fill later
+                notes=""
+            )
+
+    return redirect("settings")
+
+############################################################################################
