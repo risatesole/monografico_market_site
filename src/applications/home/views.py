@@ -17,8 +17,11 @@ def provider(request): return render(request, "pages/home/provider.html", contex
 def signup_view(request): return signup_interface(request)
 def signin_view(request): return signinInterface(request)
 def signout_view(request): return signoutInterface(request)
+
+
 @login_required
-def settings_view(request): return settingsPageInterface
+def settings_view(request): 
+    return settingsPageInterface(request)
 
 def distribuitor_view(request):
     return render(request,"pages/distribuitor/distribuitor_landing.html")

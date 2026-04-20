@@ -11,6 +11,7 @@ urlpatterns = [
     path("signout/", signout_view, name="signout"),
     path("signup/", signup_view, name="signup"),
 
+    # path("settings/", settings_view, name="settings"),
     path("settings/", settings_view, name="settings"),
     path("request-provider/", request_provider_view, name="request_provider"),
 

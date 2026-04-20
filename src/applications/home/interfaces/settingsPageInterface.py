@@ -1,3 +1,5 @@
+from django.shortcuts import render, redirect
+from ..models import ProviderApplicationToBeProvider
 
 def settingsPageInterface(request):
         # check if user already has an application
