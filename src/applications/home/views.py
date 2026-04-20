@@ -5,7 +5,7 @@ from .models import User , ProviderApplicationToBeProvider
 from .interfaces.signupInterface import signup_interface
 from .interfaces.signinInterface import signinInterface
 from .interfaces.signoutInterface import signoutInterface
-from .interfaces.settingsPageInterface import settingsPageInterface
+from .interfaces.settingsPageInterface import settingsPageInterface, apply_to_be_provider
 
 context = {
     "name": "supermercado",
@@ -18,6 +18,8 @@ def signup_view(request): return signup_interface(request)
 def signin_view(request): return signinInterface(request)
 def signout_view(request): return signoutInterface(request)
 
+def apply_to_be_provider_view(request):
+    return apply_to_be_provider(request)
 
 @login_required
 def settings_view(request): 
