@@ -1,5 +1,6 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from ..models import ProviderApplicationToBeProvider, User
+from ..models import ProviderApplicationToBeProvider
 
 def provider_request_interface(request):
     user = request.user
@@ -23,18 +24,9 @@ def provider_request_interface(request):
         "application": application
     })
 
-
-
-
-
-
-
-#####################################################################################
-
 def provider_landing(request):
     return render(request,"pages/provider/distribuitor_landing.html")
 
-from django.http import HttpResponse
 
 def providerInterface(request):
     if not request.user.is_authenticated:
