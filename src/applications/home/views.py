@@ -40,3 +40,15 @@ def provider_request_view(request):
         return redirect(f"/signin?next=/provider/request/")
 
     return provider_request_interface(request)
+
+
+
+
+def internal_view(request):
+    """
+    This is the company employees facing part of the application
+    if the user can see this should be in internal_user role
+    if the user is a customer or a provider, it should not load, eg.
+    redirect to home page
+    """
+    return HttpResponse("If you see this, you are in the internal site, right now its under development") 
