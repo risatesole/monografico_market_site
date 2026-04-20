@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
-from .models import User
-
-
+from .models import User , ProviderApplicationToBeProvider
 
 context = {
     "name": "supermercado",
@@ -12,32 +10,9 @@ def home(request): return render(request, "pages/home/index.html", context)
 def dashboard(request): return render(request, "pages/home/dashboard.html", context)
 def provider(request): return render(request, "pages/home/provider.html", context)
 
-# ----------------------
-# SIGN UP
-# ----------------------
+from .interfaces.signupInterface import signup_interface
 def signup_view(request):
-    if request.method == "POST":
-        email = request.POST.get("email")
-        password = request.POST.get("password")
-
-        # prevent duplicate emails
-        if User.objects.filter(email=email).exists():
-            return render(request, "signup.html", {
-                "error": "Email already exists"
-            })
-
-        user = User.objects.create_user(
-            email=email,
-            password=password,
-            role="customer",
-            status="active"
-        )
-
-        login(request, user)
-        return redirect("home")
-
-    return render(request, "pages/auth/signup.html")
-
+    return signup_interface(request)
 
 # ----------------------
 # SIGN IN
@@ -74,7 +49,6 @@ def signout_view(request):
 #########################################################################################
 
 from django.contrib.auth.decorators import login_required
-from .models import ProviderApplicationToBeProvider
 
 
 # ----------------------
