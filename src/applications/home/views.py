@@ -44,7 +44,7 @@ def provider_request_view(request):
     return provider_request_interface(request)
 
 @login_required
-def internal_view(request):
+def intranet_view(request):
     """
     This is the company employees facing part of the application
     if the user can see this should be in internal_user role
