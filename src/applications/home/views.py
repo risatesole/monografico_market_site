@@ -59,6 +59,6 @@ def intranet_view(request):
             "list_users": list_users,
             "provider_applications": provider_applications
         }
-        return render(request, "pages/internal/internal.html", context)
+        return render(request, "pages/intranet/intranet.html", context)
     
     return redirect('home')
