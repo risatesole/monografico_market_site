@@ -6,7 +6,6 @@ from .models import User , ProviderApplicationToBeProvider
 from .interfaces.signupInterface import signup_interface
 from .interfaces.signinInterface import signinInterface
 from .interfaces.signoutInterface import signoutInterface
-from .interfaces.settingsPageInterface import settingsPageInterface, apply_to_be_provider
 from .interfaces.ProviderInterface import providerInterface
 
 context = {
