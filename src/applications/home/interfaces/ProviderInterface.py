@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from ..models import ProviderApplicationToBeProvider
+from ..models import ProviderApplicationToBeProvider, User
 
 def provider_request_interface(request):
     user = request.user
@@ -34,5 +34,13 @@ def provider_request_interface(request):
 def provider_landing(request):
     return render(request,"pages/provider/distribuitor_landing.html")
 
+from django.http import HttpResponse
+
 def providerInterface(request):
+    if not request.user.is_authenticated:
+        return provider_landing(request)
+
+    if request.user.role == "provider":
+        return HttpResponse("Welcome provider")
+
     return provider_landing(request)
