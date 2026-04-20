@@ -6,7 +6,7 @@ from .core.views.auth.view_signup import signup_view
 from .views import settings_view
 from .views import provider_view
 from .views import provider_request_view
-from .core.views.intranet.intranet import intranet_view
+from .core.views.intranet.view_intranet import intranet_view
 
 urlpatterns = [
     path("", home, name="home"),

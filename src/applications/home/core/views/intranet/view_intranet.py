@@ -1,3 +1,7 @@
+from django.contrib.auth.decorators import login_required
+from ....models import User, ProviderApplicationToBeProvider
+from django.shortcuts import render, redirect
+
 @login_required
 def intranet_view(request):
     """
