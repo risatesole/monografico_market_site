@@ -173,6 +173,10 @@ class ProductPurchaseRequisition(models.Model):
 # META REQUEST BE PROVIDER ACCOUNT
 # ----------------------
 class MetaRequestBeProviderAccount(models.Model):
+    """
+    this model represents when a user a request to the provider with text that the user wants to be a provider
+    
+    """
     requested_at = models.DateTimeField()
 
     requested_by = models.ForeignKey(
