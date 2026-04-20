@@ -3,6 +3,9 @@ from django.contrib.auth import login
 from ..models import User
 
 def signup_interface(request):
+    if request.user.is_authenticated:
+        return redirect("home")
+
     if request.method == "POST":
         email = request.POST.get("email")
         password = request.POST.get("password")
