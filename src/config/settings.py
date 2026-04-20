@@ -124,3 +124,4 @@ STATIC_URL = 'static/'
 # custom settings:
 # custom user table
 AUTH_USER_MODEL = "home.User"
+LOGIN_URL = "/signin"
