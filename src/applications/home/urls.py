@@ -16,7 +16,7 @@ urlpatterns = [
     path("signup/", signup_view, name="signup"),
 
     # user settings
-    path('settings/', settings_view, name='settings_page'),
+    # path('settings/', settings_view, name='settings_page'),
 
     # provider
     path("provider/request/", provider_request_view, name="provider_request"),

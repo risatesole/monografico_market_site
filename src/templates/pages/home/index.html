@@ -10,9 +10,16 @@
     {% if user.is_authenticated %}
       <p>User: {{ user.email }}</p>
       <p>Role: {{ user.role }}</p>
+      <p><a href="signout/">signout</a></p>
+
     {% else %}
       <p>User not signed in</p>
-    {% endif %}
+      <p><a href="signin/">signin</a></p>
+      <p><a href="signup">signout</a></p>
+      {% endif %}
+
+      
+
 
   </body>
 </html>
