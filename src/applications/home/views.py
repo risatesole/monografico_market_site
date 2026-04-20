@@ -6,7 +6,7 @@ from .interfaces.signupInterface import signup_interface
 from .interfaces.signinInterface import signinInterface
 from .interfaces.signoutInterface import signoutInterface
 from .interfaces.settingsPageInterface import settingsPageInterface, apply_to_be_provider
-
+from .interfaces.ProviderInterface import providerInterface
 context = {
     "name": "supermercado",
 }
@@ -25,29 +25,16 @@ def apply_to_be_provider_view(request):
 def settings_view(request): 
     return settingsPageInterface(request)
 
+
+
+
+from .interfaces.ProviderInterface import provider_request_interface
+#####################################################################################
 def provider_view(request):
-    return render(request,"pages/provider/distribuitor_landing.html")
+    return providerInterface(request)
 
-
-@login_required
-def request_provider_view(request):
-    """
-    this route adds a request to the database where the user wants to be a provider
-    internal user should check it and return the status of being provider
-    needs to be refactored in sence its a fucking bad name
-    """
-    if request.method == "POST":
-        # prevent duplicate requests
-        exists = ProviderApplicationToBeProvider.objects.filter(user=request.user).exists()
-
-        if not exists:
-            ProviderApplicationToBeProvider.objects.create(
-                user=request.user,
-                status="pending",
-                external_id="",   # you can fill later
-                notes=""
-            )
-
-    return redirect("settings")
+def provider_request_view(request):
+    return provider_request_interface(request)
+#####################################################################################
 
 ############################################################################################

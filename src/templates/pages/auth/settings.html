@@ -14,7 +14,7 @@
 {% else %}
     <div class="apply-section">
         <h3>Apply to become a Provider</h3>
-        <form method="POST" action="{% url 'apply_provider' %}">
+        <form method="POST" action="#">
             {% csrf_token %}
             <textarea name="notes" placeholder="Why do you want to be a provider?" required></textarea>
             <br>
