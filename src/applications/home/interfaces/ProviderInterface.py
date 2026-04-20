@@ -17,13 +17,10 @@ def provider_landing(request):
 from ..models import ProviderApplicationToBeProvider
 
 def provider_request_interface(request):
-    application = ProviderApplicationToBeProvider.objects.filter(user=request.user).first()
-    role = request.user.role  
-    
-    return render(request, "pages/provider/request.html", {
-        "application": application,
-        "role": role,
-    })
+    context = {
+        
+    }
+    return render(request, "pages/provider/request.html", {})
 
 
 
