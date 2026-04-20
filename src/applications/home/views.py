@@ -84,9 +84,12 @@ from .models import ProviderApplicationToBeProvider
 def settings_view(request):
     # check if user already has an application
     application = ProviderApplicationToBeProvider.objects.filter(user=request.user).first()
-
+    
+    role = request.user.role  
+    
     return render(request, "pages/auth/settings.html", {
-        "application": application
+        "application": application,
+        "role": role,
     })
 
 
