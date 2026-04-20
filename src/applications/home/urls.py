@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home , dashboard, provider, signin_view, signout_view, signup_view, settings_view, request_provider_view, distribuitor_view, apply_to_be_provider_view
+from .views import home , dashboard, provider, signin_view, signout_view, signup_view, settings_view, request_provider_view, provider_view, apply_to_be_provider_view
 
 urlpatterns = [
     path("", home, name="home"),
@@ -17,5 +17,5 @@ urlpatterns = [
 
     path("request-provider/", request_provider_view, name="request_provider"),
 
-    path("distribuitor/", distribuitor_view, name="distribuitor")
+    path("provider/", provider_view, name="provider")
 ]

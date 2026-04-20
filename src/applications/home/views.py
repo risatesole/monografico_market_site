@@ -25,8 +25,8 @@ def apply_to_be_provider_view(request):
 def settings_view(request): 
     return settingsPageInterface(request)
 
-def distribuitor_view(request):
-    return render(request,"pages/distribuitor/distribuitor_landing.html")
+def provider_view(request):
+    return render(request,"pages/provider/distribuitor_landing.html")
 
 
 @login_required
