@@ -41,9 +41,6 @@ def provider_request_view(request):
 
     return provider_request_interface(request)
 
-
-
-
 def internal_view(request):
     """
     This is the company employees facing part of the application
@@ -51,4 +48,4 @@ def internal_view(request):
     if the user is a customer or a provider, it should not load, eg.
     redirect to home page
     """
-    return HttpResponse("If you see this, you are in the internal site, right now its under development") 
+    return render(request,"pages/internal/internal.html")
