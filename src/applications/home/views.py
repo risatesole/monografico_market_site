@@ -9,7 +9,7 @@ from .interfaces.signoutInterface import signoutInterface
 from .interfaces.ProviderInterface import providerInterface
 
 context = {
-    "name": "supermercado",
+    "name": "Supermercado Blanco",
 }
 
 def home(request): return render(request, "pages/home/index.html", context)
@@ -18,9 +18,6 @@ def provider(request): return render(request, "pages/home/provider.html", contex
 def signup_view(request): return signup_interface(request)
 def signin_view(request): return signinInterface(request)
 def signout_view(request): return signoutInterface(request)
-
-def apply_to_be_provider_view(request):
-    return apply_to_be_provider(request)
 
 def settings_view(request):
     if not request.user.is_authenticated:

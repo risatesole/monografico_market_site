@@ -14,7 +14,6 @@ urlpatterns = [
 
     # user settings
     path('settings/', settings_view, name='settings_page'),
-    path('settings/apply/', apply_to_be_provider_view, name='apply_provider'),
 
     # provider
     path("provider/request/", provider_request_view, name="provider_request"),
