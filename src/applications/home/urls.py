@@ -4,18 +4,11 @@ from .views import home , dashboard, provider, signin_view, signout_view, signup
 urlpatterns = [
     path("", home, name="home"),
     path("dashboard/", dashboard, name="dashboard"),
-    path("provider/", provider, name="provider"),
-
-
     path("signin/", signin_view, name="signin"),
     path("signout/", signout_view, name="signout"),
     path("signup/", signup_view, name="signup"),
-
-    # path("settings/", settings_view, name="settings"),
     path('settings/', settings_view, name='settings_page'),
     path('settings/apply/', apply_to_be_provider_view, name='apply_provider'),
-
     path("request-provider/", request_provider_view, name="request_provider"),
-
     path("provider/", provider_view, name="provider")
 ]
