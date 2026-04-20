@@ -21,7 +21,7 @@ def signout_view(request): return signoutInterface(request)
 def settings_view(request): return settingsPageInterface
 
 def distribuitor_view(request):
-    return render(request,"pages/distribuitor/become.html")
+    return render(request,"pages/distribuitor/distribuitor_landing.html")
 
 
 @login_required
