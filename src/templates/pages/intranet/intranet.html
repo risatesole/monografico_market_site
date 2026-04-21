@@ -6,7 +6,10 @@
     <title>Internal site</title>
   </head>
   <body>
-    <h1>Welcome user to internal site</h1>
+  
+    <p><a href="providerapplications/">provider applications</a></p>
+    <h2>Welcome user to internal site</h2>
+
 
     <h2>User credentials:</h2>
     <p><b>First Name: </b>{{user.first_name}}</p>
@@ -35,35 +38,6 @@
           <td>{{ u.last_name }}</td>
           <td>{{ u.role }}</td>
           <td>{{ u.email }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-
-    <h2>Applications to be provider:</h2>
-
-    <table border="1">
-      <thead>
-        <tr>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>role</th>
-          <th>Email</th>
-          <th>status of application</th>
-          <th>Notes</th>
-          <th>created at</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for p in provider_applications %}
-        <tr>
-          <td>{{ p.user.first_name }}</td>
-          <td>{{ p.user.last_name }}</td>
-          <td>{{ p.user.role }}</td>
-          <td>{{ p.user.email }}</td>
-          <th>{{ p.status}}</th>
-          <th>{{ p.notes}}</th>
-          <th>{{ p.created_at}}</th>
         </tr>
         {% endfor %}
       </tbody>

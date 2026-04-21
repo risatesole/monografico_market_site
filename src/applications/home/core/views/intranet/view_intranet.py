@@ -11,6 +11,16 @@ def intranet_view(request):
     redirect to home page
     """
     if request.user.role == 'internal_user':
+        context = {}
+        return render(request, "pages/intranet/intranet.html", context)
+    return redirect('home')
+
+def intranet_provider_applicationview(request):
+    """
+    This view manages the applications to be a provider sent by the users
+    it should show the list of applications
+    """
+    if request.user.role == 'internal_user':
 
         list_users = User.objects.all()
         provider_applications = ProviderApplicationToBeProvider.objects.all()
@@ -18,6 +28,4 @@ def intranet_view(request):
             "list_users": list_users,
             "provider_applications": provider_applications
         }
-        return render(request, "pages/intranet/intranet.html", context)
-    
-    return redirect('home')
+        return render(request, "pages/intranet/providerApplications/providerApplications.html", context)

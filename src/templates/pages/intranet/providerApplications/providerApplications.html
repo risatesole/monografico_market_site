@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Internal site</title>
+  </head>
+  <body>
+    <h1>Provider applications</h1>
+    
+    <h2>Applications to be provider:</h2>
+
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>role</th>
+          <th>Email</th>
+          <th>status of application</th>
+          <th>Notes</th>
+          <th>created at</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in provider_applications %}
+        <tr>
+          <th>{{p.id}}</th>
+          <td>{{ p.user.first_name }}</td>
+          <td>{{ p.user.last_name }}</td>
+          <td>{{ p.user.role }}</td>
+          <td>{{ p.user.email }}</td>
+          <th>{{ p.status}}</th>
+          <th>{{ p.notes}}</th>
+          <th>{{ p.created_at}}</th>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
