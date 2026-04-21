@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
-
 # ----------------------
 # CUSTOM USER MANAGER
 # ----------------------
@@ -132,7 +131,8 @@ class ProductLot(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         related_name="approved_lots",
-        db_column="approved_by"
+        db_column="approved_by",
+        limit_choices_to={"role": "internal_user"}
     )
 
     acquisition_cost_per_unit = models.FloatField()
@@ -167,32 +167,6 @@ class ProductPurchaseRequisition(models.Model):
 
     def __str__(self):
         return f"Requisition {self.id}"
-
-
-# ----------------------
-# META REQUEST BE PROVIDER ACCOUNT
-# ----------------------
-class MetaRequestBeProviderAccount(models.Model):
-
-    requested_at = models.DateTimeField()
-
-    requested_by = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name="provider_requests",
-        db_column="requested_by"
-    )
-
-    approved_by = models.ForeignKey(
-        User,
-        on_delete=models.SET_NULL,
-        null=True,
-        related_name="approved_provider_requests",
-        db_column="approved_by"
-    )
-
-    def __str__(self):
-        return f"Request {self.id}"
 
 
 # ----------------------
