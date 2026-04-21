@@ -7,7 +7,7 @@
   </head>
   <body>
     <h1>Provider applications</h1>
-    
+
     <h2>Applications to be provider:</h2>
 
     <table border="1">
@@ -26,12 +26,12 @@
       <tbody>
         {% for p in provider_applications %}
         <tr>
-          <th>{{p.id}}</th>
-          <td>{{ p.user.first_name }}</td>
-          <td>{{ p.user.last_name }}</td>
-          <td>{{ p.user.role }}</td>
-          <td>{{ p.user.email }}</td>
-          <th>{{ p.status}}</th>
+          <th><a href="{{p.id}}/">{{p.id}}</a></th>
+          <td><a href="{{p.id}}/">{{ p.user.first_name }}</a></td>
+          <td><a href="{{p.id}}/">{{ p.user.last_name }}</a></td>
+          <td><a href="{{p.id}}/">{{ p.user.role }}</a></td>
+          <td><a href="{{p.id}}/">{{ p.user.email }}</a></td>
+          <th><a href="{{p.id}}/">{{ p.status}}</a></th>
           <th>{{ p.notes}}</th>
           <th>{{ p.created_at}}</th>
         </tr>

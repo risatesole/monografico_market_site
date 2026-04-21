@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Read Provider application</title>
+  </head>
+  <body>
+    <p><a href="/internal/">go back to internal</a></p>
+    <h1>
+      Application for {{application.user.first_name}}
+      {{application.user.last_name}}
+    </h1>
+    <p>Application {{ application.id }}</p>
+    <p>application status: {{application.status}}</p>
+    <p>Application external id: {{application.external_id}}</p>
+    <p>Application details: {{application.notes}}</p>
+    
+    <button>Accept</button>
+    <button>Decline</button>
+  </body>
+</html>
