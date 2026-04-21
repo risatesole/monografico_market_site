@@ -12,7 +12,7 @@ def intranet_view(request):
     """
     if request.user.role == 'internal_user':
         context = {}
-        return render(request, "pages/intranet/intranet.html", context)
+        return render(request, "pages/intranet/page.html", context)
     return redirect('home')
 
 def intranet_provider_applicationview(request):
