@@ -11,7 +11,7 @@ from .models import User
 from .models import ProviderApplicationToBeProvider
 
 context = {
-    "name": "Supermercado Blanco",
+    "name": "Blanco",
 }
 
 def home(request): return render(request, "pages/home/index.html", context)
