@@ -36,7 +36,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     ROLE_CHOICES = [
         ("customer", "Customer"),
-        ("internal_user", "Internal User"),
+        ("employee", "Employee"),
         ("provider", "Provider"),
     ]
 
