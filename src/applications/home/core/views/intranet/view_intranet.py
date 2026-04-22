@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
-from ....models import User, ProviderApplicationToBeProvider
+from ....models import User, supplier_request 
+
 from django.shortcuts import render, redirect, get_object_or_404
 
 @login_required
@@ -23,7 +24,7 @@ def intranet_provider_applicationview(request):
     if request.user.role == 'internal_user':
 
         list_users = User.objects.all()
-        provider_applications = ProviderApplicationToBeProvider.objects.all()
+        provider_applications = supplier_request.objects.all()
         context = {
             "list_users": list_users,
             "provider_applications": provider_applications
@@ -32,7 +33,7 @@ def intranet_provider_applicationview(request):
 
 def intranet_provider_applications_details_view(request,id):
     if request.user.role == 'internal_user':
-        application = get_object_or_404(ProviderApplicationToBeProvider, pk=id)
+        application = get_object_or_404(supplier_request, pk=id)
         context = {
             "application": application
         }
