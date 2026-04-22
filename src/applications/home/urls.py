@@ -10,6 +10,8 @@ from .core.views.intranet.view_intranet import intranet_view
 from .core.views.intranet.view_intranet import intranet_provider_applicationview
 from .core.views.intranet.view_intranet import intranet_provider_applications_details_view
 from .core.views.image_upload.view_image_upload import view_image_upload
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path("", home, name="home"),
@@ -35,3 +37,6 @@ urlpatterns = [
     path("imageupload/",view_image_upload, name="upload"),
 
 ]
+
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
