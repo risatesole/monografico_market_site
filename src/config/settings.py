@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     "src.applications.home",
-    "src.applications.duck"
+    "src.applications.duck",
+    # "src.applications.duck.apps.DuckConfig"
 ]
 
 MIDDLEWARE = [

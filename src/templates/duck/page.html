@@ -7,5 +7,23 @@
 </head>
 <body>
     <h1>Hello from duck</h1>
+
+    <h2>Upload Product</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <input type="text" name="name" placeholder="Product name" required>
+        <input type="file" name="image" required>
+        
+        <button type="submit">Upload</button>
+    </form>
+
+    <h2>Products</h2>
+    {% for product in products %}
+        <div>
+            <p>{{ product.name }}</p>
+            <img src="{{ product.image.url }}" width="200">
+        </div>
+    {% endfor %}
 </body>
 </html>
