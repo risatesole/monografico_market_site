@@ -9,6 +9,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from .models import User
 from ...environment import env
+
 context = {
     "name": env.PLATFORM_NAME,
 }
