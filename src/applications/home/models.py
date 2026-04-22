@@ -99,72 +99,7 @@ class CustomerOrderItem(models.Model):
 # ----------------------
 # PRODUCT
 # ----------------------
-class Product(models.Model):
-    name = models.CharField(max_length=255)
-    description = models.TextField()
-
-    def __str__(self):
-        return self.name
-
 
 # ----------------------
 # PRODUCT LOT
 # ----------------------
-class ProductLot(models.Model):
-    product = models.ForeignKey(
-        Product,
-        on_delete=models.CASCADE,
-        db_column="product_id"
-    )
-
-    recived_at = models.IntegerField()  # kept as in UML
-
-    provider = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name="provided_lots",
-        db_column="provider_id"
-    )
-
-    approved_by = models.ForeignKey(
-        User,
-        on_delete=models.SET_NULL,
-        null=True,
-        related_name="approved_lots",
-        db_column="approved_by",
-        limit_choices_to={"role": "internal_user"}
-    )
-
-    acquisition_cost_per_unit = models.FloatField()
-    acquisition_tax = models.FloatField()
-
-    received_at = models.DateTimeField()
-
-    def __str__(self):
-        return f"Lot {self.id}"
-
-
-# ----------------------
-# PRODUCT PURCHASE REQUISITIONS
-# ----------------------
-class ProductPurchaseRequisition(models.Model):
-    STATUS_CHOICES = [
-        ("pending", "Pending"),
-        ("approved", "Approved"),
-        ("rejected", "Rejected"),
-    ]
-
-    provider = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        db_column="provider_id"
-    )
-
-    requested_at = models.DateTimeField()
-
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
-    total_estimated = models.BigIntegerField()
-
-    def __str__(self):
-        return f"Requisition {self.id}"
-
