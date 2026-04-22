@@ -7,3 +7,4 @@ from .core.models.model_product import Product
 from .core.models.model_provider_request import provider_request
 from .core.models.model_selling_record_unit import UnitSellingRecordsUnits
 from .core.models.model_unit import Unit
+from .core.models.model_product_price import ProductPrice as ProductPrice
