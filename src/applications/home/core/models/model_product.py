@@ -2,9 +2,9 @@ from django.db import models
 
 class Product(models.Model):
     CATEGORY_CHOICES = [
-        ("customer", "Customer"),
-        ("employee", "Employee"),
-        ("provider", "Provider"),
+        ("fruit", "Fruit"),
+        ("vegetable", "Vegetable"),
+        ("clothing", "Clothing"),
     ]
     name = models.CharField(max_length=255)
     description = models.TextField()
