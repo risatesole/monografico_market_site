@@ -1,17 +1,17 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from ..models import supplier_request 
+from ..models import provider_request 
 
 def provider_request_interface(request):
     user = request.user
 
-    application = supplier_request.objects.filter(
+    application = provider_request.objects.filter(
         user=user
     ).first()
 
     if request.method == "POST":
         if not application:
-            supplier_request.objects.create(
+            provider_request.objects.create(
                 user=user,
                 status="pending",
                 external_id=f"REQ-{user.id}",

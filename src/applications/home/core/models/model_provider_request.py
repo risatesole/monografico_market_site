@@ -1,7 +1,7 @@
 from django.db import models
 from ...models import User
 
-class supplier_request(models.Model):
+class provider_request(models.Model):
     """
     this model represents when a user a request to the provider with text that the user wants to be a provider
     
