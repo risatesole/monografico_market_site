@@ -20,7 +20,7 @@ class UserService:
             last_name=last_name,
             email=email,
             password=password,
-            role="customer",
+            role="customer", # fix: this has to be called in method
             status="active"
         )
         return user
@@ -45,7 +45,12 @@ class UserService:
     def getUserRole(self,userid):
         raise NotImplementedError("This method is not implemented")
     
-    def isUserEmployee(self,userid):
+    def isEmployee(self,user):
+        if user.role == "employee":
+            return True
+        else:
+            return False
+
         raise NotImplementedError("This method is not implemented")
     
     def isUserCustomer(self,userid):
