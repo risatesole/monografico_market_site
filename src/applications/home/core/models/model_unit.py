@@ -5,6 +5,6 @@ class Unit(models.Model):
     batch_id = models.ForeignKey(
         Batch,
         on_delete=models.CASCADE,
-        db_column="user_id"
+        db_column="id"
     )
     
