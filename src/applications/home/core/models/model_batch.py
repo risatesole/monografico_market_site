@@ -1,9 +1,9 @@
 from django.db import models
-from .model_product import product
+from .model_product import Product
 
-class batch(models.Model):
+class Batch(models.Model):
     product_id = models.ForeignKey(
-        product,
+        Product,
         on_delete=models.CASCADE,
         db_column="user_id"
     )
