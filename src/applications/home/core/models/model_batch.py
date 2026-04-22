@@ -2,10 +2,14 @@ from django.db import models
 from .model_product import Product
 
 class Batch(models.Model):
-    product_id = models.ForeignKey(
+    product = models.ForeignKey(
         Product,
         on_delete=models.CASCADE,
-        db_column="user_id"
+        related_name="batches"
     )
+
     quantity_of_units = models.PositiveIntegerField()
     purchase_price = models.FloatField()
+
+    def __str__(self):
+        return f"Batch of {self.product.name}"
