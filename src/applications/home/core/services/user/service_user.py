@@ -15,7 +15,7 @@ class UserService:
         if User.objects.filter(email=email).exists():
             raise emailExistsError("This email is alrreddy in use")
         
-        user = User.objects.create_user(
+        user = User.objects.create_user( # type: ignore
             first_name=first_name,
             last_name=last_name,
             email=email,
