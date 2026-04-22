@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from ..core.services.user.service_user import UserService, emailExistsError
 
+# todo: fix error of when user signsup with used email it throws in strange ways
 def signup_interface(request):
     if request.user.is_authenticated:
         return redirect("home")
