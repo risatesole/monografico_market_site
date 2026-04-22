@@ -6,9 +6,15 @@ class UserService:
     def activateUser(self):
         raise NotImplementedError("This method is not implemented")
     
-    def createUser(self):
+    def createCustomer(self):
         raise NotImplementedError("This method is not implemented")
     
+    def createEmployee(self):
+        raise NotImplementedError("This method is not implemented")
+    
+    def createProvider(self):
+        raise NotImplementedError("This method is not implemented")
+
     def setUserRoleCustomer(self,userid):
         raise NotImplementedError("This method is not implemented")
 
