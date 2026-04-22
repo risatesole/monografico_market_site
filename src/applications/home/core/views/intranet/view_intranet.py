@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from ....models import User, supplier_request 
-
+from ...services.user_service import is_employee
 from django.shortcuts import render, redirect, get_object_or_404
 
 @login_required
@@ -11,7 +11,7 @@ def intranet_view(request):
     if the user is a customer or a provider, it should not load, eg.
     redirect to home page
     """
-    if request.user.role == 'internal_user':
+    if is_employee(request.user):
         context = {}
         return render(request, "pages/intranet/page.html", context)
     return redirect('home')
@@ -21,8 +21,7 @@ def intranet_provider_applicationview(request):
     This view manages the applications to be a provider sent by the users
     it should show the list of applications
     """
-    if request.user.role == 'internal_user':
-
+    if is_employee(request.user):
         list_users = User.objects.all()
         provider_applications = supplier_request.objects.all()
         context = {
@@ -32,7 +31,7 @@ def intranet_provider_applicationview(request):
         return render(request, "pages/intranet/providerApplications/providerApplications.html", context)
 
 def intranet_provider_applications_details_view(request,id):
-    if request.user.role == 'internal_user':
+    if is_employee(request.user):
         application = get_object_or_404(supplier_request, pk=id)
         context = {
             "application": application
