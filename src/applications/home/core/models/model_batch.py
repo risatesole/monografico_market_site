@@ -8,4 +8,4 @@ class Batch(models.Model):
         db_column="user_id"
     )
     quantity_of_units = models.PositiveIntegerField()
-    purchese_price = models.FloatField()
+    purchase_price = models.FloatField()
