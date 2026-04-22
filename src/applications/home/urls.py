@@ -9,6 +9,8 @@ from .views import provider_request_view
 from .core.views.intranet.view_intranet import intranet_view
 from .core.views.intranet.view_intranet import intranet_provider_applicationview
 from .core.views.intranet.view_intranet import intranet_provider_applications_details_view
+from .core.views.image_upload.view_image_upload import view_image_upload
+
 urlpatterns = [
     path("", home, name="home"),
 
@@ -26,7 +28,10 @@ urlpatterns = [
 
     # internal views
     path('internal/providerapplications/<int:id>/', intranet_provider_applications_details_view, name='provider-detail'),
-    path("internal/providerapplications/",intranet_provider_applicationview,name="intranet_provider_application"),    
+    path("internal/providerapplications/",intranet_provider_applicationview,name="intranet_provider_application"),     # type: ignore
     path("internal/", intranet_view, name="intranet"),
+
+    # upload image
+    path("imageupload/",view_image_upload, name="upload"),
 
 ]

@@ -125,3 +125,5 @@ STATIC_URL = 'static/'
 # custom user table
 AUTH_USER_MODEL = "home.User"
 LOGIN_URL = "/signin"
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
