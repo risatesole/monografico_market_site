@@ -1,6 +1,6 @@
 from django.db import models
-from model_batch import Batch
-from model_unit import Unit
+from .model_batch import Batch
+from .model_unit import Unit
 
 class UnitSellingRecordsUnits(models.Model):
     ENTITY_CHOISES = [
