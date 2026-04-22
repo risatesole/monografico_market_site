@@ -27,7 +27,7 @@ class UserManager(BaseUserManager):
 # ----------------------
 # USER
 # ----------------------
-class User(AbstractBaseUser, PermissionsMixin):
+class auth_user(AbstractBaseUser, PermissionsMixin):
     STATUS_CHOICES = [
         ("active", "Active"),
         ("deactivated", "Deactivated"),
