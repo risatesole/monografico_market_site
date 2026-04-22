@@ -40,3 +40,22 @@ class InventoryService:
             })
 
         return result
+    
+    def list_orders(self):
+        raise NotImplementedError("This method is not implemented")
+
+    def getOrderDetails(self):
+        raise NotImplementedError("This method is not implemented")
+    
+    def sellProduct(self,userid,productid,price):
+        raise NotImplementedError("This method is not implemented")
+
+    def buyBatchFromProvider(self):
+        raise NotImplementedError("This method is not implemented")
+    
+    def getAllProductsInCategory(self):
+        raise NotImplementedError("This method is not implemented")
+
+    def setProductPrice(self):
+        raise NotImplementedError("This method is not implemented")
+
