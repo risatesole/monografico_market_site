@@ -13,21 +13,27 @@ def debug(request):
 
 
 class ProductService:
-    def getAvailableProducts(self) -> list[dict]:
+    def getProducts(self) -> list[dict]:
         return [
             {
                 "id": 1,
                 "name": "leche listamilk",
+                "description": "Buena la leche dominicana lista al instante",
                 "category": "lacteos"
             },
             {
                 "id": 2,
                 "name": "leche rica",
+                "description": "La leche mejor que listamilk",
                 "category": "lacteos"
+            },
+            {
+                "id": 3,
+                "name": "pollo rico",
+                "description": "Pollo matado en granjas de alta calidad",
+                "category": "carnes"
             }
         ]
-
-
 
 
 def provider_request_sell_handler(providerid,productid,quantity,price):
@@ -42,7 +48,7 @@ def provider_request_sell_handler(providerid,productid,quantity,price):
 def duck_view(request):
     service_instance = ProductService()
     provider_service = ProviderService()
-    available_products = service_instance.getAvailableProducts()
+    available_products = service_instance.getProducts()
 
     if request.method == "POST":
         product_id = request.POST.get("product")
