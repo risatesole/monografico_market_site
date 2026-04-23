@@ -1,25 +1,21 @@
 from django.shortcuts import render
-from .logic.handler import get_all_product_sale_requests
+from .logic.handler import get_all_product_sale_requests, setOfferStatus
 from .logic.services.product import ProductService
-ITEMS = []
-
-def debug(request):
-    print("=================================================")
-    print(f"items: {ITEMS}")
-    print(f"Product: {request.POST.get('product')}")
-    print(f"Price: {request.POST.get('price')}")
-    print(f"Quantity: {request.POST.get('quantity')}")
-    print("=================================================")
-
-
 
 def duck_view(request):
+    if request.method == "POST":
+        offer_id = request.POST.get("offer_id")
+        action = request.POST.get("action")
+
+        if action == "ACCEPTED":
+            setOfferStatus(offer_id, "ACCEPTED")
+        elif action == "DECLINED":
+            setOfferStatus(offer_id, "DECLINED")
+
     offers = get_all_product_sale_requests()
-    context = {'providers_offers': offers }
-    return render(request,"duck.html",context)
+    context = {'providers_offers': offers}
 
-
-
+    return render(request, "duck.html", context)
 
 
 
