@@ -1,4 +1,4 @@
-from ...handler import get_product_sale_requests
+from ...usecases import get_product_sale_requests
 from ...usecases import submit_product_sale_request
 from ...services.product import ProductService
 from django.shortcuts import render
