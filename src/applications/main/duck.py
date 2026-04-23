@@ -20,10 +20,8 @@ def debug(request):
 
 # simple in-memory storage (for testing only)
 
-
 def duck_view(request):
     service_instance = ProductService()
-    provider_service = ProviderService()
     available_products = service_instance.getProducts()
 
     if request.method == "POST":
