@@ -1,5 +1,8 @@
 from django.shortcuts import render
 
+# Fake database:
+ITEMS = []
+
 def debug(request):
     print("=================================================")
     print(f"items: {ITEMS}")
@@ -27,19 +30,24 @@ class ProductService:
 
 class ProviderService:
     def setRequestSellProduct(self,providerid,productid,quantity,price):
+        print(f"###########################################")
+        print(f"Executing setRequestSellProduct(): ")
         print(f"providerid: {providerid}")
         print(f"product: {productid}")
         print(f"quantity: {quantity}")
         print(f"price: ", price)
-        pass
+        print(f"###########################################")
 
 
 
+def provider_request_sell_handler(providerid,productid,quantity,price):
+    provider_service = ProviderService()
+    provider_service.setRequestSellProduct(providerid,productid,quantity,price)
 
 
 
 # simple in-memory storage (for testing only)
-ITEMS = []
+
 
 def duck_view(request):
     service_instance = ProductService()
@@ -51,26 +59,19 @@ def duck_view(request):
         price = request.POST.get("price")
         quantity = request.POST.get("quantity")
 
-        # debug(request)
-
         # find product by id
-        selected_product = next(
+        submitted_chosen_product = next(
             (p for p in available_products if str(p["id"]) == product_id),
             None
         )
 
-        if selected_product:
-            provider_service.setRequestSellProduct(1,product_id,quantity,price)
+        if submitted_chosen_product:
+            provider_request_sell_handler(1,product_id,quantity,price)
 
-            ITEMS.append({
-                "product": selected_product["name"],
-                "price": price,
-                "quantity": quantity
-            })
 
     context = {
-        'products': available_products,
-        'items': ITEMS
+        'products': available_products
+        # 'items': ITEMS
     }
 
     return render(request, "duck.html", context)
