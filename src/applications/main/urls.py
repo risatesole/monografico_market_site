@@ -1,5 +1,4 @@
-from .duck import duck_view, duck_employee_view
-
+from .logic.views.web.view_web_provider import provider_view
 
 from django.urls import path
 # from django.shortcuts import render
@@ -9,7 +8,7 @@ from .models import Product
 
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import shared_view, provider_view
+# from .views import  provider_view
 
 def example_view(request):
     if request.method == "POST":
@@ -46,8 +45,5 @@ def example_view(request):
     })
 
 urlpatterns = [
-    # path("", example_view,name="home"),
-    path("", duck_view, name="duck"),
-    path("employee/", duck_employee_view, name="duck_employee_view"),
-    # path("provider/", provider_view, name="provider")
+    path("provider/", provider_view, name="provider"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # add this to the end of ] so it saves to the storage
