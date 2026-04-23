@@ -1,22 +1,20 @@
 <h2>Provider</h2>
+
 <form method="POST">
     {% csrf_token %}
 
     <label for="product">Choose a product to sell:</label>
     <select name="product" id="product">
         {% for p in products %}
-            <option value="{{ p }}">{{ p }}</option>
+            <option value="{{ p.id }}">{{ p.name }}</option>
         {% endfor %}
     </select>
 
-    <!-- price of the product -->
     <label for="price">Price:</label>
     <input type="number" name="price" step="0.01" required>
 
-    <!-- quantity of the product -->
     <label for="quantity">Quantity:</label>
     <input type="number" name="quantity" required>
-
 
     <button type="submit">Send</button>
 </form>
@@ -26,8 +24,8 @@
 <h3>Stored Data:</h3>
 <ul>
     {% for item in items %}
-        <li>{{ item.product }} - ${{ item.price }}</li>
+        <li>{{ item.product }} - ${{ item.price }} (x{{ item.quantity }})</li>
     {% empty %}
-        <li>No ducks in the array yet!</li>
+        <li>No products yet!</li>
     {% endfor %}
 </ul>
