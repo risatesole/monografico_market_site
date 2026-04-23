@@ -1,15 +1,22 @@
+<h2>Provider</h2>
 <form method="POST">
     {% csrf_token %}
-    
-    <label for="product">Choose a product:</label>
+
+    <label for="product">Choose a product to sell:</label>
     <select name="product" id="product">
         {% for p in products %}
             <option value="{{ p }}">{{ p }}</option>
         {% endfor %}
     </select>
 
+    <!-- price of the product -->
     <label for="price">Price:</label>
     <input type="number" name="price" step="0.01" required>
+
+    <!-- quantity of the product -->
+    <label for="quantity">Quantity:</label>
+    <input type="number" name="quantity" required>
+
 
     <button type="submit">Send</button>
 </form>

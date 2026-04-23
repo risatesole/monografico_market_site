@@ -10,8 +10,16 @@ def debug(request):
     print(f"Price: {request.POST.get('price')}")
     print("=================================================")
 
+
+class ProductService:
+    def getAvialableProducts(self) -> list[str]:
+        """Returns a list of products currently in stock."""
+        return ["Rubber Duck", "Iron Duck", "Golden Duck", "Something Else"]
+
+
 def duck_view(request):
-    available_products = ["Rubber Duck", "Iron Duck", "Golden Duck", "something else"]
+    service_instance = ProductService() 
+    available_products = service_instance.getAvialableProducts() # type: ignore
 
     if request.method == "POST":
         product = request.POST.get("product")
@@ -25,8 +33,8 @@ def duck_view(request):
         return redirect('duck')
 
     context = {
-        'products': available_products, # Sent to the template
-        'items': DUCK_STORAGE           # Your "array" of results
+        'products': available_products, 
+        'items': DUCK_STORAGE           
     }
     return render(request, "duck.html", context)
 
