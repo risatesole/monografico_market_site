@@ -1,6 +1,12 @@
 from ....models import Product
 
 class ProductService:
+    """
+    Service layer for handling Product-related operations.
+
+    This class provides methods to retrieve and create Products
+    using the underlying Product model.
+    """
 
     def getProducts(self) -> list[dict]:
         products = Product.objects.all()
