@@ -3,14 +3,6 @@ from ....models import Product, Offer
 
 class ProviderService:
     def setOffer(self, providerid, productid, quantity, price):
-        print(f"###########################################")
-        print(f"Executing setOffer(): ")
-        print(f"providerid: {providerid}")
-        print(f"product: {productid}")
-        print(f"quantity: {quantity}")
-        print(f"price: {price}")
-        print(f"###########################################")
-
         try:
             # 1. Retrieve the product instance
             product_instance = Product.objects.get(id=productid)
