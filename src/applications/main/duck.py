@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .logic.services.provider import ProviderService
 from .models import Product
+from .logic.handler import submit_product_sale_request
 
 # Fake database:
 ITEMS = []
@@ -43,15 +44,6 @@ class ProductService:
             "description": product.description,
             "category": product.category
         }
-
-
-
-
-def submit_product_sale_request(providerid,productid,quantity,price):
-    """Submit a provider's request to sell a product for later approval or rejection."""
-    provider_service = ProviderService()
-    provider_service.setRequestSellProduct(providerid,productid,quantity,price)
-
 
 
 # simple in-memory storage (for testing only)
