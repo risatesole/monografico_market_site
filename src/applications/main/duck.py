@@ -47,7 +47,7 @@ class ProductService:
 
 
 
-def provider_request_sell_handler(providerid,productid,quantity,price):
+def submit_product_sale_request(providerid,productid,quantity,price):
     provider_service = ProviderService()
     provider_service.setRequestSellProduct(providerid,productid,quantity,price)
 
@@ -73,7 +73,7 @@ def duck_view(request):
         )
 
         if submitted_chosen_product:
-            provider_request_sell_handler(1,product_id,quantity,price)
+            submit_product_sale_request(1,product_id,quantity,price)
 
 
     context = {
