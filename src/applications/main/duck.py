@@ -1,6 +1,6 @@
 from django.shortcuts import render
-
-# Fake database:
+from .logic.handler import get_all_product_sale_requests
+from .logic.services.product import ProductService
 ITEMS = []
 
 def debug(request):
@@ -14,7 +14,8 @@ def debug(request):
 
 
 def duck_view(request):
-    context={}
+    offers = get_all_product_sale_requests()
+    context = {'providers_offers': offers }
     return render(request,"duck.html",context)
 
 

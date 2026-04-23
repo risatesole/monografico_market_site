@@ -46,3 +46,10 @@ class ProviderService:
         except Exception as e:
             print(f"Error retrieving offers: {e}")
             return None
+   
+    def getAllOffers(self):
+        try:
+            return Offer.objects.all().order_by("-datetime")
+        except Exception as e:
+            print(f"Error retrieving all offers: {e}")
+            return None
