@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from .logic.services.provider import ProviderService
+from .models import Product
+
 # Fake database:
 ITEMS = []
 
@@ -12,28 +14,37 @@ def debug(request):
     print("=================================================")
 
 
+
+
 class ProductService:
+
     def getProducts(self) -> list[dict]:
+        products = Product.objects.all()
+
         return [
             {
-                "id": 1,
-                "name": "leche listamilk",
-                "description": "Buena la leche dominicana lista al instante",
-                "category": "lacteos"
-            },
-            {
-                "id": 2,
-                "name": "leche rica",
-                "description": "La leche mejor que listamilk",
-                "category": "lacteos"
-            },
-            {
-                "id": 3,
-                "name": "pollo rico",
-                "description": "Pollo matado en granjas de alta calidad",
-                "category": "carnes"
+                "id": product.id,
+                "name": product.name,
+                "description": product.description,
+                "category": product.category
             }
+            for product in products
         ]
+
+    def setProduct(self, name, description, category):
+        product = Product.objects.create(
+            name=name,
+            description=description,
+            category=category
+        )
+        return {
+            "id": product.id,
+            "name": product.name,
+            "description": product.description,
+            "category": product.category
+        }
+
+
 
 
 def provider_request_sell_handler(providerid,productid,quantity,price):
