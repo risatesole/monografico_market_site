@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shared Variable</title>
+</head>
+<body>
+
+<h2>Send something</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="message" placeholder="Type something">
+    <button type="submit">Send</button>
+</form>
+
+<h3>All messages:</h3>
+<ul>
+    {% for m in messages %}
+        <li>{{ m }}</li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>
