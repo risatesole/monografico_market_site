@@ -11,7 +11,7 @@ class Product(models.Model):
 class Offer(models.Model):
     STATUS_CHOICE = [
         ("PENDING","Pending" ),
-        ("ACEPTED","Acepted"),
+        ("ACCEPTED","Acepted"),
         ("DECLINED","Declined")
     ]
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
