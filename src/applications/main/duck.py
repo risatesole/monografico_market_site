@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 def debug(request):
     print("=================================================")
+    print(f"items: {ITEMS}")
     print(f"Product: {request.POST.get('product')}")
     print(f"Price: {request.POST.get('price')}")
     print(f"Quantity: {request.POST.get('quantity')}")
@@ -22,6 +23,15 @@ class ProductService:
                 "category": "lacteos"
             }
         ]
+
+
+class ProviderService:
+    def setRequestSellProduct(self):
+        pass
+
+
+
+
 
 
 # simple in-memory storage (for testing only)
