@@ -9,9 +9,22 @@ shared_messages = []
 
 def debug(request):
     print("=================================================")
-    print("Message:")
-    print(request.POST.get("message"), flush=True)
+    print("first_number:")
+    print(request.POST.get("first_number"), flush=True)
     print("=================================================")
+
+
+def duck(request):
+    pass
+
+def provider_view(request):
+    if request.method == "POST":
+        debug(request)
+        duck(request)
+    return render(request, "provider.html", {})
+
+
+
 
 
 
