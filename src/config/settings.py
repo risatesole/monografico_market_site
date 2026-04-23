@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     "src.applications.home",
-    "src.applications.duck",
+    "src.applications.main",
     # "src.applications.duck.apps.DuckConfig"
 ]
 
