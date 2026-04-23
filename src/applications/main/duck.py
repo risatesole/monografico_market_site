@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .logic.handler import get_all_product_sale_requests, setOfferStatus
+from .logic.handler import setOfferStatus
+from .logic.usecases import get_all_product_sale_requests
 from .logic.services.product import ProductService
 
 def duck_view(request):
