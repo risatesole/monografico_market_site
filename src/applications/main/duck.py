@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from .logic.services.provider import ProviderService
 # Fake database:
 ITEMS = []
 
@@ -27,16 +27,6 @@ class ProductService:
             }
         ]
 
-
-class ProviderService:
-    def setRequestSellProduct(self,providerid,productid,quantity,price):
-        print(f"###########################################")
-        print(f"Executing setRequestSellProduct(): ")
-        print(f"providerid: {providerid}")
-        print(f"product: {productid}")
-        print(f"quantity: {quantity}")
-        print(f"price: ", price)
-        print(f"###########################################")
 
 
 
