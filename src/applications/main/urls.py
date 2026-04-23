@@ -1,4 +1,4 @@
-from .duck import duck_view
+from .duck import duck_view, duck_employee_view
 
 
 from django.urls import path
@@ -48,5 +48,6 @@ def example_view(request):
 urlpatterns = [
     # path("", example_view,name="home"),
     path("", duck_view, name="duck"),
-    path("provider/", provider_view, name="provider")
+    path("employee/", duck_employee_view, name="duck_employee_view"),
+    # path("provider/", provider_view, name="provider")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # add this to the end of ] so it saves to the storage

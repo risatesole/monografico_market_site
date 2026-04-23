@@ -33,3 +33,36 @@ def duck_view(request):
         'items': DUCK_STORAGE
     }
     return render(request, "duck.html", context)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###########################################
+def duck_employee_view(request):
+    context = {
+        'items': DUCK_STORAGE
+    }
+    return render(request, "employee.html", context)
