@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .logic.services.provider import ProviderService
 from .models import Product
 from .logic.handler import submit_product_sale_request
+from .logic.services.product import ProductService
 
 # Fake database:
 ITEMS = []
@@ -15,35 +16,6 @@ def debug(request):
     print("=================================================")
 
 
-
-
-class ProductService:
-
-    def getProducts(self) -> list[dict]:
-        products = Product.objects.all()
-
-        return [
-            {
-                "id": product.id,
-                "name": product.name,
-                "description": product.description,
-                "category": product.category
-            }
-            for product in products
-        ]
-
-    def setProduct(self, name, description, category):
-        product = Product.objects.create(
-            name=name,
-            description=description,
-            category=category
-        )
-        return {
-            "id": product.id,
-            "name": product.name,
-            "description": product.description,
-            "category": product.category
-        }
 
 
 # simple in-memory storage (for testing only)
