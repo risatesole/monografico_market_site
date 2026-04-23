@@ -26,7 +26,11 @@ class ProductService:
 
 
 class ProviderService:
-    def setRequestSellProduct(self):
+    def setRequestSellProduct(self,providerid,productid,quantity,price):
+        print(f"providerid: {providerid}")
+        print(f"product: {productid}")
+        print(f"quantity: {quantity}")
+        print(f"price: ", price)
         pass
 
 
@@ -39,6 +43,7 @@ ITEMS = []
 
 def duck_view(request):
     service_instance = ProductService()
+    provider_service = ProviderService()
     available_products = service_instance.getAvailableProducts()
 
     if request.method == "POST":
@@ -46,7 +51,7 @@ def duck_view(request):
         price = request.POST.get("price")
         quantity = request.POST.get("quantity")
 
-        debug(request)
+        # debug(request)
 
         # find product by id
         selected_product = next(
@@ -55,6 +60,8 @@ def duck_view(request):
         )
 
         if selected_product:
+            provider_service.setRequestSellProduct(1,product_id,quantity,price)
+
             ITEMS.append({
                 "product": selected_product["name"],
                 "price": price,
