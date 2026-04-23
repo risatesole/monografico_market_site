@@ -1,17 +1,26 @@
 <form method="POST">
     {% csrf_token %}
-    <select name="product">
-        <option value="Rubber Duck">Rubber Duck</option>
-        <option value="Iron Duck">Iron Duck</option>
+    
+    <label for="product">Choose a product:</label>
+    <select name="product" id="product">
+        {% for p in products %}
+            <option value="{{ p }}">{{ p }}</option>
+        {% endfor %}
     </select>
 
-    <input type="number" name="price" placeholder="Price">
+    <label for="price">Price:</label>
+    <input type="number" name="price" step="0.01" required>
 
     <button type="submit">Send</button>
 </form>
 
+<hr>
+
+<h3>Stored Data:</h3>
 <ul>
     {% for item in items %}
         <li>{{ item.product }} - ${{ item.price }}</li>
+    {% empty %}
+        <li>No ducks in the array yet!</li>
     {% endfor %}
 </ul>

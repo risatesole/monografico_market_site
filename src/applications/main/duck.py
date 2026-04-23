@@ -11,29 +11,24 @@ def debug(request):
     print("=================================================")
 
 def duck_view(request):
-    if request.method == "POST":
-        # Run your debug print
-        debug(request)
+    available_products = ["Rubber Duck", "Iron Duck", "Golden Duck", "something else"]
 
+    if request.method == "POST":
         product = request.POST.get("product")
         price = request.POST.get("price")
 
-        # Store directly into the global list
         if product and price:
             DUCK_STORAGE.append({
                 'product': product,
                 'price': price
             })
-
-        # Redirect back to the GET view
         return redirect('duck')
 
-    # Render the current state of the global list
     context = {
-        'items': DUCK_STORAGE
+        'products': available_products, # Sent to the template
+        'items': DUCK_STORAGE           # Your "array" of results
     }
     return render(request, "duck.html", context)
-
 
 
 
