@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .logic.handler import setOfferStatus
+from .logic.usecases import setOfferStatus
 from .logic.usecases import get_all_product_sale_requests
 from .logic.services.product import ProductService
 
