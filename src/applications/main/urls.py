@@ -35,7 +35,7 @@ def example_view(request):
 
         if name and image:
             Product.objects.create(name=name, image=image)
-            return redirect("/duck/")
+            return redirect("home")
 
     products = Product.objects.all()
 
@@ -43,11 +43,7 @@ def example_view(request):
         "products": products
     })
 
-
-
-
-
 urlpatterns = [
-    path("", example_view),
+    path("", example_view,name="home"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # add this to the end of ] so it saves to the storage
 
