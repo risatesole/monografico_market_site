@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Provider Page</title>
+</head>
+<body>
+
+    <h1>Provider Page</h1>
+
+    <h2>Create Product</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="create_product">
+
+        <label>Name:</label><br>
+        <input type="text" name="name"><br><br>
+
+        <label>Description:</label><br>
+        <textarea name="description"></textarea><br><br>
+
+        <label>Photo:</label><br>
+        <input type="file" name="photo"><br><br>
+
+        <label>Category:</label><br>
+        <select name="category">
+            {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <button type="submit">Create Product</button>
+    </form>
+
+    <hr>
+
+    <h2>Request New Category</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="request_category">
+
+        <label>Name:</label><br>
+        <input type="text" name="name"><br><br>
+
+        <label>Description:</label><br>
+        <textarea name="description"></textarea><br><br>
+
+        <button type="submit">Request Category</button>
+    </form>
+
+    <hr>
+
+    <h2>Request to Sell Product</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="sell_product">
+
+        <label>Provider Name:</label><br>
+        <input type="text" name="provider_name"><br><br>
+
+        <label>Product:</label><br>
+        <select name="product">
+            {% for product in products %}
+                <option value="{{ product.id }}">{{ product.name }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label>Quantity:</label><br>
+        <input type="number" name="quantity"><br><br>
+
+        <button type="submit">Request to Sell</button>
+    </form>
+
+</body>
+</html>

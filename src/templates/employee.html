@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Page</title>
+</head>
+<body>
+
+    <h1>Employee Page</h1>
+
+    <h2>Pending Category Requests</h2>
+
+    {% if pending_add_requests %}
+        {% for add_request in pending_add_requests %}
+            <p>
+                <strong>Name:</strong> {{ add_request.name }}<br>
+                <strong>Description:</strong> {{ add_request.description }}<br>
+                <strong>Status:</strong> {{ add_request.status }}
+            </p>
+
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="accept_add_request">
+                <input type="hidden" name="request_id" value="{{ add_request.id }}">
+                <button type="submit">Accept</button>
+            </form>
+
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="reject_add_request">
+                <input type="hidden" name="request_id" value="{{ add_request.id }}">
+                <button type="submit">Reject</button>
+            </form>
+
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>No pending category requests.</p>
+    {% endif %}
+
+    <h2>Pending Sell Requests</h2>
+
+    {% if pending_sell_requests %}
+        {% for sell_request in pending_sell_requests %}
+            <p>
+                <strong>Provider Name:</strong> {{ sell_request.provider_name }}<br>
+                <strong>Product:</strong> {{ sell_request.product.name }}<br>
+                <strong>Quantity:</strong> {{ sell_request.quantity }}<br>
+                <strong>Status:</strong> {{ sell_request.status }}
+            </p>
+
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="accept_sell_request">
+                <input type="hidden" name="request_id" value="{{ sell_request.id }}">
+                <button type="submit">Accept</button>
+            </form>
+
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="reject_sell_request">
+                <input type="hidden" name="request_id" value="{{ sell_request.id }}">
+                <button type="submit">Reject</button>
+            </form>
+
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>No pending sell requests.</p>
+    {% endif %}
+
+</body>
+</html>
