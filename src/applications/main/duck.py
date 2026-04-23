@@ -23,7 +23,7 @@ def debug(request):
 def duck_view(request):
     service_instance = ProductService()
     available_products = service_instance.getProducts()
-    available_products = service_instance.getProducts()
+    # available_products = service_instance.getProducts()
 
 
     if request.method == "POST":
