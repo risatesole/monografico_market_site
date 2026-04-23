@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .logic.services.provider import ProviderService
 from .models import Product
-from .logic.handler import submit_product_sale_request
+from .logic.handler import submit_product_sale_request, get_product_sale_requests
 from .logic.services.product import ProductService
 
 # Fake database:
@@ -23,6 +23,8 @@ def debug(request):
 def duck_view(request):
     service_instance = ProductService()
     available_products = service_instance.getProducts()
+    available_products = service_instance.getProducts()
+
 
     if request.method == "POST":
         product_id = request.POST.get("product")
@@ -38,10 +40,10 @@ def duck_view(request):
         if submitted_chosen_product:
             submit_product_sale_request(1,product_id,quantity,price)
 
-
+    offers = get_product_sale_requests(1)
     context = {
-        'products': available_products
-        # 'items': ITEMS
+        'products': available_products,
+        'items': offers  
     }
 
     return render(request, "duck.html", context)

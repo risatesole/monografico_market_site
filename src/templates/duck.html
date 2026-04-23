@@ -24,7 +24,13 @@
 <h3>Stored Data:</h3>
 <ul>
     {% for item in items %}
-        <li>{{ item.product }} - ${{ item.price }} (x{{ item.quantity }})</li>
+        <li>
+            {{ item.product.name }} - 
+            ${{ item.priceperunit }} 
+            (x{{ item.unitquantity }}) 
+            - {{ item.status }}
+            {{item.datetime}}
+        </li>
     {% empty %}
         <li>No products yet!</li>
     {% endfor %}

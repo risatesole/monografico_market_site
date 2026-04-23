@@ -26,3 +26,23 @@ class ProviderService:
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
             return None
+
+    def getOffers(self, providerid=None, status=None):
+        try:
+            offers = Offer.objects.all()
+
+            # Optional filters
+            if providerid is not None:
+                offers = offers.filter(providerid=providerid)
+
+            if status is not None:
+                offers = offers.filter(status=status)
+
+            # Order by newest first (optional but useful)
+            offers = offers.order_by("-datetime")
+
+            return offers
+
+        except Exception as e:
+            print(f"Error retrieving offers: {e}")
+            return None
