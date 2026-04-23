@@ -1,37 +1,11 @@
-<h2>Provider</h2>
-
-<form method="POST">
-    {% csrf_token %}
-
-    <label for="product">Choose a product to sell:</label>
-    <select name="product" id="product">
-        {% for p in products %}
-            <option value="{{ p.id }}">{{ p.name }}</option>
-        {% endfor %}
-    </select>
-
-    <label for="price">Price:</label>
-    <input type="number" name="price" step="0.01" required>
-
-    <label for="quantity">Quantity:</label>
-    <input type="number" name="quantity" required>
-
-    <button type="submit">Send</button>
-</form>
-
-<hr>
-
-<h3>Stored Data:</h3>
-<ul>
-    {% for item in items %}
-        <li>
-            {{ item.product.name }} - 
-            ${{ item.priceperunit }} 
-            (x{{ item.unitquantity }}) 
-            - {{ item.status }}
-            {{item.datetime}}
-        </li>
-    {% empty %}
-        <li>No products yet!</li>
-    {% endfor %}
-</ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee</title>
+</head>
+<body>
+    <h1>Welcome</h1>
+</body>
+</html>

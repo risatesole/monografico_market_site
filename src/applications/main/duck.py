@@ -1,8 +1,4 @@
 from django.shortcuts import render
-from .logic.services.provider import ProviderService
-from .models import Product
-from .logic.handler import submit_product_sale_request, get_product_sale_requests
-from .logic.services.product import ProductService
 
 # Fake database:
 ITEMS = []
@@ -17,26 +13,9 @@ def debug(request):
 
 
 
-
-# simple in-memory storage (for testing only)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def duck_view(request):
+    context={}
+    return render(request,"duck.html",context)
 
 
 
