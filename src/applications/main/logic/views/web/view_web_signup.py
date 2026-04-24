@@ -19,10 +19,13 @@ def signup_view(request):
     """ENTRY POINT FOR SIGNUP"""
     if request.user.is_authenticated:
         return redirect("home")
+
     if request.method == "POST":
         first_name = request.POST.get("first_name")
         last_name = request.POST.get("last_name")
         email = request.POST.get("email")
         password = request.POST.get("password")
-        form_action_signup(request,first_name, last_name, email, password)
-    return form_action_signup(request, first_name, last_name, email, password)
+
+        return form_action_signup(request, first_name, last_name, email, password)
+
+    return render(request, "pages/auth/signup.html")
