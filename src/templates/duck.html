@@ -65,7 +65,7 @@
           <td>
             <form method="POST">
               {% csrf_token %}
-
+              <input type="hidden" name="form_type" value="offer_action" />
               <input type="hidden" name="offer_id" value="{{ offer.id }}" />
 
               <select name="action">
@@ -94,6 +94,7 @@
           <th>Name</th>
           <th>Description</th>
           <th>Category</th>
+          <th>Action</th>
         </tr>
       </thead>
 
@@ -103,10 +104,19 @@
           <td>{{ product.name }}</td>
           <td>{{ product.description }}</td>
           <td>{{ product.category }}</td>
+
+          <td>
+            <form method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="form_type" value="delete_product" />
+              <input type="hidden" name="product_id" value="{{ product.id }}" />
+              <button type="submit">Delete</button>
+            </form>
+          </td>
         </tr>
         {% empty %}
         <tr>
-          <td colspan="3">No products found!</td>
+          <td colspan="4">No products found!</td>
         </tr>
         {% endfor %}
       </tbody>
