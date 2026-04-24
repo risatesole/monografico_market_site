@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .logic.usecases import setOfferStatus
 from .logic.usecases import get_all_product_sale_requests
 from .logic.services.product import ProductService
+from .logic.usecases import get_all_products
 
 def duck_view(request):
     if request.method == "POST":
@@ -14,19 +15,11 @@ def duck_view(request):
             setOfferStatus(offer_id, "DECLINED")
 
     offers = get_all_product_sale_requests()
-    context = {'providers_offers': offers}
+    products = get_all_products()
+
+    context = {
+        'providers_offers': offers,
+        'products': products
+    }
 
     return render(request, "duck.html", context)
-
-
-
-
-
-
-
-###########################################
-def duck_employee_view(request):
-    context = {
-        'items': ITEMS
-    }
-    return render(request, "employee.html", context)

@@ -1,88 +1,115 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Employee</title>
 
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+      }
 
-        th {
-            background-color: #f5f5f5;
-        }
+      th {
+        background-color: #f5f5f5;
+      }
 
-        .actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
+      .actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
 
-        select, button {
-            padding: 5px;
-        }
+      select,
+      button {
+        padding: 5px;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <h1>Welcome</h1>
 
     <h3>Provider Offers</h3>
 
     <table>
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Status</th>
-                <th>Date</th>
-                <th>Action</th>
-            </tr>
-        </thead>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Status</th>
+          <th>Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
 
-        <tbody>
-            {% for offer in providers_offers %}
-                <tr>
-                    <td>{{ offer.product.name }}</td>
-                    <td>${{ offer.priceperunit }}</td>
-                    <td>x{{ offer.unitquantity }}</td>
-                    <td>{{ offer.status }}</td>
-                    <td>{{ offer.datetime }}</td>
+      <tbody>
+        {% for offer in providers_offers %}
+        <tr>
+          <td>{{ offer.product.name }}</td>
+          <td>${{ offer.priceperunit }}</td>
+          <td>x{{ offer.unitquantity }}</td>
+          <td>{{ offer.status }}</td>
+          <td>{{ offer.datetime }}</td>
 
-                    <td>
-                        <form method="POST">
-                            {% csrf_token %}
+          <td>
+            <form method="POST">
+              {% csrf_token %}
 
-                            <input type="hidden" name="offer_id" value="{{ offer.id }}">
+              <input type="hidden" name="offer_id" value="{{ offer.id }}" />
 
-                            <select name="action">
-                                <option value="">Select</option>
-                                <option value="ACCEPTED">Accept</option>
-                                <option value="DECLINED">Decline</option>
-                            </select>
+              <select name="action">
+                <option value="">Select</option>
+                <option value="ACCEPTED">Accept</option>
+                <option value="DECLINED">Decline</option>
+              </select>
 
-                            <button type="submit">Go</button>
-                        </form>
-                    </td>
-                </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="6">No offers yet!</td>
-                </tr>
-            {% endfor %}
-        </tbody>
+              <button type="submit">Go</button>
+            </form>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6">No offers yet!</td>
+        </tr>
+        {% endfor %}
+      </tbody>
     </table>
 
-</body>
+    <h3>All Products</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Category</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for product in products %}
+        <tr>
+          <td>{{ product.name }}</td>
+          <td>{{ product.description }}</td>
+          <td>{{ product.category }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3">No products found!</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
 </html>
