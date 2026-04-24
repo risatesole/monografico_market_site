@@ -2,6 +2,28 @@ from django.db import models
 from .model_product import Product
 
 # todo: connect user model as forign key
+# class Offer(models.Model):
+#     STATUS_CHOICE = [
+#         ("PENDING","Pending" ),
+#         ("ACCEPTED","Acepted"),
+#         ("DECLINED","Declined")
+#     ]
+#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+#     providerid = models.IntegerField()
+#     datetime = models.DateTimeField()
+#     priceperunit = models.FloatField()
+#     unitquantity = models.IntegerField()
+#     status = models.CharField(max_length=10, choices=STATUS_CHOICE, default="PENDING")
+
+
+
+
+
+
+from django.db import models
+from .model_product import Product
+
+# todo: connect user model as forign key
 class Offer(models.Model):
     STATUS_CHOICE = [
         ("PENDING","Pending" ),
@@ -9,9 +31,13 @@ class Offer(models.Model):
         ("DECLINED","Declined")
     ]
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    providerid = models.IntegerField()
+    provider = models.IntegerField()
     datetime = models.DateTimeField()
-    priceperunit = models.FloatField()
-    unitquantity = models.IntegerField()
+
+    # details
+    priceperbatch = models.FloatField()
+    batchquantity = models.IntegerField()
+    unitperbatch = models.IntegerField()
+
     status = models.CharField(max_length=10, choices=STATUS_CHOICE, default="PENDING")
 

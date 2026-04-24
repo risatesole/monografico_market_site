@@ -10,11 +10,15 @@
         {% endfor %}
     </select>
 
-    <label for="price">Price:</label>
-    <input type="number" name="price" step="0.01" required>
+    <label for="priceperbatch">priceperbatch:</label>
+    <input type="number" name="priceperbatch" step="0.01" required>
 
-    <label for="quantity">Quantity:</label>
-    <input type="number" name="quantity" required>
+    <label for="batchquantity">batchquantity:</label>
+    <input type="number" name="batchquantity" required>
+
+    <label for="unitperbatch">unitperbatch:</label>
+    <input type="number" name="unitperbatch" required>
+
 
     <button type="submit">Send</button>
 </form>

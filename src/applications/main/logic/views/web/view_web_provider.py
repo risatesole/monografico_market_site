@@ -11,20 +11,27 @@ def find_product_by_id(product_id, available_products):
     )
 
 def provider_view(request):
-    """Handle provider page: list products, process sale submissions, and show offers."""
     service_instance = ProductService()
     available_products = service_instance.getProducts()
 
     if request.method == "POST":
-        product_id = request.POST.get("product")
-        price = request.POST.get("price")
-        quantity = request.POST.get("quantity")
-        submitted_chosen_product = find_product_by_id(product_id,available_products)
+        product = request.POST.get("product")
+        providerid = 1 # todo: set provider
+        priceperbatch = request.POST.get("priceperbatch")
+        batchquantity = request.POST.get("batchquantity")
+        unitperbatch = request.POST.get("unitperbatch")
+
+
+        submitted_chosen_product = find_product_by_id(product, available_products)
 
         if submitted_chosen_product:
-            submit_product_sale_request(1,product_id,quantity,price)
+            submit_product_sale_request(product, providerid, priceperbatch, batchquantity,unitperbatch)
 
-    offers = get_product_sale_requests(1)
-    context = {'products': available_products,'items': offers }
+    # offers = get_product_sale_requests(1)
+
+    context = {
+        'products': available_products,
+        # 'items': offers
+    }
+
     return render(request, "pages/provider/provider.html", context)
-
