@@ -3,9 +3,10 @@ from ...usecases import submit_product_sale_request
 from ...services.product import ProductService
 from django.shortcuts import render
 
-def find_product_by_id(product_id,available_products):
+def find_product_by_id(product_id, available_products):
     """Find product by id or None"""
-    next((p for p in available_products if str(p["id"]) == product_id),
+    return next(
+        (p for p in available_products if str(p["id"]) == str(product_id)),
         None
     )
 
