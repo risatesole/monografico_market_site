@@ -32,8 +32,14 @@ class UserService:
     def setUserRoleCustomer(self,userid):
         raise NotImplementedError("This method is not implemented")
     
-    def setUserRoleEmployee(self):
-        raise NotImplementedError("This method is not implemented")
+    def setUserRoleEmployee(self, userid):
+        try:
+            user = User.objects.get(id=userid)
+        except User.DoesNotExist:
+            raise ValueError("User not found")
+        user.role = self.ROLE_EMPLOYEE
+        user.save(update_fields=["role"])
+        return user
     
     def setUserRoleProvider(self):
         raise NotImplementedError("This method is not implemented")
