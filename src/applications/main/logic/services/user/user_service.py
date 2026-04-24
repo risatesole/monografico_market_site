@@ -31,7 +31,6 @@ class UserService:
 
     def setUserRoleCustomer(self,userid):
         raise NotImplementedError("This method is not implemented")
-
     
     def setUserRoleEmployee(self):
         raise NotImplementedError("This method is not implemented")
@@ -47,8 +46,6 @@ class UserService:
             return True
         else:
             return False
-
-        raise NotImplementedError("This method is not implemented")
     
     def isUserCustomer(self,userid):
         raise NotImplementedError("This method is not implemented")
