@@ -27,11 +27,11 @@ def provider_view(request):
         if submitted_chosen_product:
             submit_product_sale_request(product, providerid, priceperbatch, batchquantity,unitperbatch)
 
-    # offers = get_product_sale_requests(1)
+    offers = get_product_sale_requests(1)
 
     context = {
         'products': available_products,
-        # 'items': offers
+        'items': offers
     }
 
     return render(request, "pages/provider/provider.html", context)

@@ -46,14 +46,13 @@ class ProviderService:
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
             return None
-
     def getOffers(self, providerid=None, status=None):
         try:
             offers = Offer.objects.all()
 
             # Optional filters
             if providerid is not None:
-                offers = offers.filter(providerid=providerid)
+                offers = offers.filter(provider=providerid)
 
             if status is not None:
                 offers = offers.filter(status=status)
@@ -65,7 +64,7 @@ class ProviderService:
 
         except Exception as e:
             print(f"Error retrieving offers: {e}")
-            return None
+            return Offer.objects.none()
    
     def getAllOffers(self):
         try:

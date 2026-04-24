@@ -30,10 +30,12 @@
     {% for item in items %}
         <li>
             {{ item.product.name }} - 
-            ${{ item.priceperunit }} 
-            (x{{ item.unitquantity }}) 
-            - {{ item.status }}
-            {{item.datetime}}
+            ${{ item.provider }} 
+            (x{{ item.datetime }}) 
+            - {{ item.priceperbatch }}
+            {{item.batchquantity}}
+            {{item.unitperbatch}}
+            {{item.status}}
         </li>
     {% empty %}
         <li>No products yet!</li>
