@@ -45,7 +45,17 @@ def example_view(request):
         "products": products
     })
 
+
+from django.http import HttpResponse
+
+def home_view(request):
+    return HttpResponse("Welcome home - Django is running")
+
+
+from .duck import duck
 urlpatterns = [
+    path("", home_view, name="home"),
     path("employee/",employee_view, name="employee"),
+    path("signup/", duck, name="signup"),
     path("provider/", provider_view, name="provider"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # add this to the end of ] so it saves to the storage

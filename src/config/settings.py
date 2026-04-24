@@ -125,7 +125,8 @@ STATIC_URL = 'static/'
 
 # custom settings:
 # custom user table
-AUTH_USER_MODEL = "home.User"
+AUTH_USER_MODEL = "main.User"
+
 LOGIN_URL = "/signin"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
