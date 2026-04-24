@@ -29,13 +29,6 @@ class UserService:
         )
         return user
 
-
-    def createEmployee(self):
-        raise NotImplementedError("This method is not implemented")
-    
-    def createProvider(self):
-        raise NotImplementedError("This method is not implemented")
-
     def setUserRoleCustomer(self,userid):
         raise NotImplementedError("This method is not implemented")
 
