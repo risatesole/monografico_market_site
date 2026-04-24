@@ -1,0 +1,25 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <title>{{ name }}</title>
+  </head>
+  <body>
+    <h1>{{ name }}</h1>
+
+    {% if user.is_authenticated %}
+      <p>User: {{ user.email }}</p>
+      <p>Role: {{ user.role }}</p>
+      <p><a href="signout/">signout</a></p>
+
+    {% else %}
+      <p>User not signed in</p>
+      <p><a href="signin/">signin</a></p>
+      <p><a href="signup/">signup</a></p>
+      {% endif %}
+
+      
+
+
+  </body>
+</html>

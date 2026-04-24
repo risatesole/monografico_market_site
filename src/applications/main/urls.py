@@ -1,6 +1,6 @@
+# from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.conf.urls.static import static
-from django.http import HttpResponse
 from django.conf import settings
 from django.urls import path
 
@@ -10,7 +10,7 @@ from .logic.views.web.view_web_signup import signup_view
 from .logic.views.web.view_web_signin import signin_view
 
 def home_view(request):
-    return HttpResponse("Welcome home - Django is running")
+    return render(request, "pages/home/index.html")
 
 urlpatterns = [
     path("", home_view, name="home"),
