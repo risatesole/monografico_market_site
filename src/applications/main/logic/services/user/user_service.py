@@ -5,9 +5,9 @@ class emailExistsError(Exception):
 
 
 class UserService:
-    ROLE_CUSTOMER = UserRoles.CUSTOMER
-    ROLE_PROVIDER = UserRoles.PROVIDER
-    ROLE_EMPLOYEE = UserRoles.EMPLOYEE
+    ROLE_CUSTOMER = UserRoles.CUSTOMER.value
+    ROLE_PROVIDER = UserRoles.PROVIDER.value
+    ROLE_EMPLOYEE = UserRoles.EMPLOYEE.value
 
     def deactivateUser(self):
         raise NotImplementedError("This method is not implemented")
