@@ -4,8 +4,6 @@ from django.http import HttpResponse
 from django.conf import settings
 from django.urls import path
 
-from .models import Product
-
 from .logic.views.web.view_web_provider import provider_view
 from .logic.views.web.view_web_employee import employee_view
 from .logic.views.web.view_web_signup import signup_view
