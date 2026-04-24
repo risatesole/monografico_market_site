@@ -1,10 +1,14 @@
-from ....models import User
+from ....models import User, UserRoles
 
 class emailExistsError(Exception):
     pass
 
 
 class UserService:
+    ROLE_CUSTOMER = UserRoles.CUSTOMER
+    ROLE_PROVIDER = UserRoles.PROVIDER
+    ROLE_EMPLOYEE = UserRoles.EMPLOYEE
+
     def deactivateUser(self):
         raise NotImplementedError("This method is not implemented")
     
@@ -20,7 +24,7 @@ class UserService:
             last_name=last_name,
             email=email,
             password=password,
-            role="customer", # fix: this has to be called in method
+            role=self.ROLE_CUSTOMER,
             status="active"
         )
         return user
