@@ -1,30 +1,28 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
-# from .logic.services.user.user_service import UserService, emailExistsError
 from ...services.user import UserService, emailExistsError
 
+def form_action_signup(request,first_name, last_name, email, password ):
+    """SIGNUP USER WITH CUSTOMER ROLE"""
+    service = UserService()
+    try:
+        user = service.createCustomer(first_name, last_name, email, password)
+        login(request, user)
+        return redirect("home")
+    except emailExistsError:
+        print("Email already exists")
+        return render(request, "pages/auth/signup.html", {
+            "error": "Email already exists"
+        })
+
 def signup_view(request):
+    """ENTRY POINT FOR SIGNUP"""
     if request.user.is_authenticated:
         return redirect("home")
-
     if request.method == "POST":
         first_name = request.POST.get("first_name")
         last_name = request.POST.get("last_name")
         email = request.POST.get("email")
         password = request.POST.get("password")
-
-        service = UserService()
-
-        try:
-            user = service.createCustomer(first_name, last_name, email, password)
-            login(request, user)
-            return redirect("home")
-
-        except emailExistsError:
-            print("Email already exists")
-            return render(request, "pages/auth/signup.html", {
-                "error": "Email already exists"
-            })
-
+        form_action_signup(request,first_name, last_name, email, password)
     return render(request, "pages/auth/signup.html")
-
