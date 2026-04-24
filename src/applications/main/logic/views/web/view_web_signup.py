@@ -25,4 +25,4 @@ def signup_view(request):
         email = request.POST.get("email")
         password = request.POST.get("password")
         form_action_signup(request,first_name, last_name, email, password)
-    return render(request, "pages/auth/signup.html")
+    return form_action_signup(request, first_name, last_name, email, password)
