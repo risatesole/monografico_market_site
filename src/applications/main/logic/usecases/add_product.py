@@ -1,20 +1,19 @@
 from ...models import Product
-from django.core.exceptions import ValidationError
 
-def add_product(name, description, category):
+def add_product(name, description, category, image=None):
     """
-    Creates a new product record. 
-    Returns the Product instance if successful, or None if it fails.
+    Creates a new product with optional image.
+    Returns Product or None.
     """
     try:
-        # Create and save the new product instance
-        new_product = Product.objects.create(
+        product = Product.objects.create(
             name=name,
             description=description,
-            category=category
+            category=category,
+            image=image
         )
-        return new_product
+        return product
+
     except Exception as e:
-        # Log the error here if needed (e.g., integrity errors or validation issues)
-        print(f"Error creating product: {e}")
+        print(f"[ERROR] creating product: {e}")
         return None

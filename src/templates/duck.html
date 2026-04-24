@@ -3,37 +3,70 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Employee Management</title>
+    <title>Inventory Dashboard</title>
+
     <style>
-      body { font-family: sans-serif; padding: 20px; }
-      table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-      th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
-      th { background-color: #f5f5f5; }
-      .form-container { background: #f9f9f9; padding: 15px; border: 1px solid #ccc; margin-bottom: 30px; }
-      .form-group { margin-bottom: 10px; }
-      label { display: block; font-weight: bold; }
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background-color: #f5f5f5;
+      }
+
+      .form-container {
+        background: #f9f9f9;
+        padding: 15px;
+        border: 1px solid #ccc;
+        margin-bottom: 30px;
+      }
+
+      .form-group {
+        margin-bottom: 10px;
+      }
+      label {
+        display: block;
+        font-weight: bold;
+      }
+
+      img {
+        border-radius: 6px;
+      }
     </style>
   </head>
 
   <body>
     <h1>Inventory Dashboard</h1>
 
+    <!-- CREATE PRODUCT -->
     <div class="form-container">
       <h3>Create New Product</h3>
-      <form method="POST">
+
+      <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="hidden" name="form_type" value="add_product" />
-        
+
         <div class="form-group">
           <label>Name:</label>
           <input type="text" name="name" required />
         </div>
-        
+
         <div class="form-group">
           <label>Description:</label>
           <textarea name="description"></textarea>
         </div>
-        
+
         <div class="form-group">
           <label>Category:</label>
           <select name="category" required>
@@ -42,13 +75,19 @@
             <option value="VINOS">Vinos</option>
           </select>
         </div>
-        
+
+        <div class="form-group">
+          <label>Image:</label>
+          <input type="file" name="image" />
+        </div>
+
         <button type="submit">Add Product</button>
       </form>
     </div>
 
-    <hr>
+    <hr />
 
+    <!-- OFFERS -->
     <h3>Provider Offers</h3>
     <table>
       <thead>
@@ -60,6 +99,7 @@
           <th>Action</th>
         </tr>
       </thead>
+
       <tbody>
         {% for offer in providers_offers %}
         <tr>
@@ -67,15 +107,18 @@
           <td>${{ offer.priceperunit }}</td>
           <td>x{{ offer.unitquantity }}</td>
           <td><strong>{{ offer.status }}</strong></td>
+
           <td>
-            <form method="POST" style="display:inline;">
+            <form method="POST" style="display: inline">
               {% csrf_token %}
               <input type="hidden" name="form_type" value="offer_action" />
               <input type="hidden" name="offer_id" value="{{ offer.id }}" />
+
               <select name="action">
                 <option value="ACCEPTED">Accept</option>
                 <option value="DECLINED">Decline</option>
               </select>
+
               <button type="submit">Go</button>
             </form>
           </td>
@@ -84,26 +127,37 @@
       </tbody>
     </table>
 
+    <!-- PRODUCTS -->
     <h3>All Products</h3>
     <table>
       <thead>
         <tr>
           <th>Name</th>
           <th>Category</th>
+          <th>Image</th>
           <th>Action</th>
         </tr>
       </thead>
+
       <tbody>
         {% for product in products %}
         <tr>
           <td>{{ product.name }}</td>
           <td>{{ product.category }}</td>
+
           <td>
-            <form method="POST" style="display:inline;">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" width="80" />
+            {% else %} No image {% endif %}
+          </td>
+
+          <td>
+            <form method="POST" style="display: inline">
               {% csrf_token %}
               <input type="hidden" name="form_type" value="delete_product" />
               <input type="hidden" name="product_id" value="{{ product.id }}" />
-              <button type="submit" style="color: red;">Delete</button>
+
+              <button type="submit" style="color: red">Delete</button>
             </form>
           </td>
         </tr>
