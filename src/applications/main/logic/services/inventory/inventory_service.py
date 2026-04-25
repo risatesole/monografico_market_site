@@ -9,3 +9,4 @@ class InventoryService():
             acquisition_price = acquisition_price,
             datetime = datetime
         )
+        return batch

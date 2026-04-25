@@ -1,138 +1,66 @@
-# from django.contrib import admin
-# from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-# from .models import User, Product, Offer
-
-# # =========================
-# # USER ADMIN
-# # =========================
-# @admin.register(User)
-# class UserAdmin(BaseUserAdmin):
-#     model = User
-
-#     list_display = (
-#         "email",
-#         "first_name",
-#         "last_name",
-#         "role",
-#         "status",
-#         "is_staff",
-#         "is_active",
-#     )
-
-#     list_filter = (
-#         "role",
-#         "status",
-#         "is_staff",
-#         "is_active",
-#         "groups",
-#     )
-
-#     search_fields = (
-#         "email",
-#         "first_name",
-#         "last_name",
-#     )
-
-#     ordering = ("email",)
-
-#     fieldsets = (
-#         ("Credentials", {
-#             "fields": ("email", "password")
-#         }),
-#         ("Personal Info", {
-#             "fields": ("first_name", "last_name")
-#         }),
-#         ("Permissions", {
-#             "fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions")
-#         }),
-#         ("Status & Role", {
-#             "fields": ("status", "role")
-#         }),
-#         ("Important Dates", {
-#             "fields": ("last_login",)
-#         }),
-#     )
-
-#     add_fieldsets = (
-#         (None, {
-#             "classes": ("wide",),
-#             "fields": (
-#                 "email",
-#                 "first_name",
-#                 "last_name",
-#                 "password1",
-#                 "password2",
-#                 "role",
-#                 "status",
-#                 "is_staff",
-#                 "is_active",
-#             ),
-#         }),
-#     )
+from django.contrib import admin
+from .models import Batch
+from .models import User
+from .models import Product
+from .models import Offer
 
 
-# # =========================
-# # PRODUCT ADMIN
-# # =========================
-# @admin.register(Product)
-# class ProductAdmin(admin.ModelAdmin):
-#     list_display = (
-#         "name",
-#         "category",
-#         "image",
-#     )
-
-#     list_filter = ("category",)
-
-#     search_fields = ("name", "description")
-
-#     ordering = ("name",)
-
-#     readonly_fields = ("image",)
-
-#     fieldsets = (
-#         ("Product Info", {
-#             "fields": ("name", "description", "category", "image")
-#         }),
-#     )
+# -------------------------
+# Product Admin
+# -------------------------
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ("id", "name", "category")
+    search_fields = ("name", "description")
+    list_filter = ("category",)
 
 
-# # =========================
-# # OFFER ADMIN
-# # =========================
-# @admin.register(Offer)
-# class OfferAdmin(admin.ModelAdmin):
-#     list_display = (
-#         "product",
-#         "providerid",
-#         "datetime",
-#         "priceperunit",
-#         "unitquantity",
-#         "status",
-#     )
+# -------------------------
+# Offer Admin
+# -------------------------
+@admin.register(Offer)
+class OfferAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "product",
+        "provider",
+        "priceperbatch",
+        "batchquantity",
+        "unitperbatch",
+        "status",
+        "datetime",
+    )
+    list_filter = ("status", "datetime")
+    search_fields = ("product__name", "provider__email")
+    autocomplete_fields = ("product", "provider")
 
-#     list_filter = (
-#         "status",
-#         "datetime",
-#         "product",
-#     )
 
-#     search_fields = (
-#         "product__name",
-#         "providerid",
-#     )
+# -------------------------
+# User Admin
+# -------------------------
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ("id", "email", "first_name", "last_name", "role", "status", "is_staff")
+    list_filter = ("role", "status", "is_staff")
+    search_fields = ("email", "first_name", "last_name")
+    ordering = ("email",)
 
-#     ordering = ("-datetime",)
 
-#     fieldsets = (
-#         ("Offer Details", {
-#             "fields": (
-#                 "product",
-#                 "providerid",
-#                 "datetime",
-#                 "priceperunit",
-#                 "unitquantity",
-#                 "status",
-#             )
-#         }),
-#     )
+# -------------------------
+# Batch Admin
+# -------------------------
+@admin.register(Batch)
+class BatchAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "product",
+        "provider",
+        "accepted_by",
+        "unitperbatch",
+        "acquisition_price",
+        "datetime",
+    )
+    list_filter = ("datetime",)
+    search_fields = ("product__name", "provider__email", "accepted_by__email")
+    autocomplete_fields = ("product", "provider", "accepted_by")
+    
