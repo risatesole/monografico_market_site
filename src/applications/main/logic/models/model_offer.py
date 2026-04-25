@@ -2,7 +2,6 @@ from django.db import models
 from ...models import User
 from .model_product import Product
 
-# todo: connect user model as forign key
 class Offer(models.Model):
     STATUS_CHOICE = [
         ("PENDING","Pending" ),
