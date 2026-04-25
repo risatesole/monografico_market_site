@@ -13,6 +13,7 @@ class Batch(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
+        related_name="provided_batches",
         limit_choices_to={"role": UserRoles.CUSTOMER} # TODO: make this provider
     )
 
@@ -21,6 +22,7 @@ class Batch(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
+        related_name="accepted_batches",
         limit_choices_to={"role": UserRoles.CUSTOMER} # TODO: make this employee
     )
     unitperbatch = models.IntegerField()

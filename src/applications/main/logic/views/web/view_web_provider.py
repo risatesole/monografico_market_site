@@ -16,7 +16,7 @@ def provider_view(request):
 
     if request.method == "POST":
         product = request.POST.get("product")
-        providerid = 1 # todo: set provider
+        provider = request.user
         priceperbatch = request.POST.get("priceperbatch")
         batchquantity = request.POST.get("batchquantity")
         unitperbatch = request.POST.get("unitperbatch")
@@ -25,7 +25,7 @@ def provider_view(request):
         submitted_chosen_product = find_product_by_id(product, available_products)
 
         if submitted_chosen_product:
-            submit_product_sale_request(product, providerid, priceperbatch, batchquantity,unitperbatch)
+            submit_product_sale_request(product, provider, priceperbatch, batchquantity,unitperbatch)
 
     offers = get_product_sale_requests(1)
 
@@ -35,3 +35,4 @@ def provider_view(request):
     }
 
     return render(request, "pages/provider/provider.html", context)
+

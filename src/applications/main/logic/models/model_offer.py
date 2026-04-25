@@ -1,4 +1,5 @@
 from django.db import models
+from ...models import User
 from .model_product import Product
 
 # todo: connect user model as forign key
@@ -9,7 +10,7 @@ class Offer(models.Model):
         ("DECLINED","Declined")
     ]
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    provider = models.IntegerField()
+    provider = models.ForeignKey(User, on_delete=models.CASCADE)
     datetime = models.DateTimeField()
 
     # details

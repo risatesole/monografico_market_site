@@ -2,11 +2,10 @@ from datetime import datetime
 from ....models import Product, Offer
 
 class ProviderService:
-    def setOffer(self, product, providerid, priceperbatch, batchquantity,unitperbatch):
+    def setOffer(self, product, provider, priceperbatch, batchquantity,unitperbatch):
         try:
             # 1. Retrieve the product instance
             product_instance = Product.objects.get(id=product)
-
 
             # print(f"Debug: ")
             # print(f"product = {product}")
@@ -19,7 +18,7 @@ class ProviderService:
 
             offer = Offer.objects.create(
                 product = product_instance,
-                provider = providerid,
+                provider = provider,
                 datetime = datetime.now(),
                 priceperbatch = priceperbatch,
                 batchquantity = batchquantity,
