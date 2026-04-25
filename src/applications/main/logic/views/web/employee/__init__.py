@@ -1,0 +1,1 @@
+from .view_web_employee import employee_inventory_view as employee_inventory_view 
