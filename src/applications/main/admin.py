@@ -3,6 +3,7 @@ from .models import Batch
 from .models import User
 from .models import Product
 from .models import Offer
+from .models import Price
 
 
 # -------------------------
@@ -64,3 +65,21 @@ class BatchAdmin(admin.ModelAdmin):
     search_fields = ("product__name", "provider__email", "accepted_by__email")
     autocomplete_fields = ("product", "provider", "accepted_by")
     
+
+
+
+    
+@admin.register(Price)
+class PriceAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "product",
+        "value",
+        "created_at",
+    )
+
+    list_filter = ("created_at",)
+
+    search_fields = ("product__name",)
+
+    autocomplete_fields = ("product",)

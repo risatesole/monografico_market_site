@@ -95,6 +95,8 @@
           <th>Name</th>
           <th>Category</th>
           <th>Image</th>
+          <th>Price</th>
+          <th>Set Price</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -111,13 +113,28 @@
             {% else %} No image {% endif %}
           </td>
 
+          <!-- PRICE FROM SERVICE -->
+          <td>{{ product.current_price|default:"Not set" }}</td>
+
+          <!-- SET PRICE -->
+          <td>
+            <form method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="form_type" value="set_price" />
+              <input type="hidden" name="product_id" value="{{ product.id }}" />
+
+              <input type="number" step="0.01" name="price" required />
+              <button type="submit">Set</button>
+            </form>
+          </td>
+
+          <!-- DELETE -->
           <td>
             <form method="POST" style="display: inline">
               {% csrf_token %}
               <input type="hidden" name="form_type" value="delete_product" />
               <input type="hidden" name="product_id" value="{{ product.id }}" />
-
-              <button type="submit" style="color: red">Delete</button>
+              <button style="color: red">Delete</button>
             </form>
           </td>
         </tr>
