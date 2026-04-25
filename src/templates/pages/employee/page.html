@@ -87,52 +87,6 @@
 
     <hr />
 
-    <!-- OFFERS -->
-    <h3>Provider Offers</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th>provider</th>
-          <th>datetime</th>
-          <th>priceperbatch</th>
-          <th>batchquantity</th>
-          <th>unitperbatch</th>
-          <th>status</th>
-          <th>action</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {% for offer in providers_offers %}
-        <tr>
-          <td>{{ offer.product.name }}</td>
-          <td>{{ offer.provider }}</td>
-          <td>{{ offer.datetime }}</td>
-          <td>{{ offer.priceperbatch }}</td>
-          <td>{{ offer.batchquantity }}</td>
-          <td>{{ offer.unitperbatch }}</td>
-          <td><strong>{{ offer.status }}</strong></td>
-          
-          <td>
-            <form method="POST" style="display: inline">
-              {% csrf_token %}
-              <input type="hidden" name="form_type" value="offer_action" />
-              <input type="hidden" name="offer_id" value="{{ offer.id }}" />
-
-              <select name="action">
-                <option value="ACCEPTED">Accept</option>
-                <option value="DECLINED">Decline</option>
-              </select>
-
-              <button type="submit">Go</button>
-            </form>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-
     <!-- PRODUCTS -->
     <h3>All Products</h3>
     <table>
@@ -164,6 +118,52 @@
               <input type="hidden" name="product_id" value="{{ product.id }}" />
 
               <button type="submit" style="color: red">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- OFFERS -->
+    <h3>Provider Offers</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>provider</th>
+          <th>datetime</th>
+          <th>priceperbatch</th>
+          <th>batchquantity</th>
+          <th>unitperbatch</th>
+          <th>status</th>
+          <th>action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for offer in providers_offers %}
+        <tr>
+          <td>{{ offer.product.name }}</td>
+          <td>{{ offer.provider }}</td>
+          <td>{{ offer.datetime }}</td>
+          <td>{{ offer.priceperbatch }}</td>
+          <td>{{ offer.batchquantity }}</td>
+          <td>{{ offer.unitperbatch }}</td>
+          <td><strong>{{ offer.status }}</strong></td>
+
+          <td>
+            <form method="POST" style="display: inline">
+              {% csrf_token %}
+              <input type="hidden" name="form_type" value="offer_action" />
+              <input type="hidden" name="offer_id" value="{{ offer.id }}" />
+
+              <select name="action">
+                <option value="ACCEPTED">Accept</option>
+                <option value="DECLINED">Decline</option>
+              </select>
+
+              <button type="submit">Go</button>
             </form>
           </td>
         </tr>
