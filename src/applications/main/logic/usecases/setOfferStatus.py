@@ -22,5 +22,4 @@ def setOfferStatus(offer: Offer, action_user: User, status="PENDING"):
         inventoryService.create_batch(product,provider,accepted_by,unitperbatch,acquisition_price,Datetime)
 
     elif status == "DECLINED":
-        # providerService.setOfferStatusDECLINED(offer)
-        pass
+        providerService.setOfferStatusDECLINED(offer)

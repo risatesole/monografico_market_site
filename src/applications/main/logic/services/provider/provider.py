@@ -60,14 +60,15 @@ class ProviderService:
             print(f"Unexpected error: {e}")
             return None
 
-    def setOfferStatusDECLINED(self, offerid):
+    def setOfferStatusDECLINED(self, offer):
         try:
-            offer = Offer.objects.get(id=offerid)
+            
             offer.status = "DECLINED"
             offer.save()
             return offer
+        
         except Offer.DoesNotExist:
-            print(f"Error: Offer with ID {offerid} not found.")
+            print(f"Error: Offer with ID {offer} not found.")
             return None
         except Exception as e:
             print(f"Unexpected error: {e}")
