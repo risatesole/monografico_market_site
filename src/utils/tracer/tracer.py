@@ -7,17 +7,6 @@ logger = logging.getLogger(__name__)
 
 
 
-def create_batch():
-    pass
-
-
-
-def getOfferDetails(offerid):
-    offer = Offer.objects.select_related("product").get(id=offerid)
-    logger.info(offer.product.name)
-    # print(offer.product.name)
-
-
 def tracer(func):
     def wrapper(offer_id, status="PENDING"):
         print(f"[TRACE] Calling {func.__name__}")
