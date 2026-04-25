@@ -19,7 +19,6 @@ def form_action_set_offer_status(request, form_type):
         offer = Offer.objects.get(id=offer_id)
 
         if offer_id and action:
-            print(f"debug: {offer_id}")
             setOfferStatus(offer, request.user, action)
 
 

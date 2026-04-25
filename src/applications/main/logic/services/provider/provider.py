@@ -48,15 +48,13 @@ class ProviderService:
             print(f"Error retrieving all offers: {e}")
             return None
 
-    def setOfferStatusACCEPTED(self, orderid):
+    def setOfferStatusACCEPTED(self, offer:Offer):
         try:
-            offer = Offer.objects.get(id=orderid)
             offer.status = "ACCEPTED"
             offer.save()
-
             return offer
         except Offer.DoesNotExist:
-            print(f"Error: Offer with ID {orderid} not found.")
+            print(f"Error: Offer with ID {offer} not found.")
             return None
         except Exception as e:
             print(f"Unexpected error: {e}")

@@ -6,8 +6,6 @@ from ...models import Product
 from datetime import datetime
 
 def setOfferStatus(offer: Offer, action_user: User, status="PENDING"):
-    print(f"debug: ")
-    print(f"product = {offer.product.name}")
     providerService = ProviderService()
     inventoryService = InventoryService()
     current_time = datetime.now()
@@ -24,4 +22,5 @@ def setOfferStatus(offer: Offer, action_user: User, status="PENDING"):
         inventoryService.create_batch(product,provider,accepted_by,unitperbatch,acquisition_price,Datetime)
 
     elif status == "DECLINED":
-        providerService.setOfferStatusDECLINED(offer)
+        # providerService.setOfferStatusDECLINED(offer)
+        pass
