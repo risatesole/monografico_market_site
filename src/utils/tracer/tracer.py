@@ -13,14 +13,18 @@ def getOfferDetails(offerid):
 def tracer(func):
     def wrapper(offer_id, status="PENDING"):
         print(f"[TRACE] Calling {func.__name__}")
-
-
-
         # ###########################################################
         offer = Offer.objects.select_related("product").get(id=offer_id)
         product = offer.product
+        provider = offer.provider
+        acepted_by = None
+        unitperbatch = offer.unitperbatch
+        price = offer.priceperbatch
+        datetime = None
+        print(f"{offer.provider}")
 
-        print(f"{product.name}")
+
+
         return func(offer_id,status)
     return wrapper
 
