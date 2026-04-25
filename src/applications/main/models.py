@@ -8,7 +8,14 @@ from django.db import models
 
 class Batch(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    provider = models.IntegerField() # TODO: make this a provider foreign key
+    provider = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        limit_choices_to={"role": UserRoles.CUSTOMER} # TODO: make this provider
+    )
+
     accepted_by = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
