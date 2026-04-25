@@ -1,7 +1,15 @@
 
 import logging
-from ...applications.main.models import Offer 
+from ...applications.main.models import Offer,  Batch
 logger = logging.getLogger(__name__)
+
+
+
+
+
+def create_batch():
+    pass
+
 
 
 def getOfferDetails(offerid):
