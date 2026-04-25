@@ -4,18 +4,7 @@ from ....models import Product, Offer
 class ProviderService:
     def setOffer(self, product, provider, priceperbatch, batchquantity,unitperbatch):
         try:
-            # 1. Retrieve the product instance
             product_instance = Product.objects.get(id=product)
-
-            # print(f"Debug: ")
-            # print(f"product = {product}")
-            # print(f"providerid = {providerid}")
-            # print(f"datetime = {datetime.now()}") # should be set automatically
-            # print(f"priceperbatch = {priceperbatch}")
-            # print(f"batchquantity = {batchquantity}")
-            # print(f"unitperbatch: {unitperbatch}")
-            # print(f"status should be set to pending here") # set status to pending
-
             offer = Offer.objects.create(
                 product = product_instance,
                 provider = provider,
@@ -25,19 +14,6 @@ class ProviderService:
                 unitperbatch = unitperbatch,
                 status = "PENDING"
             )
-
-            # # 2. Create and save the Offer
-            # new_offer = Offer.objects.create(
-            #     product=product_instance,
-            #     providerid=providerid,
-            #     datetime= datetime.now(),
-            #     priceperunit=price,
-            #     unitquantity=quantity,
-            #     status="PENDING"  
-            # )
-            
-            # print(f"Successfully created Offer ID: {new_offer.id}")
-            # return new_offer
 
         except Product.DoesNotExist:
             print(f"Error: Product with ID {product} not found.")
