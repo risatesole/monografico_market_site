@@ -5,7 +5,7 @@ from django.conf import settings
 from django.urls import path
 
 from .logic.views.web.view_web_provider import provider_view
-from .logic.views.web.view_web_employee import employee_view
+from .logic.views.web.employee.view_web_employee import employee_view
 from .logic.views.web.view_web_signin import signin_view
 from .logic.views.web.view_web_signup import signup_view
 from .logic.views.web.view_web_signout import signout_view
