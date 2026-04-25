@@ -17,5 +17,5 @@ class Batch(models.Model):
         limit_choices_to={"role": UserRoles.CUSTOMER} # TODO: make this employee
     )
     unitperbatch = models.IntegerField()
-    price = models.FloatField()
+    acquisition_price = models.FloatField()
     datetime = models.DateTimeField(null=True, blank=True)
