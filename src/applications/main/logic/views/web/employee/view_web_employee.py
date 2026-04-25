@@ -8,7 +8,7 @@ from ....usecases import get_all_product_sale_requests, get_all_products
 from django.shortcuts import render
 from ....services.price.service_price import PriceService
 
-def employee_view(request):
+def employee_inventory_view(request):
     """HANDLE POST ACTIONS"""
     if request.method == "POST":
         form_type = request.POST.get("form_type")
