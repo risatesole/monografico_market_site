@@ -7,6 +7,8 @@ from django.db import models
 from django.utils import timezone
 
 class Batch(models.Model):
+    class Meta:
+        db_table = "batch"
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     provider = models.ForeignKey(
         User,
