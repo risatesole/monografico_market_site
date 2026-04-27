@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
-from ...services.user import UserService, emailExistsError
-from ......utils.tracer.view_tracer import views_tracer
+from ....services.user import UserService, emailExistsError
 
 def form_action_signup(request,first_name, last_name, email, password ):
     """SIGNUP USER WITH CUSTOMER ROLE"""
@@ -16,7 +15,6 @@ def form_action_signup(request,first_name, last_name, email, password ):
             "error": "Email already exists"
         })
 
-@views_tracer
 def signup_view(request):
     """ENTRY POINT FOR SIGNUP"""
     if request.user.is_authenticated:
