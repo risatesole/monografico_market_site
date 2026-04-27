@@ -1,6 +1,5 @@
-from ...usecases import get_all_product_sale_requests, get_all_products
+from .contexts.backoffice_context_handler import backoffice_view_context_handler
 from django.shortcuts import render
-from ...services.price.service_price import PriceService
 from .form_actions.handler import form_actions_handler
 
 def backoffice_view(request):
@@ -11,17 +10,4 @@ def backoffice_view(request):
             """FORM ACTIONS/HANDLERS"""
             form_actions_handler(request, form_type)
 
-    """LOAD DATA"""
-    price_service = PriceService()
-    offers = get_all_product_sale_requests()
-    products = get_all_products()
-    for product in products:
-        # inject price to product data
-        product.current_price = price_service.get_product_price(product) # type: ignore
-
-    context = {
-        "providers_offers": offers,
-        "products": products
-    }
-
-    return render(request, "pages/employee/page.html", context)
+    return render(request, "pages/employee/page.html", backoffice_view_context_handler())
