@@ -1,5 +1,6 @@
 from ....usecases import get_all_product_sale_requests, get_all_products
-from ....services.price.service_price import PriceService
+from ....product.services.price.service_price import PriceService
+
 
 def backoffice_view_context_handler():
     """LOAD DATA"""
