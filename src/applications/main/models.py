@@ -1,7 +1,7 @@
-from .logic.models.model_user import User  as User
-from .logic.models.model_user import UserRoles as UserRoles
-from .logic.models.model_product import Product as Product 
-from .logic.models.model_offer import Offer as Offer
+from .modules.models.model_user import User  as User
+from .modules.models.model_user import UserRoles as UserRoles
+from .modules.models.model_product import Product as Product 
+from .modules.models.model_offer import Offer as Offer
 
 from django.db import models
 from django.utils import timezone
