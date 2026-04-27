@@ -1,1 +1,1 @@
-from .view_web_employee import employee_inventory_view as employee_inventory_view 
+from .view_web_employee import employee_backoffice_view as employee_backoffice_view 

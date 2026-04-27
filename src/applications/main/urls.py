@@ -5,7 +5,7 @@ from django.conf import settings
 from django.urls import path
 
 from .logic.views.web.view_web_provider import provider_view
-from .logic.views.web.employee import employee_inventory_view
+from .logic.views.web.employee import employee_backoffice_view
 from .logic.views.web.view_web_signin import signin_view
 from .logic.views.web.view_web_signup import signup_view
 from .logic.views.web.view_web_signout import signout_view
@@ -15,7 +15,7 @@ def home_view(request):
 
 urlpatterns = [
     path("", home_view, name="home"),
-    path("employee/inventory",employee_inventory_view, name="employee"),
+    path("backoffice/",employee_backoffice_view, name="backoffice"),
     path("signin/",signin_view,name="signin"),
     path("signup/", signup_view, name="signup"),
     path("signout/", signout_view, name="signout"),
