@@ -1,191 +1,150 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Inventory Dashboard</title>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Market Admin</title>
+  <script src="https://cdn.tailwindcss.com">function toggleUserMenu() {
+    const menu = document.getElementById('userMenu');
+    menu.classList.toggle('hidden');
+  }
 
-    <style>
-      body {
-        font-family: sans-serif;
-        padding: 20px;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-      }
-      th,
-      td {
-        border: 1px solid #ddd;
-        padding: 10px;
-        text-align: left;
-      }
-      th {
-        background-color: #f5f5f5;
-      }
+  // close menu when clicking outside
+  document.addEventListener('click', function(e) {
+    const menu = document.getElementById('userMenu');
+    if (!e.target.closest('.relative')) {
+      menu.classList.add('hidden');
+    }
+  });
+</script>
+</head>
+<body class="bg-gray-100 font-sans">
 
-      .form-container {
-        background: #f9f9f9;
-        padding: 15px;
-        border: 1px solid #ccc;
-        margin-bottom: 30px;
-      }
+<div class="flex h-screen">
 
-      .form-group {
-        margin-bottom: 10px;
-      }
-      label {
-        display: block;
-        font-weight: bold;
-      }
+  <!-- Sidebar -->
+  <div class="w-64 bg-gray-900 text-white flex flex-col p-5">
+    <h2 class="text-xl font-bold mb-2">Supermarket Platform</h2>
+    <p class="text-sm text-gray-400 mb-6">Admin Panel</p>
 
-      img {
-        border-radius: 6px;
-      }
-    </style>
-  </head>
+    <nav class="space-y-2">
+      <button onclick="showSection('dashboard')" class="menu w-full text-left p-2 rounded hover:bg-gray-700">Dashboard</button>
+      <button onclick="showSection('customers')" class="menu w-full text-left p-2 rounded hover:bg-gray-700">Customers</button>
+      <button onclick="showSection('employees')" class="menu w-full text-left p-2 rounded hover:bg-gray-700">Employees</button>
+      <button onclick="showSection('products')" class="menu w-full text-left p-2 rounded hover:bg-gray-700">Products</button>
+      <button onclick="showSection('prices')" class="menu w-full text-left p-2 rounded hover:bg-gray-700">Prices</button>
+      <button onclick="showSection('inventory')" class="menu w-full text-left p-2 rounded hover:bg-gray-700">Inventory</button>
+      <button onclick="showSection('settings')" class="menu w-full text-left p-2 rounded hover:bg-gray-700">Settings</button>
+    </nav>
+  </div>
 
-  <body>
-    <h1>Inventory Dashboard</h1>
+  <!-- Main -->
+  <div class="flex-1 flex flex-col">
 
-    <!-- CREATE PRODUCT -->
-    <div class="form-container">
-      <h3>Create New Product</h3>
+    <!-- Topbar -->
+    <div class="bg-white shadow p-4 flex justify-between items-center">
+      <h1 class="text-xl font-semibold">Simple Market</h1>
 
-      <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="hidden" name="form_type" value="add_product" />
-
-        <div class="form-group">
-          <label>Name:</label>
-          <input type="text" name="name" required />
+      <div class="relative">
+        <div onclick="toggleUserMenu()" class="flex items-center gap-2 cursor-pointer">
+          <div class="w-8 h-8 bg-gray-800 text-white flex items-center justify-center rounded">J</div>
+          <span>John</span>
         </div>
 
-        <div class="form-group">
-          <label>Description:</label>
-          <textarea name="description"></textarea>
+        <div id="userMenu" class="absolute right-0 mt-2 w-40 bg-white border rounded shadow hidden">
+          <p class="p-2 hover:bg-gray-100 cursor-pointer">Settings</p>
+          <p class="p-2 hover:bg-gray-100 cursor-pointer">Logout</p>
         </div>
-
-        <div class="form-group">
-          <label>Category:</label>
-          <select name="category" required>
-            <option value="LACTEOS">Lacteos</option>
-            <option value="CARNES">Carnes</option>
-            <option value="VINOS">Vinos</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Image:</label>
-          <input type="file" name="image" />
-        </div>
-
-        <button type="submit">Add Product</button>
-      </form>
+      </div>
     </div>
 
-    <hr />
+    <!-- Content -->
+    <div class="p-6 overflow-y-auto">
 
-    <!-- PRODUCTS -->
-    <h3>All Products</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Category</th>
-          <th>Image</th>
-          <th>Price</th>
-          <th>Set Price</th>
-          <th>Action</th>
-        </tr>
-      </thead>
+      <!-- Dashboard -->
+      <div id="dashboard" class="section">
+        <h2 class="text-2xl font-bold mb-4">Dashboard</h2>
 
-      <tbody>
-        {% for product in products %}
-        <tr>
-          <td>{{ product.name }}</td>
-          <td>{{ product.category }}</td>
+        <div class="grid grid-cols-4 gap-4">
+          <div class="bg-white p-4 rounded shadow">Total Revenue</div>
+          <div class="bg-white p-4 rounded shadow">Customers</div>
+          <div class="bg-white p-4 rounded shadow">Active Products</div>
+          <div class="bg-white p-4 rounded shadow">Low Stock</div>
+        </div>
 
-          <td>
-            {% if product.image %}
-            <img src="{{ product.image.url }}" width="80" />
-            {% else %} No image {% endif %}
-          </td>
+        <h3 class="mt-6 font-semibold">Recent Customers</h3>
+        <table class="w-full mt-2 bg-white rounded shadow">
+          <tr class="bg-gray-200"><th class="p-2">First</th><th>Last</th><th>Email</th><th>Status</th></tr>
+          <tr><td class="p-2">John</td><td>Doe</td><td>john@email.com</td><td>Active</td></tr>
+        </table>
+      </div>
 
-          <!-- PRICE FROM SERVICE -->
-          <td>{{ product.current_price|default:"Not set" }}</td>
+      <!-- Customers -->
+      <div id="customers" class="section hidden">
+        <h2 class="text-2xl font-bold mb-4">Customers</h2>
+        <table class="w-full bg-white rounded shadow">
+          <tr class="bg-gray-200"><th class="p-2">Name</th><th>Email</th><th>Phone</th><th>Status</th><th>Action</th></tr>
+          <tr><td class="p-2">Jane Doe</td><td>jane@email.com</td><td>123</td><td>Active</td><td>Edit / Block</td></tr>
+        </table>
+      </div>
 
-          <!-- SET PRICE -->
-          <td>
-            <form method="POST">
-              {% csrf_token %}
-              <input type="hidden" name="form_type" value="set_price" />
-              <input type="hidden" name="product_id" value="{{ product.id }}" />
+      <!-- Employees -->
+      <div id="employees" class="section hidden">
+        <h2 class="text-2xl font-bold mb-4">Employees</h2>
+        <table class="w-full bg-white rounded shadow">
+          <tr class="bg-gray-200"><th class="p-2">Name</th><th>Email</th><th>Dept</th><th>Role</th><th>Status</th></tr>
+          <tr><td class="p-2">Mark</td><td>mark@email.com</td><td>Sales</td><td>Manager</td><td>Active</td></tr>
+        </table>
+      </div>
 
-              <input type="number" step="0.01" name="price" required />
-              <button type="submit">Set</button>
-            </form>
-          </td>
+      <!-- Products -->
+      <div id="products" class="section hidden">
+        <h2 class="text-2xl font-bold mb-4">Products</h2>
+        <table class="w-full bg-white rounded shadow">
+          <tr class="bg-gray-200"><th class="p-2">Pic</th><th>Product</th><th>ID</th><th>Category</th><th>Price</th></tr>
+          <tr>
+            <td class="p-2"><img src="https://via.placeholder.com/30"></td>
+            <td>Milk</td><td>002</td><td>Dairy</td><td>$2</td>
+          </tr>
+        </table>
+      </div>
 
-          <!-- DELETE -->
-          <td>
-            <form method="POST" style="display: inline">
-              {% csrf_token %}
-              <input type="hidden" name="form_type" value="delete_product" />
-              <input type="hidden" name="product_id" value="{{ product.id }}" />
-              <button style="color: red">Delete</button>
-            </form>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+      <!-- Prices -->
+      <div id="prices" class="section hidden">
+        <h2 class="text-2xl font-bold mb-4">Prices</h2>
+        <table class="w-full bg-white rounded shadow">
+          <tr class="bg-gray-200"><th class="p-2">Product</th><th>Price</th><th>Action</th></tr>
+          <tr><td class="p-2">Milk</td><td>$2</td><td>Update</td></tr>
+        </table>
+      </div>
 
-    <!-- OFFERS -->
-    <h3>Provider Offers</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th>provider</th>
-          <th>datetime</th>
-          <th>priceperbatch</th>
-          <th>batchquantity</th>
-          <th>unitperbatch</th>
-          <th>status</th>
-          <th>action</th>
-        </tr>
-      </thead>
+      <!-- Inventory -->
+      <div id="inventory" class="section hidden">
+        <h2 class="text-2xl font-bold mb-4">Inventory</h2>
+        <table class="w-full bg-white rounded shadow">
+          <tr class="bg-gray-200"><th class="p-2">Product</th><th>Stock</th><th>Status</th></tr>
+          <tr><td class="p-2">Milk</td><td>50</td><td>Normal</td></tr>
+        </table>
+      </div>
 
-      <tbody>
-        {% for offer in providers_offers %}
-        <tr>
-          <td>{{ offer.product.name }}</td>
-          <td>{{ offer.provider }}</td>
-          <td>{{ offer.datetime }}</td>
-          <td>{{ offer.priceperbatch }}</td>
-          <td>{{ offer.batchquantity }}</td>
-          <td>{{ offer.unitperbatch }}</td>
-          <td><strong>{{ offer.status }}</strong></td>
+      <!-- Settings -->
+      <div id="settings" class="section hidden">
+        <h2 class="text-2xl font-bold mb-4">Settings</h2>
+        <p>Empty settings menu</p>
+      </div>
 
-          <td>
-            <form method="POST" style="display: inline">
-              {% csrf_token %}
-              <input type="hidden" name="form_type" value="offer_action" />
-              <input type="hidden" name="offer_id" value="{{ offer.id }}" />
+    </div>
+  </div>
+</div>
 
-              <select name="action">
-                <option value="ACCEPTED">Accept</option>
-                <option value="DECLINED">Decline</option>
-              </select>
+<script>
+  function showSection(sectionId) {
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(sec => sec.classList.add('hidden'));
 
-              <button type="submit">Go</button>
-            </form>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </body>
+    document.getElementById(sectionId).classList.remove('hidden');
+  }
+</script>
+
+</body>
 </html>
