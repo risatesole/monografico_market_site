@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
-from ....models import User
+from ....models.model_user import User
 
 def signin_view(request):
     error = None
