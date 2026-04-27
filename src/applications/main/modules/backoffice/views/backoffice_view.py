@@ -1,6 +1,4 @@
-from ...views.web.employee.form_actions import (
-    employee_action_set_offer_status
-)
+from .form_actions.set_offer_status import employee_action_set_offer_status
 from .form_actions.delete_product import employee_action_delete_product
 from .form_actions.set_product_price import employee_action_set_product_price
 from .form_actions.add_product import employee_action_add_product

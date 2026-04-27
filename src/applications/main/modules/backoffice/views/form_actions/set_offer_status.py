@@ -1,6 +1,5 @@
-
-from .....usecases import setOfferStatus
-from ......models import Offer
+from ....usecases import setOfferStatus
+from .....models import Offer
 
 def employee_action_set_offer_status(request, form_type):
     """EMPLOYEE ADMIN PANEL FORM ACTION TO (accept/decline) PROVIDER OFFER """
