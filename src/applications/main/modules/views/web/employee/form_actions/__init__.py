@@ -1,2 +1,1 @@
 from .set_offer_status import employee_action_set_offer_status as employee_action_set_offer_status
-from .add_product import employee_action_add_product as employee_action_add_product
