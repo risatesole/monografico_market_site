@@ -1,11 +1,7 @@
-from .form_actions.set_offer_status import employee_action_set_offer_status
-from .form_actions.delete_product import employee_action_delete_product
-from .form_actions.set_product_price import employee_action_set_product_price
-from .form_actions.add_product import employee_action_add_product
-
 from ...usecases import get_all_product_sale_requests, get_all_products
 from django.shortcuts import render
 from ...services.price.service_price import PriceService
+from .form_actions.handler import form_actions_handler
 
 def backoffice_view(request):
     """HANDLE POST ACTIONS"""
@@ -13,10 +9,7 @@ def backoffice_view(request):
         form_type = request.POST.get("form_type")
         if form_type:
             """FORM ACTIONS/HANDLERS"""
-            employee_action_set_offer_status(request, form_type)
-            employee_action_delete_product(request, form_type)
-            employee_action_add_product(request, form_type)
-            employee_action_set_product_price(request,form_type)
+            form_actions_handler(request, form_type)
 
     """LOAD DATA"""
     price_service = PriceService()
