@@ -1,5 +1,6 @@
-from .....services.price.service_price import PriceService
-from .....usecases import get_all_products
+# from .....services.price.service_price import PriceService
+from ....services.price.service_price import PriceService 
+from ....usecases import get_all_products
 
 def employee_action_set_product_price(request,form_type):
     priceservice = PriceService()
