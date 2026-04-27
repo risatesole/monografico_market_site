@@ -104,32 +104,7 @@
         <!-- Content -->
         <div class="p-6 overflow-y-auto">
           <!-- Dashboard -->
-          <div id="dashboard" class="section">
-            <h2 class="text-2xl font-bold mb-4">Dashboard</h2>
-
-            <div class="grid grid-cols-4 gap-4">
-              <div class="bg-white p-4 rounded shadow">Total Revenue</div>
-              <div class="bg-white p-4 rounded shadow">Customers</div>
-              <div class="bg-white p-4 rounded shadow">Active Products</div>
-              <div class="bg-white p-4 rounded shadow">Low Stock</div>
-            </div>
-
-            <h3 class="mt-6 font-semibold">Recent Customers</h3>
-            <table class="w-full mt-2 bg-white rounded shadow">
-              <tr class="bg-gray-200">
-                <th class="p-2">First</th>
-                <th>Last</th>
-                <th>Email</th>
-                <th>Status</th>
-              </tr>
-              <tr>
-                <td class="p-2">John</td>
-                <td>Doe</td>
-                <td>john@email.com</td>
-                <td>Active</td>
-              </tr>
-            </table>
-          </div>
+          {%include "pages/employee/dashboard/sections/dashboard/dashboard_section.html"%}
 
           <!-- Customers -->
           <div id="customers" class="section hidden">
