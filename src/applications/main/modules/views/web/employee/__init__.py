@@ -1,1 +1,0 @@
-from .view_web_employee import employee_backoffice_view as employee_backoffice_view 

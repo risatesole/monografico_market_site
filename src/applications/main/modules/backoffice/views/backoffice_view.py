@@ -1,14 +1,14 @@
-from .form_actions import (
+from ...views.web.employee.form_actions import (
     employee_action_delete_product,
     employee_action_set_offer_status,
     employee_action_add_product,
     employee_action_set_product_price
 )
-from ....usecases import get_all_product_sale_requests, get_all_products
+from ...usecases import get_all_product_sale_requests, get_all_products
 from django.shortcuts import render
-from ....services.price.service_price import PriceService
+from ...services.price.service_price import PriceService
 
-def employee_backoffice_view(request):
+def backoffice_view(request):
     """HANDLE POST ACTIONS"""
     if request.method == "POST":
         form_type = request.POST.get("form_type")
