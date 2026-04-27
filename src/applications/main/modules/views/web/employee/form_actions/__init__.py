@@ -1,4 +1,3 @@
 from .set_offer_status import employee_action_set_offer_status as employee_action_set_offer_status
-from .delete_product import employee_action_delete_product as employee_action_delete_product 
 from .add_product import employee_action_add_product as employee_action_add_product
 from .set_product_price import employee_action_set_product_price as employee_action_set_product_price

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .....usecases import delete_product
+from ....usecases.delete_product import delete_product
 
 def employee_action_delete_product(request, form_type):
     """DELETE PRODUCT"""
