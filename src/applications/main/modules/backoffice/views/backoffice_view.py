@@ -10,4 +10,4 @@ def backoffice_view(request):
             """FORM ACTIONS/HANDLERS"""
             form_actions_handler(request, form_type)
 
-    return render(request, "pages/employee/page.html", backoffice_view_context_handler())
+    return render(request, "backoffice/page.html", backoffice_view_context_handler())
