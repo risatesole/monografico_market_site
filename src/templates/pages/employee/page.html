@@ -151,28 +151,7 @@
               </tr>
             </table>
           </div>
-
-          <!-- Employees -->
-          <div id="employees" class="section hidden">
-            <h2 class="text-2xl font-bold mb-4">Employees</h2>
-            <table class="w-full bg-white rounded shadow">
-              <tr class="bg-gray-200">
-                <th class="p-2">Name</th>
-                <th>Email</th>
-                <th>Dept</th>
-                <th>Role</th>
-                <th>Status</th>
-              </tr>
-              <tr>
-                <td class="p-2">Mark</td>
-                <td>mark@email.com</td>
-                <td>Sales</td>
-                <td>Manager</td>
-                <td>Active</td>
-              </tr>
-            </table>
-          </div>
-
+          {%include "pages/employee/dashboard/sections/employee/employee_section.html"%}
           {%include "pages/employee/dashboard/sections/product/products_section.html"%}
           {%include "pages/employee/dashboard/sections/prices/prices_section.html"%}
           {%include "pages/employee/dashboard/sections/inventory/inventory_section.html"%}
