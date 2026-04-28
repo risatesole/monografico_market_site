@@ -1,6 +1,8 @@
 from .modules.account.user.models.model_user import User  as User
 from .modules.account.user.models.model_user import UserRoles as UserRoles
 from .modules.product.models.model_product import Product as Product 
+from .modules.account.user.models.customer_profile import Customer as Employee
+from .modules.account.user.models.employee_profile import Employee as Employee
 
 from django.db import models
 from django.utils import timezone
