@@ -1,20 +1,134 @@
-<!-- Customers -->
-<div id="customers" class="section hidden">
-  <h2 class="text-2xl font-bold mb-4">Customers</h2>
-  <table class="w-full bg-white rounded shadow">
-    <tr class="bg-gray-200">
-      <th class="p-2">Name</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th>Status</th>
-      <th>Action</th>
-    </tr>
-    <tr>
-      <td class="p-2">Jane Doe</td>
-      <td>jane@email.com</td>
-      <td>123</td>
-      <td>Active</td>
-      <td>Edit / Block</td>
-    </tr>
-  </table>
-</div>
+<!doctype html>
+<html>
+  <head>
+    <title>Customers</title>
+  </head>
+
+  <body>
+    <!-- Customers -->
+    <div id="customers" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4">Customers</h2>
+
+      <table border="1" width="100%">
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Age</th>
+          <th>Country</th>
+          <th>Action</th>
+        </tr>
+
+        {% for customer in customers %}
+        <tr id="customer-{{ customer.id }}">
+          <td id="name-{{ customer.id }}">{{ customer.name }}</td>
+          <td id="email-{{ customer.id }}">{{ customer.email }}</td>
+          <td id="age-{{ customer.id }}">{{ customer.age }}</td>
+          <td id="country-{{ customer.id }}">{{ customer.country }}</td>
+
+          <td>
+            <button
+              onclick="openEditModal('{{ customer.id }}', '{{ customer.name }}', '{{ customer.email }}', '{{ customer.age }}', '{{ customer.country }}')"
+            >
+              Edit
+            </button>
+
+            <button
+              onclick="blockCustomer('{{ customer.id }}', '{{ customer.name }}')"
+            >
+              Block
+            </button>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <!-- EDIT MODAL -->
+    <div
+      id="editModal"
+      style="
+        display: none;
+        position: fixed;
+        top: 20%;
+        left: 30%;
+        background: white;
+        padding: 20px;
+        border: 1px solid black;
+      "
+    >
+      <h3>Edit Customer</h3>
+
+      <input type="hidden" id="custId" />
+
+      <label>Name:</label><br />
+      <input type="text" id="custName" /><br /><br />
+
+      <label>Email:</label><br />
+      <input type="text" id="custEmail" /><br /><br />
+
+      <label>Age:</label><br />
+      <input type="number" id="custAge" /><br /><br />
+
+      <label>Country:</label><br />
+      <input type="text" id="custCountry" /><br /><br />
+
+      <button onclick="saveCustomer()">Save</button>
+      <button onclick="closeModal()">Cancel</button>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+      function openEditModal(id, name, email, age, country) {
+        document.getElementById("editModal").style.display = "block";
+
+        document.getElementById("custId").value = id;
+        document.getElementById("custName").value = name;
+        document.getElementById("custEmail").value = email;
+        document.getElementById("custAge").value = age;
+        document.getElementById("custCountry").value = country;
+      }
+
+      function closeModal() {
+        document.getElementById("editModal").style.display = "none";
+      }
+
+      function saveCustomer() {
+        const id = document.getElementById("custId").value;
+        const name = document.getElementById("custName").value;
+        const email = document.getElementById("custEmail").value;
+        const age = document.getElementById("custAge").value;
+        const country = document.getElementById("custCountry").value;
+
+        // Update table visually
+        document.getElementById("name-" + id).innerText = name;
+        document.getElementById("email-" + id).innerText = email;
+        document.getElementById("age-" + id).innerText = age;
+        document.getElementById("country-" + id).innerText = country;
+
+        // Update button data so next edit uses new values
+        const row = document.getElementById("customer-" + id);
+        const editBtn = row.querySelector("button");
+
+        editBtn.setAttribute(
+          "onclick",
+          `openEditModal('${id}', '${name}', '${email}', '${age}', '${country}')`,
+        );
+
+        console.log("UPDATED CUSTOMER:", { id, name, email, age, country });
+
+        closeModal();
+      }
+
+      function blockCustomer(id, name) {
+        const confirmBlock = confirm(
+          "Are you sure you want to block " + name + "?",
+        );
+
+        if (confirmBlock) {
+          document.getElementById("customer-" + id).remove();
+          console.log("Customer blocked:", { id, name });
+        }
+      }
+    </script>
+  </body>
+</html>

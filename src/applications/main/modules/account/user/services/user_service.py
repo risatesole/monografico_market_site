@@ -2,8 +2,6 @@ from ..models.model_user import User, UserRoles
 
 class emailExistsError(Exception):
     pass
-
-
 class UserService:
     ROLE_CUSTOMER = UserRoles.CUSTOMER.value
     ROLE_PROVIDER = UserRoles.PROVIDER.value
