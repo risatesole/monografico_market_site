@@ -1,5 +1,6 @@
 from ....product.usecases.get_all_products import get_all_products
 from ....product import get_product_price
+from ....account.user.models.customer_profile import Customer as Customer
 
 def employee_list():
     employees = [
@@ -43,243 +44,6 @@ def employee_list():
     ]
     return employees
 
-def customers_list():
-    customers = [
-        {
-            "id": 1,
-            "name": "Alice Johnson",
-            "email": "alice.johnson@example.com",
-            "age": 28,
-            "country": "USA"
-        },
-        {
-            "id": 2,
-            "name": "Carlos Méndez",
-            "email": "carlos.mendez@example.com",
-            "age": 35,
-            "country": "Mexico"
-        },
-        {
-            "id": 3,
-            "name": "Sofia Rossi",
-            "email": "sofia.rossi@example.com",
-            "age": 22,
-            "country": "Italy"
-        },
-        {
-            "id": 4,
-            "name": "Liam O'Connor",
-            "email": "liam.oconnor@example.com",
-            "age": 41,
-            "country": "Ireland"
-        },
-        {
-            "id": 5,
-            "name": "Amina Hassan",
-            "email": "amina.hassan@example.com",
-            "age": 30,
-            "country": "Egypt"
-        },
-        {
-            "id": 2,
-            "name": "Carlos Méndez",
-            "email": "carlos.mendez@example.com",
-            "age": 35,
-            "country": "Mexico"
-        },
-        {
-            "id": 3,
-            "name": "Sofia Rossi",
-            "email": "sofia.rossi@example.com",
-            "age": 22,
-            "country": "Italy"
-        },
-        {
-            "id": 4,
-            "name": "Liam O'Connor",
-            "email": "liam.oconnor@example.com",
-            "age": 41,
-            "country": "Ireland"
-        },
-        {
-            "id": 5,
-            "name": "Amina Hassan",
-            "email": "amina.hassan@example.com",
-            "age": 30,
-            "country": "Egypt"
-        },
-        {
-            "id": 2,
-            "name": "Carlos Méndez",
-            "email": "carlos.mendez@example.com",
-            "age": 35,
-            "country": "Mexico"
-        },
-        {
-            "id": 3,
-            "name": "Sofia Rossi",
-            "email": "sofia.rossi@example.com",
-            "age": 22,
-            "country": "Italy"
-        },
-        {
-            "id": 4,
-            "name": "Liam O'Connor",
-            "email": "liam.oconnor@example.com",
-            "age": 41,
-            "country": "Ireland"
-        },
-        {
-            "id": 5,
-            "name": "Amina Hassan",
-            "email": "amina.hassan@example.com",
-            "age": 30,
-            "country": "Egypt"
-        },
-        {
-            "id": 2,
-            "name": "Carlos Méndez",
-            "email": "carlos.mendez@example.com",
-            "age": 35,
-            "country": "Mexico"
-        },
-        {
-            "id": 3,
-            "name": "Sofia Rossi",
-            "email": "sofia.rossi@example.com",
-            "age": 22,
-            "country": "Italy"
-        },
-        {
-            "id": 4,
-            "name": "Liam O'Connor",
-            "email": "liam.oconnor@example.com",
-            "age": 41,
-            "country": "Ireland"
-        },
-        {
-            "id": 5,
-            "name": "Amina Hassan",
-            "email": "amina.hassan@example.com",
-            "age": 30,
-            "country": "Egypt"
-        },
-        {
-            "id": 2,
-            "name": "Carlos Méndez",
-            "email": "carlos.mendez@example.com",
-            "age": 35,
-            "country": "Mexico"
-        },
-        {
-            "id": 3,
-            "name": "Sofia Rossi",
-            "email": "sofia.rossi@example.com",
-            "age": 22,
-            "country": "Italy"
-        },
-        {
-            "id": 4,
-            "name": "Liam O'Connor",
-            "email": "liam.oconnor@example.com",
-            "age": 41,
-            "country": "Ireland"
-        },
-        {
-            "id": 5,
-            "name": "Amina Hassan",
-            "email": "amina.hassan@example.com",
-            "age": 30,
-            "country": "Egypt"
-        },
-        {
-            "id": 2,
-            "name": "Carlos Méndez",
-            "email": "carlos.mendez@example.com",
-            "age": 35,
-            "country": "Mexico"
-        },
-        {
-            "id": 3,
-            "name": "Sofia Rossi",
-            "email": "sofia.rossi@example.com",
-            "age": 22,
-            "country": "Italy"
-        },
-        {
-            "id": 4,
-            "name": "Liam O'Connor",
-            "email": "liam.oconnor@example.com",
-            "age": 41,
-            "country": "Ireland"
-        },
-        {
-            "id": 5,
-            "name": "Amina Hassan",
-            "email": "amina.hassan@example.com",
-            "age": 30,
-            "country": "Egypt"
-        },
-        {
-            "id": 2,
-            "name": "Carlos Méndez",
-            "email": "carlos.mendez@example.com",
-            "age": 35,
-            "country": "Mexico"
-        },
-        {
-            "id": 3,
-            "name": "Sofia Rossi",
-            "email": "sofia.rossi@example.com",
-            "age": 22,
-            "country": "Italy"
-        },
-        {
-            "id": 4,
-            "name": "Liam O'Connor",
-            "email": "liam.oconnor@example.com",
-            "age": 41,
-            "country": "Ireland"
-        },
-        {
-            "id": 5,
-            "name": "Amina Hassan",
-            "email": "amina.hassan@example.com",
-            "age": 30,
-            "country": "Egypt"
-        },
-        {
-            "id": 2,
-            "name": "Carlos Méndez",
-            "email": "carlos.mendez@example.com",
-            "age": 35,
-            "country": "Mexico"
-        },
-        {
-            "id": 3,
-            "name": "Sofia Rossi",
-            "email": "sofia.rossi@example.com",
-            "age": 22,
-            "country": "Italy"
-        },
-        {
-            "id": 4,
-            "name": "Liam O'Connor",
-            "email": "liam.oconnor@example.com",
-            "age": 41,
-            "country": "Ireland"
-        },
-        {
-            "id": 5,
-            "name": "Amina Hassan",
-            "email": "amina.hassan@example.com",
-            "age": 30,
-            "country": "Egypt"
-        }
-    ]
-    return customers
-
-
 def product_list():
     products = [
         {"id": 1, "name": "Wireless Mouse", "category": "Electronics", "stock": 120, "status": "Active"},
@@ -315,28 +79,82 @@ def inventory_stock(products):
         inventory.append(item)
 
     return inventory
+
+
+
+
+
+prices_table = {
+    1: 25.99,
+    2: 89.50,
+    3: 9.99,
+    4: 34.75,
+    5: 199.99,
+    6: 59.99,
+    7: 150.00,
+    8: 22.40,
+    9: 120.00,
+    10: 210.00,
+    11: 75.25,
+    12: 14.99,
+    13: 29.99,
+    14: 300.00,
+    15: 18.99,
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##############################################################################################
+##############################################################################################
+##############################################################################################
+##############################################################################################
+##############################################################################################
+##############################################################################################
+##############################################################################################
+##############################################################################################
+##############################################################################################
+##############################################################################################
+##############################################################################################
+
+
 def backoffice_view_context_handler():
     """LOAD DATA"""
+    customers = Customer.objects.select_related("user").all() # type: ignore
 
     products = product_list()
-
-    prices_table = {
-        1: 25.99,
-        2: 89.50,
-        3: 9.99,
-        4: 34.75,
-        5: 199.99,
-        6: 59.99,
-        7: 150.00,
-        8: 22.40,
-        9: 120.00,
-        10: 210.00,
-        11: 75.25,
-        12: 14.99,
-        13: 29.99,
-        14: 300.00,
-        15: 18.99,
-    }
 
     for product in products:
         product["current_price"] = prices_table.get(product["id"], 0)
@@ -344,7 +162,7 @@ def backoffice_view_context_handler():
     context = {
         "products": products,
         "inventory": inventory_stock(products),
-        "customers": customers_list(),
+        "customers": customers,
         "employees": employee_list(),
     }
     return context

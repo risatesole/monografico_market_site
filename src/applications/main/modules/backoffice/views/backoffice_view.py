@@ -35,3 +35,8 @@ def backoffice_create_product_view(request):
         return redirect("backoffice")
 
     return render(request, "backoffice/create/createproduct.html")
+
+
+
+def backoffice_customer_edit_view(request): # handle the customer id fix add customer id to the request and handle it
+    return render(request, "backoffice/edit/customer_edit.html")
