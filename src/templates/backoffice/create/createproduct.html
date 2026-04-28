@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Producto</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -58,6 +59,7 @@
         }
     </style>
 </head>
+
 <body>
 
 <div class="container">
@@ -65,12 +67,16 @@
 
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
+
+        <!-- Nombre -->
         <label>Nombre</label>
         <input type="text" name="name" required>
 
+        <!-- Descripción -->
         <label>Descripción</label>
         <textarea name="description" rows="4" required></textarea>
 
+        <!-- Categoría -->
         <label>Categoría</label>
         <select name="category" required>
             <option value="FRUITS_AND_VEGETABLES">Frutas y vegetales</option>
@@ -98,6 +104,11 @@
             <option value="INDUSTRIAL_AND_SCIENTIFIC">Industrial & Scientific</option>
         </select>
 
+        <!-- Precio -->
+        <label>Precio</label>
+        <input type="number" step="0.01" name="price" required>
+
+        <!-- Imagen -->
         <label>Imagen</label>
         <input type="file" name="image">
 

@@ -10,6 +10,7 @@ def backoffice_view(request):
 
 from django.shortcuts import render, redirect
 from ...product.models.model_product import Product
+from ...product.models.price_model import Price
 
 def backoffice_create_product_view(request):
     if request.method == "POST":
@@ -17,14 +18,23 @@ def backoffice_create_product_view(request):
         description = request.POST.get("description")
         category = request.POST.get("category")
         image = request.FILES.get("image")
+        price_value = request.POST.get("price")
 
-        Product.objects.create(
+        # 1. crear producto
+        product = Product.objects.create(
             name=name,
             description=description,
             category=category,
             image=image
         )
 
-        return redirect("backoffice")  # cambia esto por tu ruta real
+        # 2. crear precio relacionado
+        if price_value:
+            Price.objects.create(
+                product=product,
+                value=price_value
+            )
+
+        return redirect("backoffice")
 
     return render(request, "backoffice/create/createproduct.html")
