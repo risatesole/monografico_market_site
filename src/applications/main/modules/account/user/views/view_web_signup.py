@@ -11,7 +11,7 @@ def form_action_signup(request,first_name, last_name, email, password ):
         return redirect("home")
     except emailExistsError:
         print("Email already exists")
-        return render(request, "pages/auth/signup.html", {
+        return render(request, "user/signup.html", {
             "error": "Email already exists"
         })
 
