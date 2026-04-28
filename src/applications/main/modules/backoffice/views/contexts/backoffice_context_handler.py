@@ -149,10 +149,13 @@ prices_table = {
 ##############################################################################################
 ##############################################################################################
 
+from ....account.user.models.employee_profile import Employee
 
 def backoffice_view_context_handler():
     """LOAD DATA"""
-    customers = Customer.objects.select_related("user").all() # type: ignore
+
+    customers = Customer.objects.select_related("user").all()
+    employees = Employee.objects.select_related("user").all()
 
     products = product_list()
 
@@ -163,6 +166,6 @@ def backoffice_view_context_handler():
         "products": products,
         "inventory": inventory_stock(products),
         "customers": customers,
-        "employees": employee_list(),
+        "employees": employees,
     }
     return context
