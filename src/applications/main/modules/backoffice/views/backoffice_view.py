@@ -56,7 +56,7 @@ def backoffice_customer_edit_view(request, customer_id):
         customer.address = request.POST.get("address")
         customer.save()
 
-        return redirect("customer_edit", customer_id=customer.id)
+        return redirect("customer_edit", customer_id=customer.id) # type: ignore
 
     return render(request, "backoffice/edit/customer_edit.html", {
         "customer": customer
