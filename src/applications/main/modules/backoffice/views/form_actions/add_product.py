@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from ....usecases import add_product
+from ....product import add_product
 
 def employee_action_add_product(request, form_type):
     """ADD PRODUCT WITH IMAGE"""

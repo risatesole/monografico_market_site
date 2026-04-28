@@ -1,5 +1,4 @@
-# todo: relocate this method to product module
-from ...models import Product
+from ..models.model_product import Product
 
 def add_product(name, description, category, image=None):
     """
