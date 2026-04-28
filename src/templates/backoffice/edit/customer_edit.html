@@ -1,12 +1,53 @@
 <!doctype html>
 <html>
   <head>
-    <title>Customer Edit</title>
+    <title>Edit Customer</title>
   </head>
 
   <body>
-    <h1>Customer Edit Page</h1>
+    <h1>Edit Customer</h1>
 
-    <p>YOU ARE IN THE CUSTOMER EDIT PAGE</p>
+    <form method="POST">
+      {% csrf_token %}
+
+      <hr />
+
+      <h3>User Info</h3>
+
+      <p><strong>ID:</strong> {{ customer.id }}</p>
+
+      <label>Email</label><br />
+      <input type="email" name="email" value="{{ customer.user.email }}" /><br /><br />
+
+      <label>First Name</label><br />
+      <input type="text" name="first_name" value="{{ customer.user.first_name }}" /><br /><br />
+
+      <label>Last Name</label><br />
+      <input type="text" name="last_name" value="{{ customer.user.last_name }}" /><br /><br />
+
+      <label>Role</label><br />
+      <input type="text" name="role" value="{{ customer.user.role }}" /><br /><br />
+
+      <label>Status</label><br />
+      <input type="text" name="status" value="{{ customer.user.status }}" /><br /><br />
+
+      <hr />
+
+      <h3>Customer Info</h3>
+
+      <label>Phone</label><br />
+      <input type="text" name="phone" value="{{ customer.phone }}" /><br /><br />
+
+      <label>Address</label><br />
+      <textarea name="address">{{ customer.address }}</textarea><br /><br />
+
+      <hr />
+
+      <button type="submit">Save Changes</button>
+    </form>
+
+    <br />
+
+    <a href="/backoffice/">← Back</a>
   </body>
 </html>

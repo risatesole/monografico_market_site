@@ -1,9 +1,9 @@
 from .contexts.backoffice_context_handler import backoffice_view_context_handler
-from django.shortcuts import render
-
-from django.shortcuts import render, redirect
+from django.shortcuts import render,redirect, get_object_or_404 
 from ...product.models.model_product import Product
 from ...product.models.price_model import Price
+from ...account.user.models.customer_profile import Customer
+
 
 def backoffice_view(request):
     """HANDLE POST ACTIONS"""
@@ -38,5 +38,29 @@ def backoffice_create_product_view(request):
 
 
 
-def backoffice_customer_edit_view(request): # handle the customer id fix add customer id to the request and handle it
-    return render(request, "backoffice/edit/customer_edit.html")
+def backoffice_customer_edit_view(request, customer_id):
+    customer = get_object_or_404(
+        Customer.objects.select_related("user"),
+        id=customer_id
+    )
+
+    if request.method == "POST":
+        # update USER
+        user = customer.user
+        user.email = request.POST.get("email")
+        user.first_name = request.POST.get("first_name")
+        user.last_name = request.POST.get("last_name")
+        user.role = request.POST.get("role")
+        user.status = request.POST.get("status")
+        user.save()
+
+        # update CUSTOMER
+        customer.phone = request.POST.get("phone")
+        customer.address = request.POST.get("address")
+        customer.save()
+
+        return redirect("customer_edit", customer_id=customer.id) # type: ignore
+
+    return render(request, "backoffice/edit/customer_edit.html", {
+        "customer": customer
+    })
