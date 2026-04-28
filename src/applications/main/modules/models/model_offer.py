@@ -1,6 +1,6 @@
 from django.db import models
 from ...models import User
-from .model_product import Product
+from ..product.models.model_product import Product
 
 class Offer(models.Model):
     STATUS_CHOICE = [

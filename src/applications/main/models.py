@@ -1,6 +1,6 @@
 from .modules.account.user.models.model_user import User  as User
 from .modules.account.user.models.model_user import UserRoles as UserRoles
-from .modules.models.model_product import Product as Product 
+from .modules.product.models.model_product import Product as Product 
 from .modules.models.model_offer import Offer as Offer
 
 from django.db import models
