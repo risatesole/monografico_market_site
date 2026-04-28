@@ -1,5 +1,4 @@
-from ....models import Price
-
+from .....models import Price
 class PriceService:
     def get_product_price(self,product):
         last_price = product.prices.first()
