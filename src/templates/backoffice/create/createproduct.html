@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Producto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            width: 400px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background: #28a745;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Crear Producto</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>Nombre</label>
+        <input type="text" name="name" required>
+
+        <label>Descripción</label>
+        <textarea name="description" rows="4" required></textarea>
+
+        <label>Categoría</label>
+        <select name="category" required>
+            <option value="FRUITS_AND_VEGETABLES">Frutas y vegetales</option>
+            <option value="LACTEOUS">Lácteos</option>
+            <option value="GROCERY_AND_GOURMET">Grocery & Gourmet Food</option>
+            <option value="ELECTRONIC_AND_TECH">Electronics & Tech</option>
+            <option value="CLOTHING">Clothing</option>
+            <option value="SHOES">Shoes</option>
+            <option value="JEWELRY">Jewelry</option>
+            <option value="HOME_AND_KITCHEN">Home & Kitchen</option>
+            <option value="TOOLS_AND_HOME_IMPROVEMENT">Tools & Home Improvement</option>
+            <option value="FURNITURE">Furniture</option>
+            <option value="BOOKS">Books</option>
+            <option value="VIDEO_GAMES">Video Games</option>
+            <option value="MUSIC">Music</option>
+            <option value="MOVIES_AND_TV">Movies & TV</option>
+            <option value="BEAUTY_AND_PERSONAL_CARE">Beauty & Personal Care</option>
+            <option value="HEALTH_AND_HOUSEHOLD">Health & Household</option>
+            <option value="TOYS_AND_GAMES">Toys & Games</option>
+            <option value="BABY_PRODUCTS">Baby Products</option>
+            <option value="SPORTS_AND_OUTDOORS">Sports & Outdoors</option>
+            <option value="AUTOMOTIVE">Automotive</option>
+            <option value="PET_SUPPLIES">Pet Supplies</option>
+            <option value="OFFICE_PRODUCTS">Office Products</option>
+            <option value="INDUSTRIAL_AND_SCIENTIFIC">Industrial & Scientific</option>
+        </select>
+
+        <label>Imagen</label>
+        <input type="file" name="image">
+
+        <button type="submit">Crear Producto</button>
+    </form>
+</div>
+
+</body>
+</html>
