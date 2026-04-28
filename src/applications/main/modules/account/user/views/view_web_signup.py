@@ -2,13 +2,16 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from ..services.user_service import UserService, emailExistsError
 
-def form_action_signup(request,first_name, last_name, email, password ):
+def form_action_signup(request, first_name, last_name, email, password):
     """SIGNUP USER WITH CUSTOMER ROLE"""
     service = UserService()
     try:
-        user = service.createCustomer(first_name, last_name, email, password)
+        user, customer = service.createCustomer(
+            first_name, last_name, email, password
+        )
         login(request, user)
         return redirect("home")
+
     except emailExistsError:
         print("Email already exists")
         return render(request, "user/signup.html", {

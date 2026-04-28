@@ -1,5 +1,5 @@
 from ..models.model_user import User, UserRoles
-
+from ..models.customer_profile import Customer
 class emailExistsError(Exception):
     pass
 class UserService:
@@ -24,7 +24,11 @@ class UserService:
             role=self.ROLE_CUSTOMER,
             status="active"
         )
-        return user
+        customer = Customer.objects.create(
+            user=user
+        )
+
+        return user, customer
 
     def setUserRoleCustomer(self,userid):
         raise NotImplementedError("This method is not implemented")
