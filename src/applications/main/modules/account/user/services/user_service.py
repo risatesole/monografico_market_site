@@ -4,7 +4,6 @@ class emailExistsError(Exception):
     pass
 class UserService:
     ROLE_CUSTOMER = UserRoles.CUSTOMER.value
-    ROLE_PROVIDER = UserRoles.PROVIDER.value
     ROLE_EMPLOYEE = UserRoles.EMPLOYEE.value
 
     def deactivateUser(self):
@@ -39,9 +38,6 @@ class UserService:
         user.save(update_fields=["role"])
         return user
     
-    def setUserRoleProvider(self):
-        raise NotImplementedError("This method is not implemented")
-    
     def getUserRole(self,userid):
         raise NotImplementedError("This method is not implemented")
     
@@ -54,5 +50,3 @@ class UserService:
     def isUserCustomer(self,userid):
         raise NotImplementedError("This method is not implemented")
     
-    def isUserProvider(self,userid):
-        raise NotImplementedError("This method is not implemented")

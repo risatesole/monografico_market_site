@@ -6,7 +6,6 @@ from enum import Enum
 class UserRoles(Enum):
     """Abstraction to avialable roles"""
     CUSTOMER = "customer"
-    PROVIDER = "provider"
     EMPLOYEE = "employee"
 
 class UserManager(BaseUserManager):
@@ -38,7 +37,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     ROLE_CHOICES = [
         ("customer", "Customer"),
         ("employee", "Employee"),
-        ("provider", "Provider"),
     ]
 
     first_name = models.CharField(max_length=150)
