@@ -1,4 +1,4 @@
-from ....usecases import get_all_products
+from ....product.usecases.get_all_products import get_all_products
 from ....product import get_product_price
 
 def backoffice_view_context_handler():
