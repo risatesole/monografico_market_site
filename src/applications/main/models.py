@@ -2,7 +2,6 @@ from .modules.models.model_user import User  as User
 from .modules.models.model_user import UserRoles as UserRoles
 from .modules.models.model_product import Product as Product 
 from .modules.models.model_offer import Offer as Offer
-from .modules.product.models.price_model import Price as Price # todo: remove from here and use only in usecase call to product module
 
 from django.db import models
 from django.utils import timezone
