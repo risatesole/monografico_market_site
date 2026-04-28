@@ -1,3 +1,4 @@
+# todo: delete method
 from ..services.provider import ProviderService
 from ..services.inventory import InventoryService
 from ...models import Offer

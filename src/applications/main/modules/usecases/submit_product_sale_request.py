@@ -1,3 +1,5 @@
+# todo: delete method
+
 from ..services.provider import ProviderService
 
 def submit_product_sale_request(product, provider, priceperbatch, batchquantity,unitperbatch):

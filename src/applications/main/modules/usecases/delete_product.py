@@ -1,3 +1,5 @@
+# todo: relocate this method to product module
+
 from ...models import Product
 
 def delete_product(product_id):
