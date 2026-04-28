@@ -37,15 +37,13 @@ def backoffice_create_product_view(request):
     return render(request, "backoffice/create/createproduct.html")
 
 
-
 def backoffice_customer_edit_view(request, customer_id):
-    customer = get_object_or_404(
-        Customer.objects.select_related("user"),
-        id=customer_id
-    )
+    customer = Customer.objects.select_related("user").filter(id=customer_id).first()
+
+    if not customer or customer.user.role != "customer":
+        return redirect("backoffice")
 
     if request.method == "POST":
-        # update USER
         user = customer.user
         user.email = request.POST.get("email")
         user.first_name = request.POST.get("first_name")
@@ -54,12 +52,11 @@ def backoffice_customer_edit_view(request, customer_id):
         user.status = request.POST.get("status")
         user.save()
 
-        # update CUSTOMER
         customer.phone = request.POST.get("phone")
         customer.address = request.POST.get("address")
         customer.save()
 
-        return redirect("customer_edit", customer_id=customer.id) # type: ignore
+        return redirect("customer_edit", customer_id=customer.id)
 
     return render(request, "backoffice/edit/customer_edit.html", {
         "customer": customer
