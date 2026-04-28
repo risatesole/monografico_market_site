@@ -9,12 +9,16 @@
       <th>Role</th>
       <th>Status</th>
     </tr>
+
+    {% for employee in employees %}
     <tr>
-      <td class="p-2">Mark</td>
-      <td>mark@email.com</td>
-      <td>Sales</td>
-      <td>Manager</td>
-      <td>Active</td>
+      <td class="p-2">{{ employee.name }}</td>
+      <td>{{ employee.email }}</td>
+      <td>{{ employee.department }}</td>
+      <td>{{ employee.role }}</td>
+      <td>{{ employee.status }}</td>
     </tr>
+    {% endfor %}
+
   </table>
 </div>

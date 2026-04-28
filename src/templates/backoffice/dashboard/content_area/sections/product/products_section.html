@@ -9,87 +9,21 @@
       <th>Category</th>
       <th>Price</th>
     </tr>
+
+    {% for product in products %}
     <tr>
       <td class="p-2">
-        <img src="https://via.placeholder.com/30" />
+        <img
+          src="https://example.com/product.jpg"
+          class="w-8 h-8 object-cover rounded"
+        />
       </td>
-      <td>Milk</td>
-      <td>002</td>
-      <td>Dairy</td>
-      <td>$2</td>
+      <td>{{ product.name }}</td>
+
+      <td>{{ product.id|stringformat:"03d" }}</td>
+      <td>{{ product.category }}</td>
+      <td>${{ product.current_price }}</td>
     </tr>
-    <tr>
-      <td class="p-2">
-        <img src="https://via.placeholder.com/30" />
-      </td>
-      <td>Milk</td>
-      <td>002</td>
-      <td>Dairy</td>
-      <td>$2</td>
-    </tr><tr>
-      <td class="p-2">
-        <img src="https://via.placeholder.com/30" />
-      </td>
-      <td>Milk</td>
-      <td>002</td>
-      <td>Dairy</td>
-      <td>$2</td>
-    </tr><tr>
-      <td class="p-2">
-        <img src="https://via.placeholder.com/30" />
-      </td>
-      <td>Milk</td>
-      <td>002</td>
-      <td>Dairy</td>
-      <td>$2</td>
-    </tr><tr>
-      <td class="p-2">
-        <img src="https://via.placeholder.com/30" />
-      </td>
-      <td>Milk</td>
-      <td>002</td>
-      <td>Dairy</td>
-      <td>$2</td>
-    </tr><tr>
-      <td class="p-2">
-        <img src="https://via.placeholder.com/30" />
-      </td>
-      <td>Milk</td>
-      <td>002</td>
-      <td>Dairy</td>
-      <td>$2</td>
-    </tr><tr>
-      <td class="p-2">
-        <img src="https://via.placeholder.com/30" />
-      </td>
-      <td>Milk</td>
-      <td>002</td>
-      <td>Dairy</td>
-      <td>$2</td>
-    </tr><tr>
-      <td class="p-2">
-        <img src="https://via.placeholder.com/30" />
-      </td>
-      <td>Milk</td>
-      <td>002</td>
-      <td>Dairy</td>
-      <td>$2</td>
-    </tr><tr>
-      <td class="p-2">
-        <img src="https://via.placeholder.com/30" />
-      </td>
-      <td>Milk</td>
-      <td>002</td>
-      <td>Dairy</td>
-      <td>$2</td>
-    </tr><tr>
-      <td class="p-2">
-        <img src="https://via.placeholder.com/30" />
-      </td>
-      <td>Milk</td>
-      <td>002</td>
-      <td>Dairy</td>
-      <td>$2</td>
-    </tr>
+    {% endfor %}
   </table>
 </div>
