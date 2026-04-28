@@ -23,4 +23,4 @@ def signin_view(request):
         else:
             error = "Invalid email or password"
 
-    return render(request, "pages/auth/signin.html", {"error": error})
+    return render(request, "user/signin.html", {"error": error})

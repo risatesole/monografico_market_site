@@ -28,4 +28,4 @@ def signup_view(request):
 
         return form_action_signup(request, first_name, last_name, email, password)
 
-    return render(request, "pages/auth/signup.html")
+    return render(request, "user/signup.html")
