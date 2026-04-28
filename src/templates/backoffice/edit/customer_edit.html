@@ -25,11 +25,31 @@
       <label>Last Name</label><br />
       <input type="text" name="last_name" value="{{ customer.user.last_name }}" /><br /><br />
 
+      <!-- ROLE DROPDOWN -->
       <label>Role</label><br />
-      <input type="text" name="role" value="{{ customer.user.role }}" /><br /><br />
+      <select name="role">
+        <option value="customer" {% if customer.user.role == "customer" %}selected{% endif %}>
+          Customer
+        </option>
+        <option value="employee" {% if customer.user.role == "employee" %}selected{% endif %}>
+          Employee
+        </option>
+      </select>
+      <br /><br />
 
+      <!-- STATUS DROPDOWN -->
       <label>Status</label><br />
-      <input type="text" name="status" value="{{ customer.user.status }}" /><br /><br />
+      <select name="status">
+        <option value="active" {% if customer.user.status == "active" %}selected{% endif %}>
+          Active
+        </option>
+        <option value="deactivated" {% if customer.user.status == "deactivated" %}selected{% endif %}>
+          Deactivated
+        </option>
+        <option value="deleted" {% if customer.user.status == "deleted" %}selected{% endif %}>
+          Deleted
+        </option>
+      </select>
 
       <hr />
 
