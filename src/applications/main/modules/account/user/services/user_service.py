@@ -1,4 +1,4 @@
-from ....models import User, UserRoles
+from ..models.model_user import User, UserRoles
 
 class emailExistsError(Exception):
     pass
