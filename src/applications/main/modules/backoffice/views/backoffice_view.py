@@ -3,6 +3,9 @@ from django.shortcuts import render,redirect, get_object_or_404
 from ...product.models.model_product import Product
 from ...product.models.price_model import Price
 from ...account.user.models.customer_profile import Customer
+from ...account.user.models.employee_profile import Employee, EmployeePosition
+from ...account.user.models.model_user import User
+from django.contrib import messages
 
 
 def backoffice_view(request):
@@ -59,4 +62,47 @@ def backoffice_customer_edit_view(request, customer_id):
 
     return render(request, "backoffice/edit/customer_edit.html", {
         "customer": customer
+    })
+
+
+
+def backoffice_create_employee_view(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        first_name = request.POST.get("first_name", "")
+        last_name = request.POST.get("last_name", "")
+        position = request.POST.get("position")
+
+        if not email or not password:
+            messages.error(request, "Email and password are required")
+            return render(request, "create_employee.html", {
+                "positions": EmployeePosition.choices
+            })
+
+        try:
+            # 1. Create user
+            user = User.objects.create_user( # type: ignore
+                email=email,
+                password=password,
+                first_name=first_name,
+                last_name=last_name,
+                role="employee",
+                is_staff=True,
+            )
+
+            # 2. Create employee profile
+            Employee.objects.create(
+                user=user,
+                position=position or EmployeePosition.STORE_MANAGER
+            )
+
+            messages.success(request, "Employee created successfully")
+            return redirect("create_employee")
+
+        except Exception as e:
+            messages.error(request, str(e))
+
+    return render(request, "backoffice/create/create_employee.html", {
+        "positions": EmployeePosition.choices
     })
