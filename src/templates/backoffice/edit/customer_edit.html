@@ -24,19 +24,7 @@
 
       <label>Last Name</label><br />
       <input type="text" name="last_name" value="{{ customer.user.last_name }}" /><br /><br />
-
-      <!-- ROLE DROPDOWN -->
-      <label>Role</label><br />
-      <select name="role">
-        <option value="customer" {% if customer.user.role == "customer" %}selected{% endif %}>
-          Customer
-        </option>
-        <option value="employee" {% if customer.user.role == "employee" %}selected{% endif %}>
-          Employee
-        </option>
-      </select>
-      <br /><br />
-
+      
       <!-- STATUS DROPDOWN -->
       <label>Status</label><br />
       <select name="status">

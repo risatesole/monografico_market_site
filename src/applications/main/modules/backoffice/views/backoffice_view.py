@@ -49,7 +49,6 @@ def backoffice_customer_edit_view(request, customer_id):
         user.first_name = request.POST.get("first_name")
         user.last_name = request.POST.get("last_name")
         user.role = request.POST.get("role")
-        user.status = request.POST.get("status")
         user.save()
 
         customer.phone = request.POST.get("phone")
