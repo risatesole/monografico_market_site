@@ -69,18 +69,15 @@ def inventory_stock(products):
     inventory = []
 
     for product in products:
-        item = {
-            "id": product["id"],
-            "name": product["name"],
-            "stock": product["stock"],
-            "unit": "kg",  # mock for now
-            "status": "Low" if product["stock"] < 20 else "Normal",
-        }
-        inventory.append(item)
+        inventory.append({
+            "id": product.id,
+            "name": product.name,
+            "stock": getattr(product, "stock", 0),
+            "unit": "kg",
+            "status": "Low" if getattr(product, "stock", 0) < 20 else "Normal",
+        })
 
     return inventory
-
-
 
 
 
@@ -150,22 +147,24 @@ prices_table = {
 ##############################################################################################
 
 from ....account.user.models.employee_profile import Employee
+from ....product.models.model_product import Product
+from ....product.models.price_model import Price
 
 def backoffice_view_context_handler():
-    """LOAD DATA"""
-
     customers = Customer.objects.select_related("user").all()
     employees = Employee.objects.select_related("user").all()
 
-    products = product_list()
+    products = Product.objects.prefetch_related("prices").all()
 
     for product in products:
-        product["current_price"] = prices_table.get(product["id"], 0)
+        latest_price = product.prices.first() # type: ignore
+        product.current_price = latest_price.value if latest_price else 0 # type: ignore
 
     context = {
-        "products": products,
-        "inventory": inventory_stock(products),
         "customers": customers,
         "employees": employees,
+        "products": products,
+        "inventory": inventory_stock(products),
     }
+
     return context
