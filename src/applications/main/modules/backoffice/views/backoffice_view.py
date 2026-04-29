@@ -112,3 +112,56 @@ def backoffice_create_employee_view(request):
     return render(request, "backoffice/create/create_employee.html", {
         "positions": EmployeePosition.choices
     })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@login_required
+@user_passes_test(is_employee)
+def backoffice_edit_product_view(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    price = Price.objects.filter(product=product).first()
+
+    if request.method == "POST":
+        product.name = request.POST.get("name")
+        product.description = request.POST.get("description")
+        product.category = request.POST.get("category")
+
+        if request.FILES.get("image"):
+            product.image = request.FILES.get("image")
+
+        product.save()
+
+        price_value = request.POST.get("price")
+
+        if price:
+            price.value = price_value
+            price.save()
+        else:
+            Price.objects.create(
+                product=product,
+                value=price_value
+            )
+
+        return redirect("backoffice")
+
+    context = {
+        "product": product,
+        "price": price
+    }
+
+    return render(request, "backoffice/edit/editproduct.html", context)
