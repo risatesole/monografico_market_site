@@ -846,6 +846,7 @@
                 <th>ID</th>
                 <th>Category</th>
                 <th>Price</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -862,6 +863,11 @@
                 <td style="color:var(--muted)">{{ product.id|stringformat:"03d" }}</td>
                 <td><span class="badge badge-gray">{{ product.get_category_display }}</span></td>
                 <td style="font-weight:600">${{ product.current_price|default:0 }}</td>
+                <td>
+                  <a href="{% url 'product_edit' product.id %}">
+                    <button class="btn btn-ghost">Edit</button>
+                  </a>
+                </td>
               </tr>
               {% empty %}
               <tr>
