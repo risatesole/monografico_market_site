@@ -113,17 +113,6 @@ def backoffice_create_employee_view(request):
         "positions": EmployeePosition.choices
     })
 
-
-
-
-
-
-
-
-
-
-
-
 @login_required
 @user_passes_test(is_employee)
 def backoffice_edit_employee_view(request, employee_id):
@@ -154,17 +143,11 @@ def backoffice_edit_employee_view(request, employee_id):
         "positions": EmployeePosition.choices
     })
 
-
-
-
-
-
 @login_required
 @user_passes_test(is_employee)
 def backoffice_edit_product_view(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     price = Price.objects.filter(product=product).first()
-
     if request.method == "POST":
         product.name = request.POST.get("name")
         product.description = request.POST.get("description")
@@ -185,12 +168,10 @@ def backoffice_edit_product_view(request, product_id):
                 product=product,
                 value=price_value
             )
-
         return redirect("backoffice")
 
     context = {
         "product": product,
         "price": price
     }
-
     return render(request, "backoffice/edit/editproduct.html", context)
