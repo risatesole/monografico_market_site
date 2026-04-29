@@ -124,6 +124,35 @@ def backoffice_create_employee_view(request):
 
 
 
+@login_required
+@user_passes_test(is_employee)
+def backoffice_edit_employee_view(request, employee_id):
+    employee = Employee.objects.select_related("user").filter(id=employee_id).first()
+
+    if not employee or employee.user.role != "employee":
+        return redirect("backoffice")
+
+    if request.method == "POST":
+        user = employee.user
+
+        # Update user fields
+        user.email = request.POST.get("email")
+        user.first_name = request.POST.get("first_name")
+        user.last_name = request.POST.get("last_name")
+        user.role = request.POST.get("role")
+        user.save()
+
+        # Update employee fields
+        employee.position = request.POST.get("position")
+        employee.save()
+
+        messages.success(request, "Employee updated successfully")
+        return redirect("employee_edit", employee_id=employee.id)
+
+    return render(request, "backoffice/edit/employee_edit.html", {
+        "employee": employee,
+        "positions": EmployeePosition.choices
+    })
 
 
 

@@ -1,0 +1,61 @@
+<div class="container mt-4">
+    <h2>Edit Employee</h2>
+
+    <!-- Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label>Email</label>
+            <input type="email" name="email" class="form-control"
+                   value="{{ employee.user.email }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label>First Name</label>
+            <input type="text" name="first_name" class="form-control"
+                   value="{{ employee.user.first_name }}">
+        </div>
+
+        <div class="mb-3">
+            <label>Last Name</label>
+            <input type="text" name="last_name" class="form-control"
+                   value="{{ employee.user.last_name }}">
+        </div>
+
+        <div class="mb-3">
+            <label>Position</label>
+            <select name="position" class="form-control">
+                {% for value, label in positions %}
+                    <option value="{{ value }}"
+                        {% if employee.position == value %}selected{% endif %}>
+                        {{ label }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Optional role field (remove if you want to lock role) -->
+        <div class="mb-3">
+            <label>Role</label>
+            <input type="text" name="role" class="form-control"
+                   value="{{ employee.user.role }}">
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Save Changes
+        </button>
+
+        <a href="{% url 'backoffice' %}" class="btn btn-secondary">
+            Cancel
+        </a>
+    </form>
+</div>
