@@ -32,6 +32,9 @@ def backoffice_view_context_handler():
         "employees": employees,
         "products": products,
         "inventory": inventory_stock(products),
+        "project":{
+            "name": "Duck"
+        }
     }
 
     return context

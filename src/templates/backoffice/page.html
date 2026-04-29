@@ -1,24 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Simple Market — Admin</title>
   <style>
     :root {
-      --bg:      #F9F9F8;
+      --bg: #F9F9F8;
       --surface: #FFFFFF;
-      --border:  #EBEBEA;
-      --text:    #1C1C1A;
-      --muted:   #8C8C89;
-      --subtle:  #C4C4C1;
-      --green:   #2D6A4F;
-      --red:     #9B2C2C;
-      --amber:   #92600A;
+      --border: #EBEBEA;
+      --text: #1C1C1A;
+      --muted: #8C8C89;
+      --subtle: #C4C4C1;
+      --green: #2D6A4F;
+      --red: #9B2C2C;
+      --amber: #92600A;
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
 
     body {
       font-family: -apple-system, 'Helvetica Neue', sans-serif;
@@ -30,8 +41,18 @@
       overflow: hidden;
     }
 
-    a { text-decoration: none; color: inherit; }
-    button { cursor: pointer; border: none; background: none; font: inherit; color: inherit; }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+      font: inherit;
+      color: inherit;
+    }
 
     /* SIDEBAR */
     .sidebar {
@@ -49,8 +70,17 @@
       border-bottom: 1px solid var(--border);
       margin-bottom: 18px;
     }
-    .brand-name { font-size: 13px; font-weight: 600; }
-    .brand-sub  { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+    .brand-name {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 1px;
+    }
 
     .nav-label {
       font-size: 10px;
@@ -72,8 +102,16 @@
       color: var(--muted);
       transition: background .1s, color .1s;
     }
-    .menu:hover  { background: var(--bg); color: var(--text); }
-    .menu.active { background: var(--text); color: #fff; }
+
+    .menu:hover {
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .menu.active {
+      background: var(--text);
+      color: #fff;
+    }
 
     .sidebar-footer {
       margin-top: auto;
@@ -83,21 +121,38 @@
       align-items: center;
       gap: 8px;
     }
+
     .avatar {
-      width: 24px; height: 24px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       background: var(--text);
       color: #fff;
       font-size: 10px;
       font-weight: 600;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-shrink: 0;
     }
-    .user-name { font-size: 12px; font-weight: 500; }
-    .user-role { font-size: 10px; color: var(--muted); }
+
+    .user-name {
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .user-role {
+      font-size: 10px;
+      color: var(--muted);
+    }
 
     /* MAIN */
-    .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
 
     .topbar {
       height: 46px;
@@ -109,47 +164,113 @@
       padding: 0 22px;
       flex-shrink: 0;
     }
-    .topbar-left { font-size: 13px; color: var(--muted); }
-    .topbar-left strong { color: var(--text); font-weight: 600; }
 
-    .user-menu-wrap { position: relative; }
+    .topbar-left {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .topbar-left strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .user-menu-wrap {
+      position: relative;
+    }
+
     .user-trigger {
-      display: flex; align-items: center; gap: 6px;
-      cursor: pointer; padding: 4px 6px; border-radius: 5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      padding: 4px 6px;
+      border-radius: 5px;
       transition: background .1s;
     }
-    .user-trigger:hover { background: var(--bg); }
-    .user-trigger span { font-size: 13px; }
+
+    .user-trigger:hover {
+      background: var(--bg);
+    }
+
+    .user-trigger span {
+      font-size: 13px;
+    }
 
     #userMenu {
-      position: absolute; right: 0; top: calc(100% + 4px);
+      position: absolute;
+      right: 0;
+      top: calc(100% + 4px);
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 6px;
-      box-shadow: 0 4px 12px rgba(0,0,0,.07);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .07);
       width: 130px;
       overflow: hidden;
       z-index: 50;
     }
-    #userMenu.hidden { display: none; }
-    #userMenu p { padding: 8px 12px; font-size: 13px; color: var(--muted); cursor: pointer; }
-    #userMenu p:hover { background: var(--bg); color: var(--text); }
-    #userMenu p + p { border-top: 1px solid var(--border); }
+
+    #userMenu.hidden {
+      display: none;
+    }
+
+    #userMenu p {
+      padding: 8px 12px;
+      font-size: 13px;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    #userMenu p:hover {
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    #userMenu p+p {
+      border-top: 1px solid var(--border);
+    }
 
     /* CONTENT */
-    .content { flex: 1; overflow-y: auto; padding: 26px 24px; }
-    .content::-webkit-scrollbar { width: 4px; }
-    .content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 26px 24px;
+    }
 
-    .section { display: none; }
-    .section.visible { display: block; }
+    .content::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .content::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 2px;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.visible {
+      display: block;
+    }
 
     .page-header {
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       margin-bottom: 18px;
     }
-    .page-header h2 { font-size: 15px; font-weight: 600; }
-    .page-header p  { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    .page-header h2 {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .page-header p {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
 
     /* STAT CARDS */
     .stat-grid {
@@ -158,15 +279,33 @@
       gap: 10px;
       margin-bottom: 20px;
     }
+
     .stat-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 7px;
       padding: 14px 16px;
     }
-    .stat-label { font-size: 11px; color: var(--muted); font-weight: 500; margin-bottom: 6px; }
-    .stat-val   { font-size: 20px; font-weight: 600; letter-spacing: -.02em; line-height: 1; }
-    .stat-sub   { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .stat-val {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -.02em;
+      line-height: 1;
+    }
+
+    .stat-sub {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
 
     /* TABLE CARD */
     .card {
@@ -175,17 +314,26 @@
       border-radius: 7px;
       overflow: hidden;
     }
-    .card + .card { margin-top: 14px; }
+
+    .card+.card {
+      margin-top: 14px;
+    }
 
     .card-header {
       padding: 11px 16px;
       border-bottom: 1px solid var(--border);
       font-size: 13px;
       font-weight: 600;
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    table { width: 100%; border-collapse: collapse; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
     thead th {
       padding: 8px 16px;
       text-align: left;
@@ -197,24 +345,43 @@
       background: var(--bg);
       border-bottom: 1px solid var(--border);
     }
-    tbody tr { border-bottom: 1px solid var(--border); }
-    tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover { background: var(--bg); }
-    tbody td { padding: 9px 16px; font-size: 13px; vertical-align: middle; }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+    }
+
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background: var(--bg);
+    }
+
+    tbody td {
+      padding: 9px 16px;
+      font-size: 13px;
+      vertical-align: middle;
+    }
 
     .product-thumb {
-      width: 30px; height: 30px;
+      width: 30px;
+      height: 30px;
       border-radius: 4px;
       object-fit: cover;
       border: 1px solid var(--border);
       display: block;
     }
+
     .thumb-placeholder {
-      width: 30px; height: 30px;
+      width: 30px;
+      height: 30px;
       border-radius: 4px;
       background: var(--bg);
       border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 10px;
       color: var(--muted);
     }
@@ -227,14 +394,33 @@
       font-size: 11px;
       font-weight: 500;
     }
-    .badge-green { background: #ECFDF5; color: var(--green); }
-    .badge-red   { background: #FEF2F2; color: var(--red); }
-    .badge-amber { background: #FFFBEB; color: var(--amber); }
-    .badge-gray  { background: var(--bg); color: var(--muted); border: 1px solid var(--border); }
+
+    .badge-green {
+      background: #ECFDF5;
+      color: var(--green);
+    }
+
+    .badge-red {
+      background: #FEF2F2;
+      color: var(--red);
+    }
+
+    .badge-amber {
+      background: #FFFBEB;
+      color: var(--amber);
+    }
+
+    .badge-gray {
+      background: var(--bg);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
 
     /* BUTTONS */
     .btn {
-      display: inline-flex; align-items: center; gap: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
       padding: 6px 11px;
       border-radius: 5px;
       font-size: 12px;
@@ -242,24 +428,52 @@
       transition: opacity .1s, background .1s, border-color .1s;
       border: 1px solid transparent;
     }
-    .btn-primary { background: var(--text); color: #fff; }
-    .btn-primary:hover { opacity: .8; }
-    .btn-ghost { background: var(--surface); border-color: var(--border); color: var(--muted); }
-    .btn-ghost:hover { color: var(--text); border-color: var(--subtle); }
 
-    .empty { padding: 36px; text-align: center; color: var(--muted); font-size: 13px; }
+    .btn-primary {
+      background: var(--text);
+      color: #fff;
+    }
 
-    tbody tr.clickable { cursor: pointer; }
+    .btn-primary:hover {
+      opacity: .8;
+    }
+
+    .btn-ghost {
+      background: var(--surface);
+      border-color: var(--border);
+      color: var(--muted);
+    }
+
+    .btn-ghost:hover {
+      color: var(--text);
+      border-color: var(--subtle);
+    }
+
+    .empty {
+      padding: 36px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    tbody tr.clickable {
+      cursor: pointer;
+    }
 
     /* MODAL OVERLAY */
     .modal-overlay {
       display: none;
-      position: fixed; inset: 0; z-index: 200;
-      background: rgba(0,0,0,.25);
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0, 0, 0, .25);
       align-items: center;
       justify-content: center;
     }
-    .modal-overlay.open { display: flex; }
+
+    .modal-overlay.open {
+      display: flex;
+    }
 
     .modal {
       background: var(--surface);
@@ -267,33 +481,74 @@
       border-radius: 9px;
       width: 100%;
       max-width: 440px;
-      box-shadow: 0 8px 32px rgba(0,0,0,.12);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, .12);
       overflow: hidden;
     }
-    .modal-lg { max-width: 560px; }
+
+    .modal-lg {
+      max-width: 560px;
+    }
 
     .modal-header {
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       padding: 14px 18px;
       border-bottom: 1px solid var(--border);
     }
-    .modal-title { font-size: 13px; font-weight: 600; }
+
+    .modal-title {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
     .modal-close {
-      width: 24px; height: 24px;
+      width: 24px;
+      height: 24px;
       border-radius: 4px;
       font-size: 14px;
       color: var(--muted);
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       transition: background .1s, color .1s;
-      cursor: pointer; border: none; background: none;
+      cursor: pointer;
+      border: none;
+      background: none;
     }
-    .modal-close:hover { background: var(--bg); color: var(--text); }
 
-    .modal-body { padding: 18px; display: flex; flex-direction: column; gap: 13px; }
+    .modal-close:hover {
+      background: var(--bg);
+      color: var(--text);
+    }
 
-    .field { display: flex; flex-direction: column; gap: 4px; }
-    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .field label { font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+    .modal-body {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .field label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
     .field input,
     .field select,
     .field textarea {
@@ -308,39 +563,75 @@
       transition: border-color .1s;
       width: 100%;
     }
+
     .field input:focus,
     .field select:focus,
-    .field textarea:focus { border-color: var(--subtle); background: var(--surface); }
-    .field textarea { resize: vertical; min-height: 70px; }
+    .field textarea:focus {
+      border-color: var(--subtle);
+      background: var(--surface);
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
 
     .modal-footer {
-      display: flex; align-items: center; justify-content: flex-end; gap: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
       padding: 12px 18px;
       border-top: 1px solid var(--border);
       background: var(--bg);
     }
 
     .info-row {
-      display: flex; justify-content: space-between; align-items: baseline;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
       padding: 8px 0;
       border-bottom: 1px solid var(--border);
       font-size: 13px;
       gap: 12px;
     }
-    .info-row:last-child { border-bottom: none; }
-    .info-label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; white-space: nowrap; }
-    .info-val { color: var(--text); text-align: right; }
 
-    .btn-danger { background: #FEF2F2; color: var(--red); border: 1px solid #FECACA; }
-    .btn-danger:hover { background: #FEE2E2; }
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      white-space: nowrap;
+    }
+
+    .info-val {
+      color: var(--text);
+      text-align: right;
+    }
+
+    .btn-danger {
+      background: #FEF2F2;
+      color: var(--red);
+      border: 1px solid #FECACA;
+    }
+
+    .btn-danger:hover {
+      background: #FEE2E2;
+    }
   </style>
 </head>
+
 <body>
 
   <aside class="sidebar">
     <div class="brand">
-      <div class="brand-name">Simple Market</div>
-      <div class="brand-sub">Admin</div>
+      <div class="brand-name">{{project.name}} </div>
+      <div class="brand-sub">{{user.role}}</div> <!--todo: make this employee role-->
     </div>
 
     <span class="nav-label">Overview</span>
@@ -361,8 +652,8 @@
     <div class="sidebar-footer">
       <div class="avatar">J</div>
       <div>
-        <div class="user-name">John</div>
-        <div class="user-role">Admin</div>
+        <div class="user-name">{{user.first_name}}</div>
+        <div class="user-role">{{user.position}}</div> <!--Show employee position-->
       </div>
     </div>
   </aside>
@@ -370,7 +661,7 @@
   <div class="main">
     <header class="topbar">
       <div class="topbar-left">
-        <strong>Simple Market</strong>&ensp;/&ensp;<span id="topbarSection">Dashboard</span>
+        <strong>{{project.name}}</strong>&ensp;/&ensp;<span id="topbarSection">Dashboard</span>
       </div>
       <div class="user-menu-wrap">
         <div class="user-trigger" onclick="toggleUserMenu()">
@@ -378,7 +669,9 @@
           <span>{{user.first_name}}</span>
         </div>
         <div id="userMenu" class="hidden">
-         <a href="{% url 'signout' %}"><p>Signout</p></a>
+          <a href="{% url 'signout' %}">
+            <p>Signout</p>
+          </a>
         </div>
       </div>
     </header>
@@ -421,7 +714,12 @@
           <div class="card-header">Recent Customers</div>
           <table>
             <thead>
-              <tr><th>First</th><th>Last</th><th>Email</th><th>Status</th></tr>
+              <tr>
+                <th>First</th>
+                <th>Last</th>
+                <th>Email</th>
+                <th>Status</th>
+              </tr>
             </thead>
             <tbody>
               {% for customer in customers %}
@@ -432,7 +730,9 @@
                 <td><span class="badge badge-green">Active</span></td>
               </tr>
               {% empty %}
-              <tr><td colspan="4" class="empty">No customers yet.</td></tr>
+              <tr>
+                <td colspan="4" class="empty">No customers yet.</td>
+              </tr>
               {% endfor %}
             </tbody>
           </table>
@@ -442,12 +742,20 @@
       <!-- ═══ CUSTOMERS ═══ -->
       <div id="customers" class="section">
         <div class="page-header">
-          <div><h2>Customers</h2></div>
+          <div>
+            <h2>Customers</h2>
+          </div>
         </div>
         <div class="card">
           <table>
             <thead>
-              <tr><th>Email</th><th>Phone</th><th>Address</th><th>Created</th><th>Action</th></tr>
+              <tr>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Created</th>
+                <th>Action</th>
+              </tr>
             </thead>
             <tbody>
               {% for customer in customers %}
@@ -463,7 +771,9 @@
                 </td>
               </tr>
               {% empty %}
-              <tr><td colspan="5" class="empty">No customers found.</td></tr>
+              <tr>
+                <td colspan="5" class="empty">No customers found.</td>
+              </tr>
               {% endfor %}
             </tbody>
           </table>
@@ -473,7 +783,9 @@
       <!-- ═══ EMPLOYEES ═══ -->
       <div id="employees" class="section">
         <div class="page-header">
-          <div><h2>Employees</h2></div>
+          <div>
+            <h2>Employees</h2>
+          </div>
           <a href="{% url 'backoffice_create_employee_view' %}">
             <button class="btn btn-primary">+ New Employee</button>
           </a>
@@ -481,7 +793,13 @@
         <div class="card">
           <table>
             <thead>
-              <tr><th>Name</th><th>Email</th><th>Position</th><th>Hired</th><th>Status</th></tr>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Position</th>
+                <th>Hired</th>
+                <th>Status</th>
+              </tr>
             </thead>
             <tbody>
               {% for employee in employees %}
@@ -492,14 +810,16 @@
                 <td style="color:var(--muted)">{{ employee.hired_at|date:"M d, Y" }}</td>
                 <td>
                   {% if employee.is_active %}
-                    <span class="badge badge-green">Active</span>
+                  <span class="badge badge-green">Active</span>
                   {% else %}
-                    <span class="badge badge-red">Inactive</span>
+                  <span class="badge badge-red">Inactive</span>
                   {% endif %}
                 </td>
               </tr>
               {% empty %}
-              <tr><td colspan="5" class="empty">No employees found.</td></tr>
+              <tr>
+                <td colspan="5" class="empty">No employees found.</td>
+              </tr>
               {% endfor %}
             </tbody>
           </table>
@@ -507,9 +827,12 @@
       </div>
 
       <!-- ═══ PRODUCTS ═══ -->
+      <!-- === todo: show if product is avialable or not === -->
       <div id="products" class="section">
         <div class="page-header">
-          <div><h2>Products</h2></div>
+          <div>
+            <h2>Products</h2>
+          </div>
           <a href="/backoffice/createproduct">
             <button class="btn btn-primary">+ New Product</button>
           </a>
@@ -517,16 +840,22 @@
         <div class="card">
           <table>
             <thead>
-              <tr><th>Pic</th><th>Product</th><th>ID</th><th>Category</th><th>Price</th></tr>
+              <tr>
+                <th>Pic</th>
+                <th>Product</th>
+                <th>ID</th>
+                <th>Category</th>
+                <th>Price</th>
+              </tr>
             </thead>
             <tbody>
               {% for product in products %}
               <tr class="clickable">
                 <td>
                   {% if product.image %}
-                    <img src="{{ product.image.url }}" class="product-thumb" alt="{{ product.name }}" />
+                  <img src="{{ product.image.url }}" class="product-thumb" alt="{{ product.name }}" />
                   {% else %}
-                    <div class="thumb-placeholder">N/A</div>
+                  <div class="thumb-placeholder">N/A</div>
                   {% endif %}
                 </td>
                 <td style="font-weight:500">{{ product.name }}</td>
@@ -535,7 +864,9 @@
                 <td style="font-weight:600">${{ product.current_price|default:0 }}</td>
               </tr>
               {% empty %}
-              <tr><td colspan="5" class="empty">No products found.</td></tr>
+              <tr>
+                <td colspan="5" class="empty">No products found.</td>
+              </tr>
               {% endfor %}
             </tbody>
           </table>
@@ -544,11 +875,19 @@
 
       <!-- ═══ PRICES ═══ -->
       <div id="prices" class="section">
-        <div class="page-header"><div><h2>Prices</h2></div></div>
+        <div class="page-header">
+          <div>
+            <h2>Prices</h2>
+          </div>
+        </div>
         <div class="card">
           <table>
             <thead>
-              <tr><th>Product</th><th>Price</th><th>Action</th></tr>
+              <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Action</th>
+              </tr>
             </thead>
             <tbody>
               {% for product in products %}
@@ -560,7 +899,9 @@
                 </td>
               </tr>
               {% empty %}
-              <tr><td colspan="3" class="empty">No prices to display.</td></tr>
+              <tr>
+                <td colspan="3" class="empty">No prices to display.</td>
+              </tr>
               {% endfor %}
             </tbody>
           </table>
@@ -569,11 +910,20 @@
 
       <!-- ═══ INVENTORY ═══ -->
       <div id="inventory" class="section">
-        <div class="page-header"><div><h2>Inventory</h2></div></div>
+        <div class="page-header">
+          <div>
+            <h2>Inventory</h2>
+          </div>
+        </div>
         <div class="card">
           <table>
             <thead>
-              <tr><th>Product</th><th>Stock</th><th>Unit</th><th>Status</th></tr>
+              <tr>
+                <th>Product</th>
+                <th>Stock</th>
+                <th>Unit</th>
+                <th>Status</th>
+              </tr>
             </thead>
             <tbody>
               {% for item in inventory %}
@@ -583,16 +933,18 @@
                 <td style="color:var(--muted)">{{ item.unit }}</td>
                 <td>
                   {% if item.status == "Low Stock" or item.stock == 0 %}
-                    <span class="badge badge-red">{{ item.status }}</span>
+                  <span class="badge badge-red">{{ item.status }}</span>
                   {% elif item.status == "In Stock" %}
-                    <span class="badge badge-green">{{ item.status }}</span>
+                  <span class="badge badge-green">{{ item.status }}</span>
                   {% else %}
-                    <span class="badge badge-amber">{{ item.status }}</span>
+                  <span class="badge badge-amber">{{ item.status }}</span>
                   {% endif %}
                 </td>
               </tr>
               {% empty %}
-              <tr><td colspan="4" class="empty">No inventory records.</td></tr>
+              <tr>
+                <td colspan="4" class="empty">No inventory records.</td>
+              </tr>
               {% endfor %}
             </tbody>
           </table>
@@ -601,7 +953,11 @@
 
       <!-- ═══ SETTINGS ═══ -->
       <div id="settings" class="section">
-        <div class="page-header"><div><h2>Settings</h2></div></div>
+        <div class="page-header">
+          <div>
+            <h2>Settings</h2>
+          </div>
+        </div>
         <div class="card">
           <div class="empty">No settings configured yet.</div>
         </div>
@@ -779,4 +1135,5 @@
     });
   </script>
 </body>
+
 </html>
