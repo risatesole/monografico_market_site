@@ -1,5 +1,5 @@
 from .contexts.backoffice_context_handler import backoffice_view_context_handler
-from django.shortcuts import render,redirect, get_object_or_404 
+from django.shortcuts import render,redirect, get_object_or_404
 from ...product.models.model_product import Product
 from ...product.models.price_model import Price
 from ...account.user.models.customer_profile import Customer
@@ -7,7 +7,12 @@ from ...account.user.models.employee_profile import Employee, EmployeePosition
 from ...account.user.models.model_user import User
 from django.contrib import messages
 
+from django.contrib.auth.decorators import login_required, user_passes_test
+def is_employee(user):
+    return user.is_authenticated and user.role == "employee"
 
+@login_required
+@user_passes_test(is_employee)
 def backoffice_view(request):
     """HANDLE POST ACTIONS"""
     return render(request, "backoffice/page.html", backoffice_view_context_handler())
@@ -39,7 +44,8 @@ def backoffice_create_product_view(request):
 
     return render(request, "backoffice/create/createproduct.html")
 
-
+@login_required
+@user_passes_test(is_employee)
 def backoffice_customer_edit_view(request, customer_id):
     customer = Customer.objects.select_related("user").filter(id=customer_id).first()
 
@@ -64,8 +70,8 @@ def backoffice_customer_edit_view(request, customer_id):
         "customer": customer
     })
 
-
-
+@login_required
+@user_passes_test(is_employee)
 def backoffice_create_employee_view(request):
     if request.method == "POST":
         email = request.POST.get("email")
