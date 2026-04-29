@@ -147,7 +147,7 @@ def backoffice_edit_employee_view(request, employee_id):
         employee.save()
 
         messages.success(request, "Employee updated successfully")
-        return redirect("employee_edit", employee_id=employee.id)
+        return redirect("backoffice")
 
     return render(request, "backoffice/edit/employee_edit.html", {
         "employee": employee,
