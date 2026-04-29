@@ -1,1161 +1,1273 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Simple Market — Admin</title>
-  <style>
-    :root {
-      --bg: #F9F9F8;
-      --surface: #FFFFFF;
-      --border: #EBEBEA;
-      --text: #1C1C1A;
-      --muted: #8C8C89;
-      --subtle: #C4C4C1;
-      --green: #2D6A4F;
-      --red: #9B2C2C;
-      --amber: #92600A;
-    }
-
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html,
-    body {
-      height: 100%;
-    }
-
-    body {
-      font-family: -apple-system, 'Helvetica Neue', sans-serif;
-      font-size: 14px;
-      background: var(--bg);
-      color: var(--text);
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    button {
-      cursor: pointer;
-      border: none;
-      background: none;
-      font: inherit;
-      color: inherit;
-    }
-
-    /* SIDEBAR */
-    .sidebar {
-      width: 196px;
-      flex-shrink: 0;
-      background: var(--surface);
-      border-right: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      padding: 20px 10px;
-    }
-
-    .brand {
-      padding: 0 8px 18px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 18px;
-    }
-
-    .brand-name {
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .brand-sub {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 1px;
-    }
-
-    .nav-label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: .07em;
-      text-transform: uppercase;
-      color: var(--subtle);
-      padding: 0 8px;
-      margin: 14px 0 3px;
-    }
-
-    .menu {
-      display: block;
-      width: 100%;
-      text-align: left;
-      padding: 6px 8px;
-      border-radius: 5px;
-      font-size: 13px;
-      color: var(--muted);
-      transition: background .1s, color .1s;
-    }
-
-    .menu:hover {
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    .menu.active {
-      background: var(--text);
-      color: #fff;
-    }
-
-    .sidebar-footer {
-      margin-top: auto;
-      padding: 14px 8px 0;
-      border-top: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .avatar {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: var(--text);
-      color: #fff;
-      font-size: 10px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .user-name {
-      font-size: 12px;
-      font-weight: 500;
-    }
-
-    .user-role {
-      font-size: 10px;
-      color: var(--muted);
-    }
-
-    /* MAIN */
-    .main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .topbar {
-      height: 46px;
-      border-bottom: 1px solid var(--border);
-      background: var(--surface);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 22px;
-      flex-shrink: 0;
-    }
-
-    .topbar-left {
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .topbar-left strong {
-      color: var(--text);
-      font-weight: 600;
-    }
-
-    .user-menu-wrap {
-      position: relative;
-    }
-
-    .user-trigger {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-      padding: 4px 6px;
-      border-radius: 5px;
-      transition: background .1s;
-    }
-
-    .user-trigger:hover {
-      background: var(--bg);
-    }
-
-    .user-trigger span {
-      font-size: 13px;
-    }
-
-    #userMenu {
-      position: absolute;
-      right: 0;
-      top: calc(100% + 4px);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, .07);
-      width: 130px;
-      overflow: hidden;
-      z-index: 50;
-    }
-
-    #userMenu.hidden {
-      display: none;
-    }
-
-    #userMenu p {
-      padding: 8px 12px;
-      font-size: 13px;
-      color: var(--muted);
-      cursor: pointer;
-    }
-
-    #userMenu p:hover {
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    #userMenu p+p {
-      border-top: 1px solid var(--border);
-    }
-
-    /* CONTENT */
-    .content {
-      flex: 1;
-      overflow-y: auto;
-      padding: 26px 24px;
-    }
-
-    .content::-webkit-scrollbar {
-      width: 4px;
-    }
-
-    .content::-webkit-scrollbar-thumb {
-      background: var(--border);
-      border-radius: 2px;
-    }
-
-    .section {
-      display: none;
-    }
-
-    .section.visible {
-      display: block;
-    }
-
-    .page-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 18px;
-    }
-
-    .page-header h2 {
-      font-size: 15px;
-      font-weight: 600;
-    }
-
-    .page-header p {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 2px;
-    }
-
-    /* STAT CARDS */
-    .stat-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 7px;
-      padding: 14px 16px;
-    }
-
-    .stat-label {
-      font-size: 11px;
-      color: var(--muted);
-      font-weight: 500;
-      margin-bottom: 6px;
-    }
-
-    .stat-val {
-      font-size: 20px;
-      font-weight: 600;
-      letter-spacing: -.02em;
-      line-height: 1;
-    }
-
-    .stat-sub {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 4px;
-    }
-
-    /* TABLE CARD */
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 7px;
-      overflow: hidden;
-    }
-
-    .card+.card {
-      margin-top: 14px;
-    }
-
-    .card-header {
-      padding: 11px 16px;
-      border-bottom: 1px solid var(--border);
-      font-size: 13px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    thead th {
-      padding: 8px 16px;
-      text-align: left;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      color: var(--muted);
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
-    }
-
-    tbody tr {
-      border-bottom: 1px solid var(--border);
-    }
-
-    tbody tr:last-child {
-      border-bottom: none;
-    }
-
-    tbody tr:hover {
-      background: var(--bg);
-    }
-
-    tbody td {
-      padding: 9px 16px;
-      font-size: 13px;
-      vertical-align: middle;
-    }
-
-    .product-thumb {
-      width: 30px;
-      height: 30px;
-      border-radius: 4px;
-      object-fit: cover;
-      border: 1px solid var(--border);
-      display: block;
-    }
-
-    .thumb-placeholder {
-      width: 30px;
-      height: 30px;
-      border-radius: 4px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      color: var(--muted);
-    }
-
-    /* BADGE */
-    .badge {
-      display: inline-block;
-      padding: 2px 7px;
-      border-radius: 4px;
-      font-size: 11px;
-      font-weight: 500;
-    }
-
-    .badge-green {
-      background: #ECFDF5;
-      color: var(--green);
-    }
-
-    .badge-red {
-      background: #FEF2F2;
-      color: var(--red);
-    }
-
-    .badge-amber {
-      background: #FFFBEB;
-      color: var(--amber);
-    }
-
-    .badge-gray {
-      background: var(--bg);
-      color: var(--muted);
-      border: 1px solid var(--border);
-    }
-
-    /* BUTTONS */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 6px 11px;
-      border-radius: 5px;
-      font-size: 12px;
-      font-weight: 500;
-      transition: opacity .1s, background .1s, border-color .1s;
-      border: 1px solid transparent;
-    }
-
-    .btn-primary {
-      background: var(--text);
-      color: #fff;
-    }
-
-    .btn-primary:hover {
-      opacity: .8;
-    }
-
-    .btn-ghost {
-      background: var(--surface);
-      border-color: var(--border);
-      color: var(--muted);
-    }
-
-    .btn-ghost:hover {
-      color: var(--text);
-      border-color: var(--subtle);
-    }
-
-    .empty {
-      padding: 36px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    tbody tr.clickable {
-      cursor: pointer;
-    }
-
-    /* MODAL OVERLAY */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 200;
-      background: rgba(0, 0, 0, .25);
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal-overlay.open {
-      display: flex;
-    }
-
-    .modal {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      width: 100%;
-      max-width: 440px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, .12);
-      overflow: hidden;
-    }
-
-    .modal-lg {
-      max-width: 560px;
-    }
-
-    .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 18px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .modal-title {
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .modal-close {
-      width: 24px;
-      height: 24px;
-      border-radius: 4px;
-      font-size: 14px;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background .1s, color .1s;
-      cursor: pointer;
-      border: none;
-      background: none;
-    }
-
-    .modal-close:hover {
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    .modal-body {
-      padding: 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 13px;
-    }
-
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .field-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .field label {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--muted);
-      letter-spacing: .04em;
-      text-transform: uppercase;
-    }
-
-    .field input,
-    .field select,
-    .field textarea {
-      padding: 7px 10px;
-      border: 1px solid var(--border);
-      border-radius: 5px;
-      font-size: 13px;
-      font-family: inherit;
-      color: var(--text);
-      background: var(--bg);
-      outline: none;
-      transition: border-color .1s;
-      width: 100%;
-    }
-
-    .field input:focus,
-    .field select:focus,
-    .field textarea:focus {
-      border-color: var(--subtle);
-      background: var(--surface);
-    }
-
-    .field textarea {
-      resize: vertical;
-      min-height: 70px;
-    }
-
-    .modal-footer {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 8px;
-      padding: 12px 18px;
-      border-top: 1px solid var(--border);
-      background: var(--bg);
-    }
-
-    .info-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 13px;
-      gap: 12px;
-    }
-
-    .info-row:last-child {
-      border-bottom: none;
-    }
-
-    .info-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .04em;
-      white-space: nowrap;
-    }
-
-    .info-val {
-      color: var(--text);
-      text-align: right;
-    }
-
-    .btn-danger {
-      background: #FEF2F2;
-      color: var(--red);
-      border: 1px solid #FECACA;
-    }
-
-    .btn-danger:hover {
-      background: #FEE2E2;
-    }
-  </style>
-</head>
-
-<body>
-
-  <aside class="sidebar">
-    <div class="brand">
-      <div class="brand-name">{{project.name}} </div>
-      <div class="brand-sub">{{user.role}}</div> <!--todo: make this employee role-->
-    </div>
-
-    <span class="nav-label">Overview</span>
-    <button class="menu active" onclick="showSection('dashboard', this)">Dashboard</button>
-
-    <span class="nav-label">Management</span>
-    <button class="menu" onclick="showSection('customers', this)">Customers</button>
-    <button class="menu" onclick="showSection('employees', this)">Employees</button>
-    <button class="menu" onclick="showSection('products', this)">Products</button>
-
-    <span class="nav-label">Commerce</span>
-    <button class="menu" onclick="showSection('provider', this)">Provider</button>
-    <button class="menu" onclick="showSection('inventory', this)">Inventory</button>
-
-    <span class="nav-label">System</span>
-    <button class="menu" onclick="showSection('settings', this)">Settings</button>
-
-    <div class="sidebar-footer">
-      <div class="avatar">J</div>
-      <div>
-        <div class="user-name">{{user.first_name}}</div>
-        <div class="user-role">{{user.position}}</div> <!--Show employee position-->
-      </div>
-    </div>
-  </aside>
-
-  <div class="main">
-    <header class="topbar">
-      <div class="topbar-left">
-        <strong>{{project.name}}</strong>&ensp;/&ensp;<span id="topbarSection">Dashboard</span>
-      </div>
-      <div class="user-menu-wrap">
-        <div class="user-trigger" onclick="toggleUserMenu()">
-          <div class="avatar">{{ user.first_name|first|upper }}</div>
-          <span>{{user.first_name}}</span>
-        </div>
-        <div id="userMenu" class="hidden">
-          <a href="{% url 'signout' %}">
-            <p>Signout</p>
-          </a>
-        </div>
-      </div>
-    </header>
-
-    <div class="content">
-
-      <!-- ═══ DASHBOARD ═══ -->
-      <div id="dashboard" class="section visible">
-        <div class="page-header">
-          <div>
-            <h2>Dashboard</h2>
-            <p>April 2026</p>
-          </div>
-        </div>
-
-        <div class="stat-grid">
-          <div class="stat-card">
-            <div class="stat-label">Revenue</div>
-            <div class="stat-val">$12,400</div>
-            <div class="stat-sub">+8% this month</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Customers</div>
-            <div class="stat-val">38</div>
-            <div class="stat-sub">3 new this week</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Products</div>
-            <div class="stat-val">{{ products|length }}</div>
-            <div class="stat-sub">In catalogue</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Low Stock</div>
-            <div class="stat-val" style="color:var(--red)">1</div>
-            <div class="stat-sub">Needs restocking</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-header">Recent Customers</div>
-          <table>
-            <thead>
-              <tr>
-                <th>First</th>
-                <th>Last</th>
-                <th>Email</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for customer in customers %}
-              <tr>
-                <td>{{ customer.user.first_name }}</td>
-                <td>{{ customer.user.last_name }}</td>
-                <td style="color:var(--muted)">{{ customer.user.email }}</td>
-                <td><span class="badge badge-green">Active</span></td>
-              </tr>
-              {% empty %}
-              <tr>
-                <td colspan="4" class="empty">No customers yet.</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Market — Admin</title>
+    <style>
+      :root {
+        --bg: #f9f9f8;
+        --surface: #ffffff;
+        --border: #ebebea;
+        --text: #1c1c1a;
+        --muted: #8c8c89;
+        --subtle: #c4c4c1;
+        --green: #2d6a4f;
+        --red: #9b2c2c;
+        --amber: #92600a;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        font-family: -apple-system, "Helvetica Neue", sans-serif;
+        font-size: 14px;
+        background: var(--bg);
+        color: var(--text);
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      button {
+        cursor: pointer;
+        border: none;
+        background: none;
+        font: inherit;
+        color: inherit;
+      }
+
+      /* SIDEBAR */
+      .sidebar {
+        width: 196px;
+        flex-shrink: 0;
+        background: var(--surface);
+        border-right: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        padding: 20px 10px;
+      }
+
+      .brand {
+        padding: 0 8px 18px;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 18px;
+      }
+
+      .brand-name {
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .brand-sub {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 1px;
+      }
+
+      .nav-label {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        color: var(--subtle);
+        padding: 0 8px;
+        margin: 14px 0 3px;
+      }
+
+      .menu {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 6px 8px;
+        border-radius: 5px;
+        font-size: 13px;
+        color: var(--muted);
+        transition:
+          background 0.1s,
+          color 0.1s;
+      }
+
+      .menu:hover {
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      .menu.active {
+        background: var(--text);
+        color: #fff;
+      }
+
+      .sidebar-footer {
+        margin-top: auto;
+        padding: 14px 8px 0;
+        border-top: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .avatar {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--text);
+        color: #fff;
+        font-size: 10px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .user-name {
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .user-role {
+        font-size: 10px;
+        color: var(--muted);
+      }
+
+      /* MAIN */
+      .main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .topbar {
+        height: 46px;
+        border-bottom: 1px solid var(--border);
+        background: var(--surface);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 22px;
+        flex-shrink: 0;
+      }
+
+      .topbar-left {
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .topbar-left strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .user-menu-wrap {
+        position: relative;
+      }
+
+      .user-trigger {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+        padding: 4px 6px;
+        border-radius: 5px;
+        transition: background 0.1s;
+      }
+
+      .user-trigger:hover {
+        background: var(--bg);
+      }
+
+      .user-trigger span {
+        font-size: 13px;
+      }
+
+      #userMenu {
+        position: absolute;
+        right: 0;
+        top: calc(100% + 4px);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+        width: 130px;
+        overflow: hidden;
+        z-index: 50;
+      }
+
+      #userMenu.hidden {
+        display: none;
+      }
+
+      #userMenu p {
+        padding: 8px 12px;
+        font-size: 13px;
+        color: var(--muted);
+        cursor: pointer;
+      }
+
+      #userMenu p:hover {
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      #userMenu p + p {
+        border-top: 1px solid var(--border);
+      }
+
+      /* CONTENT */
+      .content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 26px 24px;
+      }
+
+      .content::-webkit-scrollbar {
+        width: 4px;
+      }
+
+      .content::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 2px;
+      }
+
+      .section {
+        display: none;
+      }
+
+      .section.visible {
+        display: block;
+      }
+
+      .page-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+      }
+
+      .page-header h2 {
+        font-size: 15px;
+        font-weight: 600;
+      }
+
+      .page-header p {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 2px;
+      }
+
+      /* STAT CARDS */
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .stat-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        padding: 14px 16px;
+      }
+
+      .stat-label {
+        font-size: 11px;
+        color: var(--muted);
+        font-weight: 500;
+        margin-bottom: 6px;
+      }
+
+      .stat-val {
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        line-height: 1;
+      }
+
+      .stat-sub {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 4px;
+      }
+
+      /* TABLE CARD */
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 7px;
+        overflow: hidden;
+      }
+
+      .card + .card {
+        margin-top: 14px;
+      }
+
+      .card-header {
+        padding: 11px 16px;
+        border-bottom: 1px solid var(--border);
+        font-size: 13px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      thead th {
+        padding: 8px 16px;
+        text-align: left;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+      }
+
+      tbody tr {
+        border-bottom: 1px solid var(--border);
+      }
+
+      tbody tr:last-child {
+        border-bottom: none;
+      }
+
+      tbody tr:hover {
+        background: var(--bg);
+      }
+
+      tbody td {
+        padding: 9px 16px;
+        font-size: 13px;
+        vertical-align: middle;
+      }
+
+      .product-thumb {
+        width: 30px;
+        height: 30px;
+        border-radius: 4px;
+        object-fit: cover;
+        border: 1px solid var(--border);
+        display: block;
+      }
+
+      .thumb-placeholder {
+        width: 30px;
+        height: 30px;
+        border-radius: 4px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        color: var(--muted);
+      }
+
+      /* BADGE */
+      .badge {
+        display: inline-block;
+        padding: 2px 7px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 500;
+      }
+
+      .badge-green {
+        background: #ecfdf5;
+        color: var(--green);
+      }
+
+      .badge-red {
+        background: #fef2f2;
+        color: var(--red);
+      }
+
+      .badge-amber {
+        background: #fffbeb;
+        color: var(--amber);
+      }
+
+      .badge-gray {
+        background: var(--bg);
+        color: var(--muted);
+        border: 1px solid var(--border);
+      }
+
+      /* BUTTONS */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 6px 11px;
+        border-radius: 5px;
+        font-size: 12px;
+        font-weight: 500;
+        transition:
+          opacity 0.1s,
+          background 0.1s,
+          border-color 0.1s;
+        border: 1px solid transparent;
+      }
+
+      .btn-primary {
+        background: var(--text);
+        color: #fff;
+      }
+
+      .btn-primary:hover {
+        opacity: 0.8;
+      }
+
+      .btn-ghost {
+        background: var(--surface);
+        border-color: var(--border);
+        color: var(--muted);
+      }
+
+      .btn-ghost:hover {
+        color: var(--text);
+        border-color: var(--subtle);
+      }
+
+      .empty {
+        padding: 36px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      tbody tr.clickable {
+        cursor: pointer;
+      }
+
+      /* MODAL OVERLAY */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        background: rgba(0, 0, 0, 0.25);
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-overlay.open {
+        display: flex;
+      }
+
+      .modal {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        width: 100%;
+        max-width: 440px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        overflow: hidden;
+      }
+
+      .modal-lg {
+        max-width: 560px;
+      }
+
+      .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 18px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .modal-title {
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .modal-close {
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+        font-size: 14px;
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          background 0.1s,
+          color 0.1s;
+        cursor: pointer;
+        border: none;
+        background: none;
+      }
+
+      .modal-close:hover {
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      .modal-body {
+        padding: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 13px;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .field-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .field label {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--muted);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .field input,
+      .field select,
+      .field textarea {
+        padding: 7px 10px;
+        border: 1px solid var(--border);
+        border-radius: 5px;
+        font-size: 13px;
+        font-family: inherit;
+        color: var(--text);
+        background: var(--bg);
+        outline: none;
+        transition: border-color 0.1s;
+        width: 100%;
+      }
+
+      .field input:focus,
+      .field select:focus,
+      .field textarea:focus {
+        border-color: var(--subtle);
+        background: var(--surface);
+      }
+
+      .field textarea {
+        resize: vertical;
+        min-height: 70px;
+      }
+
+      .modal-footer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
+        padding: 12px 18px;
+        border-top: 1px solid var(--border);
+        background: var(--bg);
+      }
+
+      .info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: 8px 0;
+        border-bottom: 1px solid var(--border);
+        font-size: 13px;
+        gap: 12px;
+      }
+
+      .info-row:last-child {
+        border-bottom: none;
+      }
+
+      .info-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        white-space: nowrap;
+      }
+
+      .info-val {
+        color: var(--text);
+        text-align: right;
+      }
+
+      .btn-danger {
+        background: #fef2f2;
+        color: var(--red);
+        border: 1px solid #fecaca;
+      }
+
+      .btn-danger:hover {
+        background: #fee2e2;
+      }
+    </style>
+  </head>
+
+  <body>
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-name">{{project.name}}</div>
+        <div class="brand-sub">{{user.role}}</div>
+        <!--todo: make this employee role-->
       </div>
 
-      <!-- ═══ CUSTOMERS ═══ -->
-      <div id="customers" class="section">
-        <div class="page-header">
-          <div>
-            <h2>Customers</h2>
+      <span class="nav-label">Overview</span>
+      <button class="menu active" onclick="showSection('dashboard', this)">
+        Dashboard
+      </button>
+
+      <span class="nav-label">Management</span>
+      <button class="menu" onclick="showSection('customers', this)">
+        Customers
+      </button>
+      <button class="menu" onclick="showSection('employees', this)">
+        Employees
+      </button>
+      <button class="menu" onclick="showSection('products', this)">
+        Products
+      </button>
+
+      <span class="nav-label">Commerce</span>
+      <button class="menu" onclick="showSection('provider', this)">
+        Provider
+      </button>
+      <button class="menu" onclick="showSection('inventory', this)">
+        Inventory
+      </button>
+
+      <span class="nav-label">System</span>
+      <button class="menu" onclick="showSection('settings', this)">
+        Settings
+      </button>
+
+      <div class="sidebar-footer">
+        <div class="avatar">J</div>
+        <div>
+          <div class="user-name">{{user.first_name}}</div>
+          <div class="user-role">{{user.position}}</div>
+          <!--Show employee position-->
+        </div>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <strong>{{project.name}}</strong>&ensp;/&ensp;<span id="topbarSection"
+            >Dashboard</span
+          >
+        </div>
+        <div class="user-menu-wrap">
+          <div class="user-trigger" onclick="toggleUserMenu()">
+            <div class="avatar">{{ user.first_name|first|upper }}</div>
+            <span>{{user.first_name}}</span>
+          </div>
+          <div id="userMenu" class="hidden">
+            <a href="{% url 'signout' %}">
+              <p>Signout</p>
+            </a>
           </div>
         </div>
-        <div class="card">
-          <table>
-            <thead>
-              <tr>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Address</th>
-                <th>Created</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for customer in customers %}
-              <tr id="customer-{{ customer.id }}" class="clickable">
-                <td>{{ customer.user.email }}</td>
-                <td style="color:var(--muted)">{{ customer.phone|default:"—" }}</td>
-                <td style="color:var(--muted)">{{ customer.address|default:"—" }}</td>
-                <td style="color:var(--muted)">{{ customer.created_at|date:"M d, Y" }}</td>
-                <td>
-                  <a href="{% url 'customer_edit' customer.id %}">
+      </header>
+
+      <div class="content">
+        <!-- ═══ DASHBOARD ═══ -->
+        <div id="dashboard" class="section visible">
+          <div class="page-header">
+            <div>
+              <h2>Dashboard</h2>
+              <p>April 2026</p>
+            </div>
+          </div>
+
+          <div class="stat-grid">
+            <div class="stat-card">
+              <div class="stat-label">Revenue</div>
+              <div class="stat-val">$12,400</div>
+              <div class="stat-sub">+8% this month</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Customers</div>
+              <div class="stat-val">38</div>
+              <div class="stat-sub">3 new this week</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Products</div>
+              <div class="stat-val">{{ products|length }}</div>
+              <div class="stat-sub">In catalogue</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Low Stock</div>
+              <div class="stat-val" style="color: var(--red)">1</div>
+              <div class="stat-sub">Needs restocking</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">Recent Customers</div>
+            <table>
+              <thead>
+                <tr>
+                  <th>First</th>
+                  <th>Last</th>
+                  <th>Email</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for customer in customers %}
+                <tr>
+                  <td>{{ customer.user.first_name }}</td>
+                  <td>{{ customer.user.last_name }}</td>
+                  <td style="color: var(--muted)">{{ customer.user.email }}</td>
+                  <td><span class="badge badge-green">Active</span></td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="4" class="empty">No customers yet.</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ═══ CUSTOMERS ═══ -->
+        <div id="customers" class="section">
+          <div class="page-header">
+            <div>
+              <h2>Customers</h2>
+            </div>
+          </div>
+          <div class="card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Address</th>
+                  <th>Created</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for customer in customers %}
+                <tr id="customer-{{ customer.id }}" class="clickable">
+                  <td>{{ customer.user.email }}</td>
+                  <td style="color: var(--muted)">
+                    {{ customer.phone|default:"—" }}
+                  </td>
+                  <td style="color: var(--muted)">
+                    {{ customer.address|default:"—" }}
+                  </td>
+                  <td style="color: var(--muted)">
+                    {{ customer.created_at|date:"M d, Y" }}
+                  </td>
+                  <td>
+                    <a href="{% url 'customer_edit' customer.id %}">
+                      <button class="btn btn-ghost">Edit</button>
+                    </a>
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="5" class="empty">No customers found.</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ═══ EMPLOYEES ═══ -->
+        <div id="employees" class="section">
+          <div class="page-header">
+            <div>
+              <h2>Employees</h2>
+            </div>
+            <a href="{% url 'backoffice_create_employee_view' %}">
+              <button class="btn btn-primary">+ New Employee</button>
+            </a>
+          </div>
+          <div class="card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Position</th>
+                  <th>Hired</th>
+                  <th>Status</th>
+                  <th>action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for employee in employees %}
+                <tr>
+                  <td>
+                    {{ employee.user.first_name }} {{ employee.user.last_name }}
+                  </td>
+                  <td style="color: var(--muted)">{{ employee.user.email }}</td>
+                  <td>
+                    <span class="badge badge-gray"
+                      >{{ employee.position }}</span
+                    >
+                  </td>
+                  <td style="color: var(--muted)">
+                    {{ employee.hired_at|date:"M d, Y" }}
+                  </td>
+                  <td>
+                    {% if employee.is_active %}
+                    <span class="badge badge-green">Active</span>
+                    {% else %}
+                    <span class="badge badge-red">Inactive</span>
+                    {% endif %}
+                  </td>
+                  <td>
+                    <a href="{% url 'employee_edit' employee.id %}">
+                      <button class="btn btn-ghost">Edit</button>
+                    </a>
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="5" class="empty">No employees found.</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ═══ PRODUCTS ═══ -->
+        <!-- === todo: show if product is avialable or not === -->
+        <div id="products" class="section">
+          <div class="page-header">
+            <div>
+              <h2>Products</h2>
+            </div>
+            <a href="/backoffice/createproduct">
+              <button class="btn btn-primary">+ New Product</button>
+            </a>
+          </div>
+          <div class="card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Pic</th>
+                  <th>Product</th>
+                  <th>ID</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for product in products %}
+                <tr class="clickable">
+                  <td>
+                    {% if product.image %}
+                    <img
+                      src="{{ product.image.url }}"
+                      class="product-thumb"
+                      alt="{{ product.name }}"
+                    />
+                    {% else %}
+                    <div class="thumb-placeholder">N/A</div>
+                    {% endif %}
+                  </td>
+                  <td style="font-weight: 500">{{ product.name }}</td>
+                  <td style="color: var(--muted)">
+                    {{ product.id|stringformat:"03d" }}
+                  </td>
+                  <td>
+                    <span class="badge badge-gray"
+                      >{{ product.get_category_display }}</span
+                    >
+                  </td>
+                  <td style="font-weight: 600">
+                    ${{ product.current_price|default:0 }}
+                  </td>
+                  <td>
+                    <a href="{% url 'product_edit' product.id %}">
+                      <button class="btn btn-ghost">Edit</button>
+                    </a>
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="5" class="empty">No products found.</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ═══ Provider═══ -->
+        <div id="provider" class="section">
+          <div class="page-header">
+            <div>
+              <h2>Provider</h2>
+            </div>
+          </div>
+          <div class="card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Phone Number</th>
+                  <th>Address</th>
+                  <th>email</th>
+                  <th>Description</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for provider in providers %}
+                <tr>
+                  <td>{{ provider.name }}</td>
+                  <td>{{ provider.phone_number }}</td>
+                  <td>{{ provider.address }}</td>
+                  <td>{{ provider.email }}</td>
+                  <td>{{ provider.description }}</td>
+                  <td>
                     <button class="btn btn-ghost">Edit</button>
-                  </a>
-                </td>
-              </tr>
-              {% empty %}
-              <tr>
-                <td colspan="5" class="empty">No customers found.</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- ═══ EMPLOYEES ═══ -->
-      <div id="employees" class="section">
-        <div class="page-header">
-          <div>
-            <h2>Employees</h2>
-          </div>
-          <a href="{% url 'backoffice_create_employee_view' %}">
-            <button class="btn btn-primary">+ New Employee</button>
-          </a>
-        </div>
-        <div class="card">
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Position</th>
-                <th>Hired</th>
-                <th>Status</th>
-                <th>action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for employee in employees %}
-              <tr>
-
-
-
-
-                <td>{{ employee.user.first_name }} {{ employee.user.last_name }}</td>
-                <td style="color:var(--muted)">{{ employee.user.email }}</td>
-                <td><span class="badge badge-gray">{{ employee.position }}</span></td>
-                <td style="color:var(--muted)">{{ employee.hired_at|date:"M d, Y" }}</td>
-                <td>
-                  {% if employee.is_active %}
-                  <span class="badge badge-green">Active</span>
-                  {% else %}
-                  <span class="badge badge-red">Inactive</span>
-                  {% endif %}
-                </td>
-                <td>
-                  <a href="{% url 'employee_edit' employee.id %}">
-                    <button class="btn btn-ghost">Edit</button>
-                  </a>
-                </td>
-              </tr>
-              {% empty %}
-              <tr>
-                <td colspan="5" class="empty">No employees found.</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- ═══ PRODUCTS ═══ -->
-      <!-- === todo: show if product is avialable or not === -->
-      <div id="products" class="section">
-        <div class="page-header">
-          <div>
-            <h2>Products</h2>
-          </div>
-          <a href="/backoffice/createproduct">
-            <button class="btn btn-primary">+ New Product</button>
-          </a>
-        </div>
-        <div class="card">
-          <table>
-            <thead>
-              <tr>
-                <th>Pic</th>
-                <th>Product</th>
-                <th>ID</th>
-                <th>Category</th>
-                <th>Price</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for product in products %}
-              <tr class="clickable">
-                <td>
-                  {% if product.image %}
-                  <img src="{{ product.image.url }}" class="product-thumb" alt="{{ product.name }}" />
-                  {% else %}
-                  <div class="thumb-placeholder">N/A</div>
-                  {% endif %}
-                </td>
-                <td style="font-weight:500">{{ product.name }}</td>
-                <td style="color:var(--muted)">{{ product.id|stringformat:"03d" }}</td>
-                <td><span class="badge badge-gray">{{ product.get_category_display }}</span></td>
-                <td style="font-weight:600">${{ product.current_price|default:0 }}</td>
-                <td>
-                  <a href="{% url 'product_edit' product.id %}">
-                    <button class="btn btn-ghost">Edit</button>
-                  </a>
-                </td>
-              </tr>
-              {% empty %}
-              <tr>
-                <td colspan="5" class="empty">No products found.</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- ═══ Provider═══ -->
-      <div id="provider" class="section">
-        <div class="page-header">
-          <div>
-            <h2>Provider</h2>
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="6" class="empty">No providers to display.</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
         </div>
-        <div class="card">
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Phone Number</th>
-                <th>Address</th>
-                <th>email</th>
-                <th>Description</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for provider in providers %}
-              <tr>
-                <td>{{ provider.name }}</td>
-                <td>{{ provider.phone_number }}</td>
-                <td>{{ provider.address }}</td>
-                <td>{{ provider.email }}</td>
-                <td>{{ provider.description }}</td>
-                <td>
-                  <button class="btn btn-ghost">Edit</button>
-                </td>
-              </tr>
-              {% empty %}
-              <tr>
-                <td colspan="6" class="empty">No providers to display.</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
 
-      <!-- ═══ INVENTORY ═══ -->
-      <div id="inventory" class="section">
-        <div class="page-header">
-          <div>
-            <h2>Inventory</h2>
+        <!-- ═══ INVENTORY ═══ -->
+        <div id="inventory" class="section">
+          <div class="page-header">
+            <div>
+              <h2>Inventory</h2>
+            </div>
+          </div>
+          <div class="card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Stock</th>
+                  <th>Unit</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in inventory %}
+                <tr class="clickable" onclick="openModal('inventoryModal')">
+                  <td style="font-weight: 500">{{ item.name }}</td>
+                  <td>{{ item.stock }}</td>
+                  <td style="color: var(--muted)">{{ item.unit }}</td>
+                  <td>
+                    {% if item.status == "Low Stock" or item.stock == 0 %}
+                    <span class="badge badge-red">{{ item.status }}</span>
+                    {% elif item.status == "In Stock" %}
+                    <span class="badge badge-green">{{ item.status }}</span>
+                    {% else %}
+                    <span class="badge badge-amber">{{ item.status }}</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="4" class="empty">No inventory records.</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
         </div>
-        <div class="card">
-          <table>
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th>Stock</th>
-                <th>Unit</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for item in inventory %}
-              <tr class="clickable" onclick="openModal('inventoryModal')">
-                <td style="font-weight:500">{{ item.name }}</td>
-                <td>{{ item.stock }}</td>
-                <td style="color:var(--muted)">{{ item.unit }}</td>
-                <td>
-                  {% if item.status == "Low Stock" or item.stock == 0 %}
-                  <span class="badge badge-red">{{ item.status }}</span>
-                  {% elif item.status == "In Stock" %}
-                  <span class="badge badge-green">{{ item.status }}</span>
-                  {% else %}
-                  <span class="badge badge-amber">{{ item.status }}</span>
-                  {% endif %}
-                </td>
-              </tr>
-              {% empty %}
-              <tr>
-                <td colspan="4" class="empty">No inventory records.</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
 
-      <!-- ═══ SETTINGS ═══ -->
-      <div id="settings" class="section">
-        <div class="page-header">
-          <div>
-            <h2>Settings</h2>
+        <!-- ═══ SETTINGS ═══ -->
+        <div id="settings" class="section">
+          <div class="page-header">
+            <div>
+              <h2>Settings</h2>
+            </div>
+          </div>
+          <div class="card">
+            <div class="empty">No settings configured yet.</div>
           </div>
         </div>
-        <div class="card">
-          <div class="empty">No settings configured yet.</div>
-        </div>
       </div>
-
-    </div><!-- /content -->
-  </div><!-- /main -->
-
-
-  <!-- ═══════════ MODALS ═══════════ -->
-
-  <!-- Customer edit modal -->
-  <div class="modal-overlay" id="customerModal">
-    <div class="modal">
-      <div class="modal-header">
-        <span class="modal-title">Edit Customer</span>
-        <button class="modal-close" onclick="closeModal('customerModal')">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="field-row">
-          <div class="field"><label>First Name</label><input type="text" /></div>
-          <div class="field"><label>Last Name</label><input type="text" /></div>
-        </div>
-        <div class="field"><label>Email</label><input type="email" /></div>
-        <div class="field"><label>Phone</label><input type="text" /></div>
-        <div class="field"><label>Address</label><input type="text" /></div>
-        <div class="field">
-          <label>Status</label>
-          <select>
-            <option>Active</option>
-            <option>Inactive</option>
-          </select>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-danger" onclick="closeModal('customerModal')">Delete</button>
-        <button class="btn btn-ghost" onclick="closeModal('customerModal')">Cancel</button>
-        <button class="btn btn-primary" onclick="closeModal('customerModal')">Save changes</button>
-      </div>
+      <!-- /content -->
     </div>
-  </div>
+    <!-- /main -->
 
-  <!-- Employee view/edit modal -->
-  <div class="modal-overlay" id="employeeModal">
-    <div class="modal">
-      <div class="modal-header">
-        <span class="modal-title">Edit Employee</span>
-        <button class="modal-close" onclick="closeModal('employeeModal')">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="field-row">
-          <div class="field"><label>First Name</label><input type="text" /></div>
-          <div class="field"><label>Last Name</label><input type="text" /></div>
-        </div>
-        <div class="field"><label>Email</label><input type="email" /></div>
-        <div class="field">
-          <label>Position</label>
-          <select>
-            <option>store_manager</option>
-            <option>cashier</option>
-            <option>stock_clerk</option>
-            <option>admin</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Status</label>
-          <select>
-            <option>Active</option>
-            <option>Inactive</option>
-          </select>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-danger" onclick="closeModal('employeeModal')">Dismiss</button>
-        <button class="btn btn-ghost" onclick="closeModal('employeeModal')">Cancel</button>
-        <button class="btn btn-primary" onclick="closeModal('employeeModal')">Save changes</button>
-      </div>
-    </div>
-  </div>
+    <!-- ═══════════ MODALS ═══════════ -->
 
-  <!-- Price edit modal -->
-  <div class="modal-overlay" id="priceModal">
-    <div class="modal">
-      <div class="modal-header">
-        <span class="modal-title">Edit Price</span>
-        <button class="modal-close" onclick="closeModal('priceModal')">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="field"><label>Product</label><input type="text" readonly style="opacity:.6" /></div>
-        <div class="field"><label>Current Price</label><input type="number" step="0.01" /></div>
-        <div class="field"><label>Effective From</label><input type="date" /></div>
-        <div class="field"><label>Notes</label><textarea placeholder="Reason for price change…"></textarea></div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-ghost" onclick="closeModal('priceModal')">Cancel</button>
-        <button class="btn btn-primary" onclick="closeModal('priceModal')">Update Price</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Inventory edit modal -->
-  <div class="modal-overlay" id="inventoryModal">
-    <div class="modal">
-      <div class="modal-header">
-        <span class="modal-title">Edit Inventory</span>
-        <button class="modal-close" onclick="closeModal('inventoryModal')">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="field"><label>Product</label><input type="text" readonly style="opacity:.6" /></div>
-        <div class="field-row">
-          <div class="field"><label>Stock Quantity</label><input type="number" min="0" /></div>
+    <!-- Customer edit modal -->
+    <div class="modal-overlay" id="customerModal">
+      <div class="modal">
+        <div class="modal-header">
+          <span class="modal-title">Edit Customer</span>
+          <button class="modal-close" onclick="closeModal('customerModal')">
+            ✕
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="field-row">
+            <div class="field">
+              <label>First Name</label><input type="text" />
+            </div>
+            <div class="field">
+              <label>Last Name</label><input type="text" />
+            </div>
+          </div>
+          <div class="field"><label>Email</label><input type="email" /></div>
+          <div class="field"><label>Phone</label><input type="text" /></div>
+          <div class="field"><label>Address</label><input type="text" /></div>
           <div class="field">
-            <label>Unit</label>
+            <label>Status</label>
             <select>
-              <option>kg</option>
-              <option>units</option>
-              <option>liters</option>
-              <option>boxes</option>
+              <option>Active</option>
+              <option>Inactive</option>
             </select>
           </div>
         </div>
-        <div class="field">
-          <label>Status</label>
-          <select>
-            <option>Low</option>
-            <option>In Stock</option>
-            <option>Out of Stock</option>
-          </select>
+        <div class="modal-footer">
+          <button class="btn btn-danger" onclick="closeModal('customerModal')">
+            Delete
+          </button>
+          <button class="btn btn-ghost" onclick="closeModal('customerModal')">
+            Cancel
+          </button>
+          <button class="btn btn-primary" onclick="closeModal('customerModal')">
+            Save changes
+          </button>
         </div>
-        <div class="field"><label>Notes</label><textarea placeholder="Restock notes…"></textarea></div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-ghost" onclick="closeModal('inventoryModal')">Cancel</button>
-        <button class="btn btn-primary" onclick="closeModal('inventoryModal')">Update Stock</button>
       </div>
     </div>
-  </div>
 
-  <script>
-    const sectionNames = {
-      dashboard: 'Dashboard', customers: 'Customers', employees: 'Employees',
-      products: 'Products', providers: 'providers', inventory: 'Inventory', settings: 'Settings'
-    };
+    <!-- Employee view/edit modal -->
+    <div class="modal-overlay" id="employeeModal">
+      <div class="modal">
+        <div class="modal-header">
+          <span class="modal-title">Edit Employee</span>
+          <button class="modal-close" onclick="closeModal('employeeModal')">
+            ✕
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="field-row">
+            <div class="field">
+              <label>First Name</label><input type="text" />
+            </div>
+            <div class="field">
+              <label>Last Name</label><input type="text" />
+            </div>
+          </div>
+          <div class="field"><label>Email</label><input type="email" /></div>
+          <div class="field">
+            <label>Position</label>
+            <select>
+              <option>store_manager</option>
+              <option>cashier</option>
+              <option>stock_clerk</option>
+              <option>admin</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Status</label>
+            <select>
+              <option>Active</option>
+              <option>Inactive</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" onclick="closeModal('employeeModal')">
+            Dismiss
+          </button>
+          <button class="btn btn-ghost" onclick="closeModal('employeeModal')">
+            Cancel
+          </button>
+          <button class="btn btn-primary" onclick="closeModal('employeeModal')">
+            Save changes
+          </button>
+        </div>
+      </div>
+    </div>
 
-    function showSection(id, btn) {
-      document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
-      document.getElementById(id).classList.add('visible');
-      document.querySelectorAll('.menu').forEach(m => m.classList.remove('active'));
-      if (btn) btn.classList.add('active');
-      document.getElementById('topbarSection').textContent = sectionNames[id] || id;
-    }
+    <!-- Price edit modal -->
+    <div class="modal-overlay" id="priceModal">
+      <div class="modal">
+        <div class="modal-header">
+          <span class="modal-title">Edit Price</span>
+          <button class="modal-close" onclick="closeModal('priceModal')">
+            ✕
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="field">
+            <label>Product</label
+            ><input type="text" readonly style="opacity: 0.6" />
+          </div>
+          <div class="field">
+            <label>Current Price</label><input type="number" step="0.01" />
+          </div>
+          <div class="field">
+            <label>Effective From</label><input type="date" />
+          </div>
+          <div class="field">
+            <label>Notes</label
+            ><textarea placeholder="Reason for price change…"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" onclick="closeModal('priceModal')">
+            Cancel
+          </button>
+          <button class="btn btn-primary" onclick="closeModal('priceModal')">
+            Update Price
+          </button>
+        </div>
+      </div>
+    </div>
 
-    function toggleUserMenu() {
-      document.getElementById('userMenu').classList.toggle('hidden');
-    }
-    document.addEventListener('click', e => {
-      if (!e.target.closest('.user-menu-wrap'))
-        document.getElementById('userMenu').classList.add('hidden');
-    });
+    <!-- Inventory edit modal -->
+    <div class="modal-overlay" id="inventoryModal">
+      <div class="modal">
+        <div class="modal-header">
+          <span class="modal-title">Edit Inventory</span>
+          <button class="modal-close" onclick="closeModal('inventoryModal')">
+            ✕
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="field">
+            <label>Product</label
+            ><input type="text" readonly style="opacity: 0.6" />
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Stock Quantity</label><input type="number" min="0" />
+            </div>
+            <div class="field">
+              <label>Unit</label>
+              <select>
+                <option>kg</option>
+                <option>units</option>
+                <option>liters</option>
+                <option>boxes</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label>Status</label>
+            <select>
+              <option>Low</option>
+              <option>In Stock</option>
+              <option>Out of Stock</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Notes</label
+            ><textarea placeholder="Restock notes…"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-ghost" onclick="closeModal('inventoryModal')">
+            Cancel
+          </button>
+          <button
+            class="btn btn-primary"
+            onclick="closeModal('inventoryModal')"
+          >
+            Update Stock
+          </button>
+        </div>
+      </div>
+    </div>
 
-    function openModal(id) {
-      document.getElementById(id).classList.add('open');
-    }
-    function closeModal(id) {
-      document.getElementById(id).classList.remove('open');
-    }
-    document.querySelectorAll('.modal-overlay').forEach(overlay => {
-      overlay.addEventListener('click', e => {
-        if (e.target === overlay) overlay.classList.remove('open');
+    <script>
+      const sectionNames = {
+        dashboard: "Dashboard",
+        customers: "Customers",
+        employees: "Employees",
+        products: "Products",
+        providers: "providers",
+        inventory: "Inventory",
+        settings: "Settings",
+      };
+
+      function showSection(id, btn) {
+        document
+          .querySelectorAll(".section")
+          .forEach((s) => s.classList.remove("visible"));
+        document.getElementById(id).classList.add("visible");
+        document
+          .querySelectorAll(".menu")
+          .forEach((m) => m.classList.remove("active"));
+        if (btn) btn.classList.add("active");
+        document.getElementById("topbarSection").textContent =
+          sectionNames[id] || id;
+      }
+
+      function toggleUserMenu() {
+        document.getElementById("userMenu").classList.toggle("hidden");
+      }
+      document.addEventListener("click", (e) => {
+        if (!e.target.closest(".user-menu-wrap"))
+          document.getElementById("userMenu").classList.add("hidden");
       });
-    });
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape')
-        document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
-    });
-  </script>
-</body>
 
+      function openModal(id) {
+        document.getElementById(id).classList.add("open");
+      }
+      function closeModal(id) {
+        document.getElementById(id).classList.remove("open");
+      }
+      document.querySelectorAll(".modal-overlay").forEach((overlay) => {
+        overlay.addEventListener("click", (e) => {
+          if (e.target === overlay) overlay.classList.remove("open");
+        });
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape")
+          document
+            .querySelectorAll(".modal-overlay.open")
+            .forEach((m) => m.classList.remove("open"));
+      });
+    </script>
+  </body>
 </html>
