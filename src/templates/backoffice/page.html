@@ -887,6 +887,7 @@
                   <th>Product</th>
                   <th>ID</th>
                   <th>Category</th>
+                  <th>Brand</th>
                   <th>Price</th>
                   <th>Action</th>
                 </tr>
@@ -914,6 +915,7 @@
                       >{{ product.get_category_display }}</span
                     >
                   </td>
+                  <td>{{product.brand}}</td>
                   <td style="font-weight: 600">
                     ${{ product.current_price|default:0 }}
                   </td>

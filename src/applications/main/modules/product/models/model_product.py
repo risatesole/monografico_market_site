@@ -54,6 +54,8 @@ class Product(models.Model):
         default="ACTIVE"
     )
 
+    brand = models.CharField(max_length=255)
+
     image = models.ImageField(
         upload_to="products/",
         null=True,
