@@ -6,6 +6,7 @@ from django.urls import path
 
 from .modules.backoffice.views.backoffice_view import backoffice_view, backoffice_create_product_view, backoffice_customer_edit_view, backoffice_create_employee_view
 from .modules.account.user.views import signin_view, signout_view, signup_view
+from .modules.account.user.views.view_web_preferences import preferences_user_view
 
 def home_view(request):
     return render(request, "pages/home/index.html")
@@ -19,4 +20,5 @@ urlpatterns = [
     path("signin/",signin_view,name="signin"),
     path("signup/", signup_view, name="signup"),
     path("signout/", signout_view, name="signout"),
+    path("preferences/",preferences_user_view, name="preferences"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) # add this to the end of ] so it saves to the storage
