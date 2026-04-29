@@ -7,6 +7,8 @@ from ...account.user.models.employee_profile import Employee, EmployeePosition
 from ...account.user.models.model_user import User
 from django.contrib import messages
 
+from ...inventory.models.provider_model import Provider
+
 from django.contrib.auth.decorators import login_required, user_passes_test
 def is_employee(user):
     return user.is_authenticated and user.role == "employee"
@@ -175,3 +177,43 @@ def backoffice_edit_product_view(request, product_id):
         "price": price
     }
     return render(request, "backoffice/edit/editproduct.html", context)
+
+
+
+
+@login_required
+@user_passes_test(is_employee)
+def backoffice_create_provider(request):
+    if request.method == "POST":
+        Provider.objects.create(
+            name=request.POST.get("name"),
+            phone_number=request.POST.get("phone_number"),
+            address=request.POST.get("address"),
+            email=request.POST.get("email"),
+            description=request.POST.get("description"),
+        )
+        return redirect("backoffice")
+    
+    return render(request, "backoffice/create/create_provider.html")
+
+
+@login_required
+@user_passes_test(is_employee)
+def backoffice_edit_provider(request, provider_id):
+    provider = get_object_or_404(Provider, id=provider_id)
+
+    if request.method == "POST":
+        provider.name = request.POST.get("name")
+        provider.phone_number = request.POST.get("phone_number")
+        provider.address = request.POST.get("address")
+        provider.email = request.POST.get("email")
+        provider.description = request.POST.get("description")
+
+        provider.save()
+
+        messages.success(request, "Provider updated successfully")
+        return redirect("backoffice")
+
+    return render(request, "backoffice/edit/edit_provider.html", {
+        "provider": provider
+    })

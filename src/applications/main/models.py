@@ -3,6 +3,8 @@ from .modules.account.user.models.model_user import UserRoles as UserRoles
 from .modules.product.models.model_product import Product as Product 
 from .modules.account.user.models.customer_profile import Customer as Customer
 from .modules.account.user.models.employee_profile import Employee as Employee
+from .modules.inventory.models.provider_model import Provider as Provider
+from .modules.inventory.models.inventory_recipt_model import StockEntry as StockEntry
 
 from django.db import models
 from django.utils import timezone

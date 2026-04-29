@@ -939,8 +939,10 @@
             <div>
               <h2>Provider</h2>
             </div>
-            <a href="/backoffice/createproduct">
-              <button class="btn btn-primary">+ New Provider todo: this button</button>
+            <a href="/backoffice/createprovider">
+              <button class="btn btn-primary">
+                + Add Provider
+              </button>
             </a>
           </div>
           <div class="card">
@@ -964,7 +966,12 @@
                   <td>{{ provider.email }}</td>
                   <td>{{ provider.description }}</td>
                   <td>
-                    <button class="btn btn-ghost">Edit</button>
+                    <a
+                      href="{% url 'edit_provider' provider.id %}"
+                      class="btn btn-ghost"
+                    >
+                      Edit
+                    </a>
                   </td>
                 </tr>
                 {% empty %}
