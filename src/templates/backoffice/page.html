@@ -643,7 +643,7 @@
     <button class="menu" onclick="showSection('products', this)">Products</button>
 
     <span class="nav-label">Commerce</span>
-    <button class="menu" onclick="showSection('prices', this)">Prices</button>
+    <button class="menu" onclick="showSection('provider', this)">Provider</button>
     <button class="menu" onclick="showSection('inventory', this)">Inventory</button>
 
     <span class="nav-label">System</span>
@@ -889,34 +889,40 @@
         </div>
       </div>
 
-      <!-- ═══ PRICES ═══ -->
-      <div id="prices" class="section">
+      <!-- ═══ Provider═══ -->
+      <div id="provider" class="section">
         <div class="page-header">
           <div>
-            <h2>Prices</h2>
+            <h2>Provider</h2>
           </div>
         </div>
         <div class="card">
           <table>
             <thead>
               <tr>
-                <th>Product</th>
-                <th>Price</th>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+                <th>email</th>
+                <th>Description</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {% for product in products %}
-              <tr class="clickable" onclick="openModal('priceModal')">
-                <td style="font-weight:500">{{ product.name }}</td>
-                <td style="font-weight:600">${{ product.current_price }}</td>
+              {% for provider in providers %}
+              <tr>
+                <td>{{ provider.name }}</td>
+                <td>{{ provider.phone_number }}</td>
+                <td>{{ provider.address }}</td>
+                <td>{{ provider.email }}</td>
+                <td>{{ provider.description }}</td>
                 <td>
-                  <button class="btn btn-ghost" onclick="event.stopPropagation(); openModal('priceModal')">Edit</button>
+                  <button class="btn btn-ghost">Edit</button>
                 </td>
               </tr>
               {% empty %}
               <tr>
-                <td colspan="3" class="empty">No prices to display.</td>
+                <td colspan="6" class="empty">No providers to display.</td>
               </tr>
               {% endfor %}
             </tbody>
@@ -1115,7 +1121,7 @@
   <script>
     const sectionNames = {
       dashboard: 'Dashboard', customers: 'Customers', employees: 'Employees',
-      products: 'Products', prices: 'Prices', inventory: 'Inventory', settings: 'Settings'
+      products: 'Products', providers: 'providers', inventory: 'Inventory', settings: 'Settings'
     };
 
     function showSection(id, btn) {
