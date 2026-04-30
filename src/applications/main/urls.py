@@ -9,7 +9,12 @@ from .modules.account.user.views import signin_view, signout_view, signup_view
 from .modules.account.user.views.view_web_preferences import preferences_user_view
 
 def home_view(request):
-    return render(request, "pages/home/index.html")
+    context = {
+        "project":{
+            "name": "Duck"
+        }
+    }
+    return render(request, "pages/home/index.html",context)
 
 urlpatterns = [
     path("", home_view, name="home"),
