@@ -1,108 +1,84 @@
-Table customer {
+Table user{
   id int [pk]
-  firstname varchar
-  lastname varchar
-  email varchar
-  password_hash varchar
-  age varchar
-  phone_number varchar
-  created_at datetime
-  updated_at datetime
+  first_name varchar
+  last_name varchar
 }
 
-Table customer_paymentinformation {
+Table customer{
   id int [pk]
-  payment_method varchar
-  payment_details varchar
+  user int [ref: - user.id]
 }
 
-Table direction{
+Table employee{
   id int [pk]
-  client_id int  [ref: > customer.id]
-  ubicacion varchar
+  user int [ref: - user.id]
+  position varchar [note: "ADMIN, Inventory manager, customer manager, product logistics, marketing"]
 }
 
-Table customer_order {
-  customer_id int [ref: - customer.id]
-  amount int 
-  status varchar
-}
-
-Table customer_order_item {
-  id int
-  order_id int 
-  product_id int [ref: - product.id]
-  quantity int
-  price int
-}
-
-Table product{
+Table product {
   id int [pk]
-  name varchar
-  description varchar
-  category int [ref: - product_category.id]
+  metric_unit varchar [note: "pounds, units, bottles, pair"]
+  nombre varchar
+  descripcion varchar
 }
 
-Table product_category{
+table selling_price{
   id int [pk]
-  name varchar
+  product int [ref: > product.id]
+  set_by int [ref: > employee.id]
 }
 
-Table product_lot {
-  id int [pk]
-  recived_at datetime
-  product_id int [ref: - product.id]
-  price_per_unit int
-  provider_id int [ref: - provider.id]
-  quantity int
-}
 
 Table provider{
   id int [pk]
-  name varchar
+  nombre varchar
+  correo varcahr
 }
 
-Table provider_account {
-  // puede anadir quitar productos
+Table stock_purchase {
   id int [pk]
-  firstname varchar
-  lastname varchar
-  email varchar
-  password_hash varchar
-  age varchar
-  phone_number varchar
-  created_at datetime
-  updated_at datetime
-  provider_id int [ref: >provider.id]
-  position varchar
+  provider int [ref: > provider.id]
+  purchese_price boolean
+  reference_doc varchar
+  description varchar
+  added_by int [ref: > employee.id]
 }
 
-Table provider_payment_information {
+Table stock_entry{
   id int [pk]
-  provider_id int [ref: > provider.id]
-  card_number int
-  card_secret int
+  purchese_receipt int [ref: - stock_purchase.id]
+  product int [ref: >product.id]
+  quantity int 
 }
 
-Table transaction_provider{
+Table order {
   id int [pk]
-  from varchar
-  to varchar
-  created_at varchar
-  product_lot_id int [ref: > product_lot.id]
-  price_per_unit int
-  quantitu_unit int
+  customer int [ref:- customer.id]
+  fecha datetime 
+  // payment method
 }
 
-Table internal_user{
+Table order_products{
   id int [pk]
-  firstname varchar
-  lastname varchar
-  email varchar
-  password_hash varchar
-  age varchar
-  phone_number varchar
-  created_at datetime
-  updated_at datetime
-  role varchar
+  order int [ref: - order.id]
+  product int [ref: > product.id]
+}
+
+Table sale{
+  // when a customer makes a purchase
+  id int [pk]
+  customer int [ref: > customer.id]
+  product int [ref: >product.id]
+  quantity int
+  date datetime
+}
+
+Table stock_movement{
+  id int [pk]
+  date_time datetime
+  product int [ref: >product.id]
+  movement_type varchar [note: "initial_inventory, purchase_entry, customer_sell"]
+  document_reference varchar
+  quantity int
+  Balance int
 }
