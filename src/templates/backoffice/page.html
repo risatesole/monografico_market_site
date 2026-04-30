@@ -92,7 +92,9 @@
       }
 
       .menu {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         width: 100%;
         text-align: left;
         padding: 6px 8px;
@@ -112,6 +114,58 @@
       .menu.active {
         background: var(--text);
         color: #fff;
+      }
+
+      /* chevron icon for expandable menus */
+      .menu-chevron {
+        font-size: 10px;
+        transition: transform 0.15s;
+        opacity: 0.6;
+      }
+
+      .menu-group.open > .menu .menu-chevron {
+        transform: rotate(90deg);
+      }
+
+      /* submenu wrapper */
+      .submenu {
+        display: none;
+        flex-direction: column;
+        padding-left: 10px;
+        margin-top: 1px;
+      }
+
+      .menu-group.open > .submenu {
+        display: flex;
+      }
+
+      .submenu-item {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 5px 8px;
+        border-radius: 5px;
+        font-size: 12px;
+        color: var(--muted);
+        transition:
+          background 0.1s,
+          color 0.1s;
+        border-left: 2px solid var(--border);
+        border-radius: 0 5px 5px 0;
+        padding-left: 10px;
+      }
+
+      .submenu-item:hover {
+        background: var(--bg);
+        color: var(--text);
+        border-left-color: var(--subtle);
+      }
+
+      .submenu-item.active {
+        background: var(--bg);
+        color: var(--text);
+        font-weight: 500;
+        border-left-color: var(--text);
       }
 
       .sidebar-footer {
@@ -646,9 +700,20 @@
       </button>
 
       <span class="nav-label">Management</span>
-      <button class="menu" onclick="showSection('customers', this)">
-        Customers
-      </button>
+
+      <!-- Customers with Orders submenu -->
+      <div class="menu-group" id="group-customers">
+        <button class="menu" onclick="toggleGroup('group-customers'); showSection('customers', this)">
+          Customers
+          <span class="menu-chevron">›</span>
+        </button>
+        <div class="submenu">
+          <button class="submenu-item" onclick="showSection('orders', this)">
+            Orders
+          </button>
+        </div>
+      </div>
+
       <button class="menu" onclick="showSection('employees', this)">
         Employees
       </button>
@@ -660,9 +725,19 @@
       <button class="menu" onclick="showSection('provider', this)">
         Provider
       </button>
-      <button class="menu" onclick="showSection('inventory', this)">
-        Inventory
-      </button>
+
+      <!-- Inventory with Inventory Logs submenu -->
+      <div class="menu-group" id="group-inventory">
+        <button class="menu" onclick="toggleGroup('group-inventory'); showSection('inventory', this)">
+          Inventory
+          <span class="menu-chevron">›</span>
+        </button>
+        <div class="submenu">
+          <button class="submenu-item" onclick="showSection('inventory-logs', this)">
+            Inventory Logs
+          </button>
+        </div>
+      </div>
 
       <span class="nav-label">System</span>
       <button class="menu" onclick="showSection('settings', this)">
@@ -805,6 +880,18 @@
                 {% endfor %}
               </tbody>
             </table>
+          </div>
+        </div>
+
+        <!-- ═══ ORDERS ═══ -->
+        <div id="orders" class="section">
+          <div class="page-header">
+            <div>
+              <h2>Orders</h2>
+            </div>
+          </div>
+          <div class="card">
+            <div class="empty">No orders to display.</div>
           </div>
         </div>
 
@@ -1029,6 +1116,18 @@
           </div>
         </div>
 
+        <!-- ═══ INVENTORY LOGS ═══ -->
+        <div id="inventory-logs" class="section">
+          <div class="page-header">
+            <div>
+              <h2>Inventory Logs</h2>
+            </div>
+          </div>
+          <div class="card">
+            <div class="empty">No inventory logs to display.</div>
+          </div>
+        </div>
+
         <!-- ═══ SETTINGS ═══ -->
         <div id="settings" class="section">
           <div class="page-header">
@@ -1043,203 +1142,23 @@
       </div>
       <!-- /content -->
     </div>
-    <!-- /main -->
-
-    <!-- ═══════════ MODALS ═══════════ -->
-
-    <!-- Customer edit modal -->
-    <div class="modal-overlay" id="customerModal">
-      <div class="modal">
-        <div class="modal-header">
-          <span class="modal-title">Edit Customer</span>
-          <button class="modal-close" onclick="closeModal('customerModal')">
-            ✕
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="field-row">
-            <div class="field">
-              <label>First Name</label><input type="text" />
-            </div>
-            <div class="field">
-              <label>Last Name</label><input type="text" />
-            </div>
-          </div>
-          <div class="field"><label>Email</label><input type="email" /></div>
-          <div class="field"><label>Phone</label><input type="text" /></div>
-          <div class="field"><label>Address</label><input type="text" /></div>
-          <div class="field">
-            <label>Status</label>
-            <select>
-              <option>Active</option>
-              <option>Inactive</option>
-            </select>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-danger" onclick="closeModal('customerModal')">
-            Delete
-          </button>
-          <button class="btn btn-ghost" onclick="closeModal('customerModal')">
-            Cancel
-          </button>
-          <button class="btn btn-primary" onclick="closeModal('customerModal')">
-            Save changes
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Employee view/edit modal -->
-    <div class="modal-overlay" id="employeeModal">
-      <div class="modal">
-        <div class="modal-header">
-          <span class="modal-title">Edit Employee</span>
-          <button class="modal-close" onclick="closeModal('employeeModal')">
-            ✕
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="field-row">
-            <div class="field">
-              <label>First Name</label><input type="text" />
-            </div>
-            <div class="field">
-              <label>Last Name</label><input type="text" />
-            </div>
-          </div>
-          <div class="field"><label>Email</label><input type="email" /></div>
-          <div class="field">
-            <label>Position</label>
-            <select>
-              <option>store_manager</option>
-              <option>cashier</option>
-              <option>stock_clerk</option>
-              <option>admin</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Status</label>
-            <select>
-              <option>Active</option>
-              <option>Inactive</option>
-            </select>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-danger" onclick="closeModal('employeeModal')">
-            Dismiss
-          </button>
-          <button class="btn btn-ghost" onclick="closeModal('employeeModal')">
-            Cancel
-          </button>
-          <button class="btn btn-primary" onclick="closeModal('employeeModal')">
-            Save changes
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Price edit modal -->
-    <div class="modal-overlay" id="priceModal">
-      <div class="modal">
-        <div class="modal-header">
-          <span class="modal-title">Edit Price</span>
-          <button class="modal-close" onclick="closeModal('priceModal')">
-            ✕
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="field">
-            <label>Product</label
-            ><input type="text" readonly style="opacity: 0.6" />
-          </div>
-          <div class="field">
-            <label>Current Price</label><input type="number" step="0.01" />
-          </div>
-          <div class="field">
-            <label>Effective From</label><input type="date" />
-          </div>
-          <div class="field">
-            <label>Notes</label
-            ><textarea placeholder="Reason for price change…"></textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-ghost" onclick="closeModal('priceModal')">
-            Cancel
-          </button>
-          <button class="btn btn-primary" onclick="closeModal('priceModal')">
-            Update Price
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Inventory edit modal -->
-    <div class="modal-overlay" id="inventoryModal">
-      <div class="modal">
-        <div class="modal-header">
-          <span class="modal-title">Edit Inventory</span>
-          <button class="modal-close" onclick="closeModal('inventoryModal')">
-            ✕
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="field">
-            <label>Product</label
-            ><input type="text" readonly style="opacity: 0.6" />
-          </div>
-          <div class="field-row">
-            <div class="field">
-              <label>Stock Quantity</label><input type="number" min="0" />
-            </div>
-            <div class="field">
-              <label>Unit</label>
-              <select>
-                <option>kg</option>
-                <option>units</option>
-                <option>liters</option>
-                <option>boxes</option>
-              </select>
-            </div>
-          </div>
-          <div class="field">
-            <label>Status</label>
-            <select>
-              <option>Low</option>
-              <option>In Stock</option>
-              <option>Out of Stock</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Notes</label
-            ><textarea placeholder="Restock notes…"></textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-ghost" onclick="closeModal('inventoryModal')">
-            Cancel
-          </button>
-          <button
-            class="btn btn-primary"
-            onclick="closeModal('inventoryModal')"
-          >
-            Update Stock
-          </button>
-        </div>
-      </div>
-    </div>
-
     <script>
       const sectionNames = {
         dashboard: "Dashboard",
         customers: "Customers",
+        orders: "Orders",
         employees: "Employees",
         products: "Products",
-        providers: "providers",
+        providers: "Providers",
         inventory: "Inventory",
+        "inventory-logs": "Inventory Logs",
         settings: "Settings",
+      };
+
+      // Track which groups should stay open based on active section
+      const groupSections = {
+        "group-customers": ["customers", "orders"],
+        "group-inventory": ["inventory", "inventory-logs"],
       };
 
       function showSection(id, btn) {
@@ -1247,12 +1166,34 @@
           .querySelectorAll(".section")
           .forEach((s) => s.classList.remove("visible"));
         document.getElementById(id).classList.add("visible");
+
+        // Clear active state on all menu buttons and submenu items
         document
           .querySelectorAll(".menu")
           .forEach((m) => m.classList.remove("active"));
+        document
+          .querySelectorAll(".submenu-item")
+          .forEach((m) => m.classList.remove("active"));
+
         if (btn) btn.classList.add("active");
+
+        // If a submenu-item was clicked, keep the parent .menu visually distinct
+        const parentGroup = btn && btn.closest(".menu-group");
+        if (parentGroup && btn.classList.contains("submenu-item")) {
+          parentGroup.querySelector(".menu").style.color = "var(--text)";
+        }
+
         document.getElementById("topbarSection").textContent =
           sectionNames[id] || id;
+      }
+
+      function toggleGroup(groupId) {
+        const group = document.getElementById(groupId);
+        // Close other groups first
+        document.querySelectorAll(".menu-group").forEach((g) => {
+          if (g.id !== groupId) g.classList.remove("open");
+        });
+        group.classList.toggle("open");
       }
 
       function toggleUserMenu() {
